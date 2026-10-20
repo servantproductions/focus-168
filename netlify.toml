@@ -1,0 +1,4 @@
+# Focus 168 is a single static page: no build step, publish the folder as-is.
+[build]
+  publish = "."
+  command = ""
