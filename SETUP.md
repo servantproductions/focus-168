@@ -8,6 +8,8 @@ What's in this folder:
 | --- | --- |
 | `index.html` | The app. The only file that has to go online. |
 | `setup.sql` | Creates the database table and the rules that keep each person's plan private. |
+| `favicon.svg` | The browser-tab icon (the clock from the logo). |
+| `netlify.toml` | Tells Netlify to publish the folder as-is, with no build step. |
 | `serve.ps1` | Runs the app on your computer at `http://localhost:8168` for testing. |
 | `SETUP.md` | This guide. |
 
@@ -65,7 +67,7 @@ What's in this folder:
    - Add your Netlify link under **Redirect URLs**. Keep the localhost one if you still want to test locally.
 5. Send the link to your friends. Each person signs up with their own email and gets their own private plan.
 
-**Updating the app later:** in Netlify, open your site, go to **Deploys**, and drag the folder onto the page again.
+**Updating the app later:** the Netlify project is linked to the GitHub repository `servantproductions/focus-168`. Every push to the `main` branch goes live automatically within about a minute. Nobody's account or plan is affected, because those live in Supabase.
 
 ---
 
