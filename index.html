@@ -32,6 +32,7 @@
   --accent: #66766C;
   --accent-ink: #FFFFFF;
   --clay: #B37B64;
+  --clay-ink: #FFFFFF;
   --ok: #4E7A5C;
   --bad: #A8452C;
   --logo-ink: #66766C;
@@ -46,7 +47,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
-    --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --ok: #8FC09E; --bad: #E58A6E;
+    --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --ok: #8FC09E; --bad: #E58A6E;
     --logo-ink: #A9B8AE; --logo-clay: #D3967C;
     --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A; --cat-deep: #F1D28F;
     --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
@@ -56,7 +57,7 @@
 }
 :root[data-theme="dark"] {
   --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
-  --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --ok: #8FC09E; --bad: #E58A6E;
+  --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --ok: #8FC09E; --bad: #E58A6E;
   --logo-ink: #A9B8AE; --logo-clay: #D3967C;
     --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A; --cat-deep: #F1D28F;
   --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
@@ -155,6 +156,7 @@ h2 { font: 600 1.45rem/1.15 var(--display); letter-spacing: -.01em; margin: 0; t
 .hint { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
 .btn { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 600; }
 .btn:hover { filter: brightness(1.08); }
+.btn-add { background: var(--clay); color: var(--clay-ink); }
 
 .cols { display: grid; grid-template-columns: 18px 28px minmax(0, 1fr) 128px 96px 100px 104px 112px 36px; gap: 8px; align-items: center; }
 .thead { padding: 10px 0 8px; border-bottom: 1px solid var(--rule); }
@@ -428,7 +430,7 @@ button.d:hover { color: var(--ink); }
         <h2 id="ledger-title">Areas of focus</h2>
         <p class="hint">Change hours per day, pick the days, or set hours per week. The other numbers follow. For different hours on different days, set each day under Days. Drag the grip to reorder.</p>
       </div>
-      <button class="btn" id="add-top" type="button">+ Add area</button>
+      <button class="btn btn-add" id="add-top" type="button">+ Add area</button>
     </div>
     <div class="thead cols" aria-hidden="true">
       <span></span><span></span><span>Area</span><span>Category</span><span class="r">Per day</span><span class="r">Days</span><span class="r">Per week</span><span class="r">Share of week</span><span></span>
@@ -441,7 +443,7 @@ button.d:hover { color: var(--ink); }
       <span class="t-l">Remaining <span class="t-day-name"></span></span><span class="r" id="r-day"></span><span class="gap"></span><span class="r" id="r-week"></span><span class="gap"></span><span class="gap"></span>
     </div>
     <div class="add-row">
-      <button class="linkish" id="add-bottom" type="button">+ Add another area</button>
+      <button class="btn btn-add" id="add-bottom" type="button">+ Add area</button>
       <span class="tip">Hours accept <code>1.5</code>, <code>1:30</code>, <code>1h30</code> or <code>90m</code>.</span>
     </div>
   </section>
