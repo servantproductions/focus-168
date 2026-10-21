@@ -36,6 +36,7 @@
   --bad: #A8452C;
   --logo-ink: #66766C;
   --logo-clay: #B37B64;
+  --cat-g: #5F7A64; --cat-r: #56708A; --cat-i: #A8674E; --cat-p: #9A7428; --cat-deep: #6E5420;
   --a0: #66766C; --a1: #B37B64; --a2: #969D93; --a3: #C9B193;
   --a4: #5E7287; --a5: #C49A4E; --a6: #8F6E7C; --a7: #3E6B6B;
   --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
@@ -47,6 +48,7 @@
     --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
     --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --ok: #8FC09E; --bad: #E58A6E;
     --logo-ink: #A9B8AE; --logo-clay: #D3967C;
+    --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A; --cat-deep: #F1D28F;
     --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
     --a4: #8FA3BA; --a5: #D9B266; --a6: #B596A4; --a7: #6FA3A1;
     color-scheme: dark;
@@ -56,6 +58,7 @@
   --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
   --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --ok: #8FC09E; --bad: #E58A6E;
   --logo-ink: #A9B8AE; --logo-clay: #D3967C;
+    --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A; --cat-deep: #F1D28F;
   --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
   --a4: #8FA3BA; --a5: #D9B266; --a6: #B596A4; --a7: #6FA3A1;
   color-scheme: dark;
@@ -153,7 +156,7 @@ h2 { font: 600 1.45rem/1.15 var(--display); letter-spacing: -.01em; margin: 0; t
 .btn { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 600; }
 .btn:hover { filter: brightness(1.08); }
 
-.cols { display: grid; grid-template-columns: 18px 28px minmax(0, 1fr) 96px 100px 104px 128px 36px; gap: 8px; align-items: center; }
+.cols { display: grid; grid-template-columns: 18px 28px minmax(0, 1fr) 128px 96px 100px 104px 112px 36px; gap: 8px; align-items: center; }
 .thead { padding: 10px 0 8px; border-bottom: 1px solid var(--rule); }
 .thead span { font: 600 10.5px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .thead .r { text-align: right; padding-right: 10px; }
@@ -182,7 +185,7 @@ select.field { font: 14px var(--mono); text-align: right; appearance: auto; }
 .del { width: 32px; height: 32px; border-radius: 8px; border: 0; background: none; color: var(--muted); font-size: 20px; line-height: 1; }
 .del:hover { color: var(--bad); background: var(--paper); }
 .tfoot { padding: 10px 0 2px; font: 13px var(--mono); font-variant-numeric: tabular-nums; }
-.tfoot .t-l { grid-column: 1 / 4; font: 600 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
+.tfoot .t-l { grid-column: 1 / 5; font: 600 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-left: 4px; }
 .tfoot .r { text-align: right; padding-right: 10px; }
 .tfoot .over { color: var(--bad); }
 .empty { padding: 28px 8px; text-align: center; color: var(--muted); }
@@ -240,17 +243,54 @@ button.d:hover { color: var(--ink); }
 .day-list input:disabled + span { color: var(--muted); }
 .day-count { margin: 0; padding-top: 8px; border-top: 1px solid var(--rule); font: 12px var(--mono); color: var(--muted); }
 
+/* life categories (GRIP) */
+.cat-badge { flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font: 700 12px/1 var(--mono); color: var(--k); background: color-mix(in srgb, var(--k) 15%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k) 40%, transparent); }
+.cat-btn { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; background: transparent; }
+.cat-top { display: flex; align-items: center; gap: 7px; min-width: 0; max-width: 100%; }
+.cat-btn .cat-badge { width: 20px; height: 20px; font-size: 11px; }
+.cat-name { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat-btn.none .cat-name { color: var(--muted); font-style: italic; }
+.cat-btn.none .cat-badge { box-shadow: inset 0 0 0 1px var(--rule); background: none; }
+.cat-deep { font: 600 9.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cat-deep); padding-left: 27px; }
+.catpicker { width: 272px; gap: 4px; }
+.cat-opt { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 0; background: none; border-radius: 10px; padding: 7px 8px; }
+.cat-opt:hover { background: var(--paper); }
+.cat-opt[aria-checked="true"] { background: color-mix(in srgb, var(--k) 12%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k) 45%, transparent); }
+.cat-opt b, .cat-deep-opt b { display: block; font-size: 14px; font-weight: 600; }
+.cat-opt small, .cat-deep-opt small { display: block; font-size: 12px; color: var(--muted); }
+.cat-deep-opt { display: flex; gap: 10px; align-items: flex-start; padding: 10px 8px 4px; margin-top: 4px; border-top: 1px solid var(--rule); cursor: pointer; }
+.cat-deep-opt input { flex: none; width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--cat-deep); }
+.cat-deep-opt.off { cursor: not-allowed; }
+.cat-deep-opt.off b { color: var(--muted); }
+
+.grip .card-head { margin-bottom: 14px; }
+.deep-stat { margin: 0; display: inline-flex; align-items: baseline; gap: 8px; padding: 7px 12px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--cat-deep) 45%, transparent); background: color-mix(in srgb, var(--cat-deep) 9%, transparent); font-size: 13px; color: var(--ink); }
+.deep-stat b { font: 600 15px var(--mono); color: var(--cat-deep); font-variant-numeric: tabular-nums; }
+.grip-table { margin-top: 12px; }
+.grip-row { display: grid; grid-template-columns: minmax(0, 1fr) 136px 148px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.grip-row:last-child { border-bottom: 0; }
+.grip-head { padding: 0 0 8px; font: 600 10.5px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.grip-head .r { text-align: right; }
+.grip-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.grip-name b { font-weight: 600; }
+.grip-name small { display: block; font-size: 12px; color: var(--muted); }
+.grip-row.sub .grip-name { padding-left: 32px; }
+.grip-row.sub .cat-badge { width: 18px; height: 18px; font-size: 10px; }
+.grip-row.quiet .grip-name b { color: var(--muted); font-weight: 500; }
+.grip-val { text-align: right; font: 14px var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.grip-val span { display: inline-block; min-width: 44px; margin-left: 8px; font-size: 12px; color: var(--muted); }
+.grip-val.over { color: var(--bad); }
+
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
 .toast button { background: none; border: 1px solid currentColor; color: inherit; border-radius: 8px; padding: 4px 10px; font-weight: 600; }
 
-@media (max-width: 760px) {
-  .meters { grid-template-columns: minmax(0, 1fr); }
-  .mast-side { align-items: flex-start; }
-  .account { justify-content: flex-start; }
+/* The areas table stacks each row into cards once the columns no longer fit side by side. */
+@media (max-width: 940px) {
   .thead { display: none; }
-  .row.cols { grid-template-columns: 18px 26px repeat(3, minmax(0, 1fr)) 32px; grid-template-areas: "hd sw nm nm nm dl" ". . pd dy wk ." ". . sh sh sh ."; column-gap: 6px; row-gap: 4px; padding: 10px 0; }
+  .row.cols { grid-template-columns: 18px 26px repeat(3, minmax(0, 1fr)) 32px; grid-template-areas: "hd sw nm nm nm dl" ". . pd dy wk ." ". . ct ct ct ." ". . sh sh sh ."; column-gap: 6px; row-gap: 4px; padding: 10px 0; align-items: start; }
+  .row .handle, .row .swatch, .row .name, .row .del { align-self: center; }
   .row .handle { grid-area: hd; } .row .swatch { grid-area: sw; } .row .name { grid-area: nm; } .row .del { grid-area: dl; }
-  .row .c-pd { grid-area: pd; } .row .c-dy { grid-area: dy; } .row .c-wk { grid-area: wk; } .row .share { grid-area: sh; }
+  .row .c-pd { grid-area: pd; } .row .c-dy { grid-area: dy; } .row .c-wk { grid-area: wk; } .row .share { grid-area: sh; } .row .c-ct { grid-area: ct; }
   .cell-l { display: block; font: 600 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-left: 10px; }
   .num-in, select.field { text-align: left; }
   .days-btn { align-items: flex-start; text-align: left; }
@@ -259,6 +299,18 @@ button.d:hover { color: var(--ink); }
   .tfoot.cols { grid-template-columns: minmax(0, 1fr) auto auto; }
   .tfoot .t-l { grid-column: auto; }
   .tfoot .gap { display: none; }
+  .c-ct .cat-btn { flex-direction: row; align-items: center; gap: 10px; }
+  .c-ct .cat-deep { padding-left: 0; }
+}
+@media (max-width: 760px) {
+  .meters { grid-template-columns: minmax(0, 1fr); }
+  .mast-side { align-items: flex-start; }
+  .account { justify-content: flex-start; }
+  .grip-row { grid-template-columns: minmax(0, 1fr) 84px 100px; gap: 8px; }
+  .grip-name small { display: none; }
+  .grip-val span { display: block; margin: 0; }
+  .num-in, .days-btn { padding-inline: 6px; }
+  .cell-l, .avg, .share { padding-left: 6px; }
   .wrow { grid-template-columns: 30px minmax(0, 1fr) 58px; gap: 6px; }
   .hours { gap: 1px; }
 }
@@ -345,6 +397,21 @@ button.d:hover { color: var(--ink); }
     </article>
   </section>
 
+  <section class="card grip" aria-labelledby="grip-title">
+    <div class="card-head">
+      <div>
+        <h2 id="grip-title">Life categories</h2>
+        <p class="hint">How your planned time splits across Growth, Restoration, Interpersonal and Production.</p>
+      </div>
+      <p class="deep-stat" id="deep-stat"></p>
+    </div>
+    <div class="bar" id="grip-bar" role="img" style="--tick: calc(100% / 7)"></div>
+    <div class="grip-table">
+      <div class="grip-row grip-head" aria-hidden="true"><span>Category</span><span class="r" id="grip-day-head">Day</span><span class="r">Week</span></div>
+      <div id="grip-rows"></div>
+    </div>
+  </section>
+
   <div class="banner" id="load-error" hidden>
     <span><b>Couldn't load your plan.</b> Check your connection, then</span>
     <button class="linkish" id="retry-load" type="button">try again</button>
@@ -364,7 +431,7 @@ button.d:hover { color: var(--ink); }
       <button class="btn" id="add-top" type="button">+ Add area</button>
     </div>
     <div class="thead cols" aria-hidden="true">
-      <span></span><span></span><span>Area</span><span class="r">Per day</span><span class="r">Days</span><span class="r">Per week</span><span class="r">Share of week</span><span></span>
+      <span></span><span></span><span>Area</span><span>Category</span><span class="r">Per day</span><span class="r">Days</span><span class="r">Per week</span><span class="r">Share of week</span><span></span>
     </div>
     <div id="rows"></div>
     <div class="tfoot cols">
@@ -405,11 +472,17 @@ button.d:hover { color: var(--ink); }
   <p class="day-count" id="day-count" aria-live="polite"></p>
 </div>
 
+<div class="picker catpicker" id="catpicker" role="dialog" aria-label="Life category" hidden>
+  <div id="cat-list" role="radiogroup" aria-label="Life category"></div>
+  <label class="cat-deep-opt" id="deep-opt"><input type="checkbox" id="deep-check"><span><b>Deep Focus</b><small id="deep-note">Focused, undistracted production work</small></span></label>
+</div>
+
 <template id="row-tpl">
   <div class="row cols">
     <button class="handle" type="button" title="Drag to reorder (or use arrow keys)"></button>
     <button class="swatch" type="button" aria-label="Choose color" aria-haspopup="dialog" title="Choose color"></button>
     <input class="field name" type="text" maxlength="80" placeholder="Name this area" aria-label="Area name" autocomplete="off">
+    <div class="cell c-ct"><span class="cell-l">Category</span><button class="field cat-btn" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="cat-top"><span class="cat-badge"></span><span class="cat-name"></span></span><span class="cat-deep" hidden>Deep Focus</span></button></div>
     <label class="cell c-pd"><span class="cell-l">Per day</span><input class="field num-in perday" type="text" inputmode="decimal" aria-label="Hours per day" autocomplete="off"><span class="avg"></span></label>
     <div class="cell c-dy"><span class="cell-l">Days</span><button class="field days-btn" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="dn"></span><span class="dots" aria-hidden="true"></span></button></div>
     <label class="cell c-wk"><span class="cell-l">Per week</span><input class="field num-in perweek" type="text" inputmode="decimal" aria-label="Hours per week" autocomplete="off"></label>
@@ -425,14 +498,23 @@ button.d:hover { color: var(--ink); }
   const ALL = [0, 1, 2, 3, 4, 5, 6], WEEKDAYS = [0, 1, 2, 3, 4], WEEKENDS = [5, 6];
   const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   const SAMPLE = [
-    { name: "Sleep", perDay: 8, days: ALL, color: 4 },
-    { name: "Deep work", hours: [4, 4, 4, 4, 2, 4, 4], days: WEEKDAYS, color: 0 },
-    { name: "Meetings & email", perDay: 2, days: WEEKDAYS, color: 2 },
-    { name: "Family & friends", perDay: 2.5, days: ALL, color: 1 },
-    { name: "Exercise", hours: [1, 1, 1.5, 1, 1, 2, 1], days: [0, 2, 4, 5], color: 7 },
-    { name: "Learning", perDay: 1, days: [1, 3, 6], color: 5 },
-    { name: "Meals & chores", perDay: 1.5, days: ALL, color: 3 },
+    { name: "Sleep", perDay: 8, days: ALL, color: 4, category: "R" },
+    { name: "Deep work", hours: [4, 4, 4, 4, 2, 4, 4], days: WEEKDAYS, color: 0, category: "P", deep: true },
+    { name: "Meetings & email", perDay: 2, days: WEEKDAYS, color: 2, category: "P" },
+    { name: "Family & friends", perDay: 2.5, days: ALL, color: 1, category: "I" },
+    { name: "Exercise", hours: [1, 1, 1.5, 1, 1, 2, 1], days: [0, 2, 4, 5], color: 7, category: "R" },
+    { name: "Learning", perDay: 1, days: [1, 3, 6], color: 5, category: "G" },
+    { name: "Meals & chores", perDay: 1.5, days: ALL, color: 3, category: "R" },
   ];
+  // GRIP life categories. Deep Focus is a flag on Production areas, counted as a slice of P.
+  const CAT_KEYS = ["G", "R", "I", "P"];
+  const CATS = {
+    G: { name: "Growth", desc: "Intellectual, skills, mindset" },
+    R: { name: "Restoration", desc: "Health, sleep, recovery" },
+    I: { name: "Interpersonal", desc: "Relationships, family, community" },
+    P: { name: "Production", desc: "Career, business, finances" },
+  };
+  const catVar = (k) => (k ? `var(--cat-${k.toLowerCase()})` : "var(--muted)");
 
   const $ = (s) => document.querySelector(s);
   const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
@@ -498,10 +580,12 @@ button.d:hover { color: var(--ink); }
         ? a.hours.map((h) => clamp(+h || 0, 0, 24))
         : new Array(7).fill(clamp(+a.perDay || 0, 0, 24)),
       days: normDays(a.days),
+      category: CAT_KEYS.includes(a.category) ? a.category : null,
+      deep: a.category === "P" && !!a.deep,
     }));
   }
-  const serialize = () => state.areas.map(({ id, name, color, days, hours }) => ({ id, name, color, days: days.slice(), hours: hours.slice() }));
-  const canon = (list) => JSON.stringify(list.map((a) => [a.id, a.name, a.color, a.days, a.hours]));
+  const serialize = () => state.areas.map(({ id, name, color, days, hours, category, deep }) => ({ id, name, color, days: days.slice(), hours: hours.slice(), category, deep }));
+  const canon = (list) => JSON.stringify(list.map((a) => [a.id, a.name, a.color, a.days, a.hours, a.category ?? null, !!a.deep]));
 
   const state = { areas: [], sample: false };
   let dirty = false;
@@ -640,12 +724,24 @@ button.d:hover { color: var(--ink); }
     q(".perday").id = "pd-" + a.id;
     q(".days-btn").id = "dy-" + a.id;
     q(".perweek").id = "wk-" + a.id;
+    q(".cat-btn").id = "ct-" + a.id;
     q(".name").value = a.name;
     refreshNums(row, a, null);
     const dots = q(".dots");
     for (let d = 0; d < 7; d++) dots.append(document.createElement("i"));
     paintDays(row, a);
+    paintCat(row, a);
     return row;
+  }
+
+  function paintCat(row, a) {
+    const btn = row.querySelector(".cat-btn"), c = a.category && CATS[a.category];
+    btn.classList.toggle("none", !c);
+    btn.style.setProperty("--k", catVar(a.category));
+    btn.querySelector(".cat-badge").textContent = c ? a.category : "?";
+    btn.querySelector(".cat-name").textContent = c ? c.name : "Choose";
+    btn.querySelector(".cat-deep").hidden = !a.deep;
+    btn.setAttribute("aria-label", c ? `Category: ${c.name}${a.deep ? ", Deep Focus" : ""}. Change` : "Choose a category");
   }
 
   // Rewrites a row's per-day and per-week fields from state, leaving `skip` (the field being typed in) alone.
@@ -755,6 +851,9 @@ button.d:hover { color: var(--ink); }
     } else if (t.closest(".days-btn")) {
       if (popOpen(daypicker, a)) hidePop(true);
       else openDays(a, t.closest(".days-btn"));
+    } else if (t.closest(".cat-btn")) {
+      if (popOpen(catpicker, a)) hidePop(true);
+      else openCat(a, t.closest(".cat-btn"));
     } else if (t.closest(".del")) {
       const idx = state.areas.indexOf(a);
       state.areas.splice(idx, 1);
@@ -865,7 +964,7 @@ button.d:hover { color: var(--ink); }
     el.style.top = r.bottom + scrollY + 8 + "px";
   }
   function hidePop(refocus) {
-    for (const el of [picker, daypicker]) { el.hidden = true; delete el.dataset.id; }
+    for (const el of [picker, daypicker, catpicker]) { el.hidden = true; delete el.dataset.id; }
     if (pickerAnchor) {
       pickerAnchor.setAttribute("aria-expanded", "false");
       if (refocus && pickerAnchor.isConnected) pickerAnchor.focus();
@@ -978,8 +1077,70 @@ button.d:hover { color: var(--ink); }
   });
   daypicker.querySelectorAll("[data-preset]").forEach((b) => b.addEventListener("click", () => setDays(PRESETS[b.dataset.preset])));
 
+  // ---------- category picker ----------
+  const catpicker = $("#catpicker"), catList = $("#cat-list"), deepCheck = $("#deep-check");
+  const catOpts = [...CAT_KEYS, null].map((k) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cat-opt";
+    b.setAttribute("role", "radio");
+    b.style.setProperty("--k", catVar(k));
+    const badge = document.createElement("span");
+    badge.className = "cat-badge";
+    badge.textContent = k || "–";
+    const text = document.createElement("span");
+    const name = document.createElement("b");
+    name.textContent = k ? CATS[k].name : "No category";
+    const desc = document.createElement("small");
+    desc.textContent = k ? CATS[k].desc : "Leave this area uncounted";
+    text.append(name, desc);
+    b.append(badge, text);
+    b.addEventListener("click", () => setCategory(k));
+    catList.append(b);
+    return { b, k };
+  });
+  const catArea = () => state.areas.find((x) => x.id === catpicker.dataset.id);
+
+  function syncCatPicker(a) {
+    catOpts.forEach(({ b, k }) => b.setAttribute("aria-checked", String(k === a.category)));
+    const isP = a.category === "P";
+    deepCheck.checked = a.deep;
+    deepCheck.disabled = !isP;
+    $("#deep-opt").classList.toggle("off", !isP);
+    $("#deep-note").textContent = isP ? "Focused, undistracted production work" : "Available for Production areas";
+  }
+
+  function setCategory(k) {
+    const a = catArea();
+    if (!a) return;
+    if (a.category !== k) {
+      a.category = k;
+      if (k !== "P") a.deep = false;
+      const row = rowFor(a);
+      if (row) paintCat(row, a);
+      edited();
+    }
+    // Production stays open so Deep Focus can be ticked; any other choice is final.
+    if (k === "P") syncCatPicker(a); else hidePop(true);
+  }
+
+  deepCheck.addEventListener("change", () => {
+    const a = catArea();
+    if (!a || a.category !== "P") return;
+    a.deep = deepCheck.checked;
+    const row = rowFor(a);
+    if (row) paintCat(row, a);
+    edited();
+  });
+
+  function openCat(a, anchor) {
+    syncCatPicker(a);
+    showPop(catpicker, a, anchor);
+    (catOpts.find(({ k }) => k === a.category) || catOpts[0]).b.focus();
+  }
+
   document.addEventListener("pointerdown", (e) => {
-    if (!pickerAnchor || e.target.closest(".picker") || e.target.closest(".swatch, .days-btn")) return;
+    if (!pickerAnchor || e.target.closest(".picker") || e.target.closest(".swatch, .days-btn, .cat-btn")) return;
     hidePop(false);
   });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") hidePop(true); });
@@ -992,7 +1153,7 @@ button.d:hover { color: var(--ink); }
   }
 
   function addArea() {
-    const a = { id: uid(), name: "", color: nextColor(), hours: new Array(7).fill(1), days: ALL.slice() };
+    const a = { id: uid(), name: "", color: nextColor(), hours: new Array(7).fill(1), days: ALL.slice(), category: null, deep: false };
     state.areas.push(a);
     if (state.areas.length === 1) renderRows(); else rowsEl.append(makeRow(a));
     edited();
@@ -1150,6 +1311,105 @@ button.d:hover { color: var(--ink); }
     });
   }
 
+  // ---------- life categories (GRIP) ----------
+  const pct = (h, of) => {
+    const p = of > 0 ? (h / of) * 100 : 0;
+    return (p > 0 && p < 9.95 ? p.toFixed(1) : String(Math.round(p))) + "%";
+  };
+
+  function gripRow({ badge, k, name, desc, day, week, sub, quiet }) {
+    const row = document.createElement("div");
+    row.className = "grip-row" + (sub ? " sub" : "") + (quiet ? " quiet" : "");
+    const nameCell = document.createElement("div");
+    nameCell.className = "grip-name";
+    const b = document.createElement("span");
+    b.className = "cat-badge";
+    b.style.setProperty("--k", k);
+    b.textContent = badge;
+    const text = document.createElement("span");
+    const n = document.createElement("b");
+    n.textContent = name;
+    const d = document.createElement("small");
+    d.textContent = desc;
+    text.append(n, d);
+    nameCell.append(b, text);
+    row.append(nameCell, gripVal(day, 24), gripVal(week, 168));
+    return row;
+  }
+
+  function gripVal(h, of) {
+    const cell = document.createElement("div");
+    cell.className = "grip-val";
+    const over = h < -EPS;
+    cell.classList.toggle("over", over);
+    cell.textContent = over ? `over ${fmt(-h)}` : fmt(h);
+    const p = document.createElement("span");
+    p.textContent = over ? "" : pct(h, of);
+    cell.append(p);
+    return cell;
+  }
+
+  function drawGrip() {
+    const dayH = (a) => (a.days.includes(selDay) ? a.hours[selDay] : 0);
+    const total = (pred, f) => state.areas.reduce((s, a) => s + (pred(a) ? f(a) : 0), 0);
+    const both = (pred) => ({ day: total(pred, dayH), week: total(pred, weekly) });
+
+    const cats = CAT_KEYS.map((k) => ({ k, ...both((a) => a.category === k) }));
+    const deep = both((a) => a.category === "P" && a.deep);
+    const none = both((a) => !a.category);
+    const all = both(() => true);
+    const prod = cats[3];
+
+    const rows = $("#grip-rows");
+    rows.textContent = "";
+    cats.forEach(({ k, day, week }) => {
+      rows.append(gripRow({ badge: k, k: catVar(k), name: CATS[k].name, desc: CATS[k].desc, day, week }));
+      if (k === "P") {
+        rows.append(gripRow({
+          badge: "D", k: "var(--cat-deep)", name: "Deep Focus", sub: true, day: deep.day, week: deep.week,
+          desc: prod.week > 0 ? `${pct(deep.week, prod.week)} of Production time` : "Part of Production",
+        }));
+      }
+    });
+    if (none.week > EPS || none.day > EPS) {
+      rows.append(gripRow({ badge: "?", k: "var(--muted)", name: "No category", desc: "Areas not assigned yet", day: none.day, week: none.week, quiet: true }));
+    }
+    rows.append(gripRow({ badge: "–", k: "var(--muted)", name: "Unplanned", desc: "Time not given to any area", day: 24 - all.day, week: 168 - all.week, quiet: true }));
+
+    $("#grip-day-head").textContent = DAYS[selDay];
+
+    // Whole-week bar: G, R, I, Production (Deep Focus shown as its own darker slice), then uncategorized.
+    const bar = $("#grip-bar");
+    bar.textContent = "";
+    const scale = Math.max(168, all.week);
+    const segs = [
+      ...cats.slice(0, 3).map(({ k, week }) => ({ v: week, c: catVar(k), t: CATS[k].name })),
+      { v: deep.week, c: "var(--cat-deep)", t: "Deep Focus" },
+      { v: prod.week - deep.week, c: catVar("P"), t: "Production (other)" },
+      { v: none.week, c: "color-mix(in srgb, var(--muted) 45%, transparent)", t: "No category" },
+    ];
+    segs.forEach(({ v, c, t }) => {
+      if (v <= EPS) return;
+      const s = document.createElement("span");
+      s.className = "seg";
+      s.style.width = (v / scale) * 100 + "%";
+      s.style.background = c;
+      s.title = `${t} · ${fmt(v)} · ${pct(v, 168)} of the week`;
+      bar.append(s);
+    });
+    bar.setAttribute("aria-label", cats.map(({ k, week }) => `${CATS[k].name} ${fmt(week)}`).join(", ") + `, Deep Focus ${fmt(deep.week)}`);
+
+    const stat = $("#deep-stat");
+    stat.textContent = "";
+    const label = document.createElement("span");
+    label.textContent = "Deep Focus";
+    const val = document.createElement("b");
+    val.textContent = fmt(deep.week);
+    const tail = document.createElement("span");
+    tail.textContent = `a week · ${pct(deep.week, 168)} of your week`;
+    stat.append(label, val, tail);
+  }
+
   function update() {
     const dayTotal = (d) => state.areas.reduce((s, a) => s + (a.days.includes(d) ? a.hours[d] : 0), 0);
     const dayAreas = state.areas.filter((a) => a.days.includes(selDay) && a.hours[selDay] > 0);
@@ -1187,6 +1447,7 @@ button.d:hover { color: var(--ink); }
 
     drawWeek();
     drawLegend();
+    drawGrip();
   }
 
   // ---------- accounts ----------
