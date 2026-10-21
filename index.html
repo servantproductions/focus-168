@@ -136,6 +136,7 @@ h1.logo svg { width: clamp(240px, 46vw, 400px); height: auto; display: block; }
 .day-tabs button:hover { color: var(--ink); border-color: var(--muted); }
 .day-tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .day-tabs button.today::before { content: ""; position: absolute; left: 50%; bottom: 2px; width: 3px; height: 3px; margin-left: -1.5px; border-radius: 50%; background: currentColor; }
+.day-tabs button:disabled { opacity: .35; cursor: default; }
 .day-tabs button.over::after { content: ""; position: absolute; top: 3px; right: 3px; width: 6px; height: 6px; border-radius: 50%; background: var(--bad); }
 .t-day-name { letter-spacing: .04em; text-transform: none; font-weight: 400; }
 .scale { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--muted); margin-top: -6px; font-variant-numeric: tabular-nums; }
@@ -294,6 +295,87 @@ button.d:hover { color: var(--ink); }
 .grip-val span { display: inline-block; min-width: 44px; margin-left: 8px; font-size: 12px; color: var(--muted); }
 .grip-val.over { color: var(--bad); }
 
+/* tabs + always-visible "of 168" counter (sticks to the top while scrolling) */
+.tabbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 0; margin-block: -8px; background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.tabs { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; }
+.tabs button { border: 0; background: none; border-radius: 9px; padding: 8px 16px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.tabs button:hover { color: var(--ink); }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+.left-counter { margin: 0 0 0 auto; font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.left-counter b { font-size: 15px; color: var(--ink); }
+.left-counter.over b { color: var(--bad); }
+.runner { display: inline-flex; align-items: center; gap: 10px; min-width: 0; padding: 4px 4px 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--clay) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--clay) 45%, transparent); font-size: 13px; }
+.runner-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--clay); animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+.runner-name { min-width: 0; max-width: 18ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runner-time { font: 600 14px var(--mono); font-variant-numeric: tabular-nums; }
+.runner-stop { border: 0; border-radius: 999px; padding: 5px 12px; background: var(--clay); color: var(--clay-ink); font-weight: 600; font-size: 13px; }
+.tabpanel { display: grid; gap: 24px; min-width: 0; }
+
+/* actual tab */
+.banner code { font: 12.5px var(--mono); background: var(--paper); padding: 1px 5px; border-radius: 4px; }
+.weekhead { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.weekhead-text { min-width: 0; }
+.weekhead h2 { font-size: 1.6rem; }
+.icon-btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--rule); background: var(--surface); font-size: 20px; line-height: 1; color: var(--ink); }
+.icon-btn:disabled { opacity: .35; cursor: default; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile { display: grid; gap: 8px; min-width: 0; padding: 18px 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; }
+.tile .label { display: flex; align-items: center; gap: 6px; }
+.tile-icon svg { display: block; width: 13px; height: 13px; color: var(--clay); }
+.tile-big { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--muted); }
+.tile-big b { font: 800 clamp(1.9rem, 4.5vw, 2.6rem)/1 var(--display); letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile-track { height: 8px; border-radius: 4px; background: var(--empty); overflow: hidden; }
+.tile-track i { display: block; width: 0; height: 100%; border-radius: 4px; background: var(--accent); transition: width .3s ease; }
+.tile-deep .tile-track i { background: var(--clay); }
+.tile-sub { margin: 0; font-size: 13px; color: var(--muted); }
+
+.review-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.review-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start; font-size: 15px; line-height: 1.45; }
+.review-list .ri { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font: 700 12px/1 var(--mono); color: var(--k); background: color-mix(in srgb, var(--k) 14%, transparent); }
+.review-list .ri svg { width: 14px; height: 14px; display: block; }
+.review-list b { font-weight: 600; }
+.review-list .rn { font: 600 14px var(--mono); font-variant-numeric: tabular-nums; }
+.review .linkish { margin-top: 14px; }
+
+.log-day { display: grid; gap: 6px; margin: 6px 0 4px; }
+.lrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.lrow:last-child { border-bottom: 0; }
+.lrow-main { display: grid; gap: 7px; min-width: 0; }
+.lrow-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ldot { flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+.lname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.ldeep svg { display: block; width: 14px; height: 14px; color: var(--clay); }
+.lnums { margin-left: auto; display: flex; align-items: center; gap: 6px; font: 13px var(--mono); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ltotal { width: 66px; padding: 4px 7px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); font: 600 14px var(--mono); text-align: right; }
+.ltotal:focus { outline: none; border-color: var(--accent); background: var(--surface); }
+.ltrack { position: relative; height: 8px; border-radius: 4px; background: var(--empty); }
+.ltrack i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--c); transition: width .3s ease; }
+.ltrack .mark { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; border-radius: 1px; background: var(--ink); }
+.lsub { font-size: 12.5px; color: var(--muted); }
+.lacts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; width: 344px; }
+.qbtn { padding: 7px 10px; border: 1px solid var(--rule); border-radius: 9px; background: var(--surface); color: var(--ink); font: 600 13px var(--mono); white-space: nowrap; }
+.qbtn:hover { border-color: var(--muted); }
+.qbtn:active { transform: scale(.97); }
+.qbtn.block { font-family: var(--body); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.qbtn.timer { font-family: var(--body); }
+.qbtn.timer.on { background: var(--clay); border-color: var(--clay); color: var(--clay-ink); font-family: var(--mono); }
+.log-empty { padding: 24px 8px; text-align: center; color: var(--muted); }
+
+.cmp { display: grid; margin-top: 8px; }
+.cmp-row { display: grid; grid-template-columns: minmax(0, 1.3fr) 76px 76px 104px minmax(70px, 1fr); gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 14px; }
+.cmp-head { padding: 14px 0 6px; font: 600 10.5px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.cmp-head .r { text-align: right; }
+.cmp-name { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.cmp-name > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmp-name .cat-badge { width: 20px; height: 20px; font-size: 11px; }
+.cmp-v { text-align: right; font: 14px var(--mono); font-variant-numeric: tabular-nums; }
+.cmp-gap { text-align: right; font: 600 12.5px var(--mono); white-space: nowrap; }
+.cmp-gap.short { color: var(--clay); }
+.cmp-gap.over { color: var(--cat-r); }
+.cmp-gap.on { color: var(--ok); }
+.cmp-row.total { border-bottom: 0; font-weight: 600; }
+
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
 .toast button { background: none; border: 1px solid currentColor; color: inherit; border-radius: 8px; padding: 4px 10px; font-weight: 600; }
 
@@ -314,6 +396,17 @@ button.d:hover { color: var(--ink); }
   .tfoot .gap { display: none; }
 }
 @media (max-width: 760px) {
+  .tabs { display: grid; width: 100%; }
+  .tabs button { padding-inline: 8px; }
+  .left-counter { margin-left: 0; }
+  .runner { width: 100%; }
+  .runner-name { max-width: none; flex: 1; }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .lrow { grid-template-columns: minmax(0, 1fr); }
+  .lacts { justify-content: flex-start; width: auto; }
+  .cmp-row { grid-template-columns: minmax(0, 1fr) 58px 58px 76px; gap: 8px; font-size: 13px; }
+  .cmp-row .cmp-bar { display: none; }
+  .cmp-v { font-size: 13px; }
   .meters { grid-template-columns: minmax(0, 1fr); }
   .mast-side { align-items: flex-start; }
   .account { justify-content: flex-start; }
@@ -390,6 +483,26 @@ button.d:hover { color: var(--ink); }
     </div>
   </header>
 
+  <nav class="tabbar" aria-label="Views">
+    <div class="tabs" role="tablist" aria-label="Planned or actual">
+      <button type="button" role="tab" id="tab-btn-planned" aria-controls="tab-planned" aria-selected="true">Planned focus</button>
+      <button type="button" role="tab" id="tab-btn-actual" aria-controls="tab-actual" aria-selected="false" tabindex="-1">Actual focus</button>
+    </div>
+    <div class="runner" id="runner" hidden>
+      <span class="runner-dot" aria-hidden="true"></span>
+      <span class="runner-name" id="runner-name"></span>
+      <b class="runner-time" id="runner-time" role="timer">0:00</b>
+      <button type="button" class="runner-stop" id="runner-stop">Stop</button>
+    </div>
+    <p class="left-counter" id="left-counter" aria-live="polite"></p>
+  </nav>
+
+  <div class="banner" id="load-error" hidden>
+    <span><b>Couldn't load your plan.</b> Check your connection, then</span>
+    <button class="linkish" id="retry-load" type="button">try again</button>
+  </div>
+
+  <div class="tabpanel" id="tab-planned" role="tabpanel" aria-labelledby="tab-btn-planned">
   <section class="meters" aria-label="Time remaining">
     <article class="meter" id="m-day">
       <div class="meter-top"><p class="label" id="day-label">Per day · 24 hours</p><span class="chip"></span></div>
@@ -422,11 +535,6 @@ button.d:hover { color: var(--ink); }
     </div>
     <p class="grip-note" id="grip-note" hidden></p>
   </section>
-
-  <div class="banner" id="load-error" hidden>
-    <span><b>Couldn't load your plan.</b> Check your connection, then</span>
-    <button class="linkish" id="retry-load" type="button">try again</button>
-  </div>
 
   <div class="banner" id="sample-banner" hidden>
     <span><b>Sample plan.</b> Edit any area to make it yours, or</span>
@@ -463,6 +571,74 @@ button.d:hover { color: var(--ink); }
     <div class="week" id="week"></div>
     <ul class="legend" id="legend"></ul>
   </section>
+  </div>
+
+  <div class="tabpanel" id="tab-actual" role="tabpanel" aria-labelledby="tab-btn-actual" hidden>
+    <div class="banner" id="weeks-missing" hidden>
+      <span><b>One more setup step.</b> Tracking actual time needs a new table in your database. Run the <code>weeks</code> section of <code>setup.sql</code> in Supabase's SQL Editor, then reload this page.</span>
+    </div>
+    <div class="banner" id="week-error" hidden>
+      <span><b>Couldn't load this week's log.</b> Check your connection, then</span>
+      <button class="linkish" id="retry-week" type="button">try again</button>
+    </div>
+
+    <section class="weekhead" aria-label="Week">
+      <button type="button" class="icon-btn" id="wk-prev" aria-label="Previous week">‹</button>
+      <div class="weekhead-text">
+        <p class="label" id="wk-kicker">This week</p>
+        <h2 id="wk-range"></h2>
+      </div>
+      <button type="button" class="icon-btn" id="wk-next" aria-label="Next week">›</button>
+      <button type="button" class="linkish" id="wk-today" hidden>Back to this week</button>
+    </section>
+
+    <section class="tiles" aria-label="Week summary">
+      <article class="tile">
+        <p class="label">Logged</p>
+        <p class="tile-big"><b id="t-logged">0h</b> <span id="t-logged-of">of 0h planned</span></p>
+        <div class="tile-track"><i id="t-logged-bar"></i></div>
+        <p class="tile-sub" id="t-logged-sub"></p>
+      </article>
+      <article class="tile">
+        <p class="label" id="t-left-label">Left this week</p>
+        <p class="tile-big"><b id="t-left">0h</b> <span id="t-left-of">of 168h</span></p>
+        <div class="tile-track"><i id="t-left-bar"></i></div>
+        <p class="tile-sub" id="t-left-sub"></p>
+      </article>
+      <article class="tile tile-deep">
+        <p class="label"><span class="tile-icon" id="t-deep-icon"></span>Deep Focus</p>
+        <p class="tile-big"><b id="t-deep">0h</b> <span id="t-deep-of">of 0h planned</span></p>
+        <div class="tile-track"><i id="t-deep-bar"></i></div>
+        <p class="tile-sub" id="t-deep-sub"></p>
+      </article>
+    </section>
+
+    <section class="card review" aria-labelledby="review-title">
+      <h2 id="review-title">Weekly review</h2>
+      <ul class="review-list" id="review-list"></ul>
+      <button type="button" class="linkish" id="review-last" hidden>Review last week</button>
+    </section>
+
+    <section class="card" aria-labelledby="log-title">
+      <div class="card-head">
+        <div>
+          <h2 id="log-title">Log your time</h2>
+          <p class="hint">Quick-add, start a timer, or tap the block you just did. Type a weekly total to set it in one go.</p>
+        </div>
+      </div>
+      <div class="log-day">
+        <p class="label">Logging for</p>
+        <div class="day-tabs" id="log-days" role="group" aria-label="Day to log"></div>
+      </div>
+      <div id="log-rows"></div>
+    </section>
+
+    <section class="card" aria-labelledby="cmp-title">
+      <h2 id="cmp-title">Planned vs actual</h2>
+      <p class="hint" id="cmp-hint">Each bar shows what you logged; the mark shows what you planned.</p>
+      <div class="cmp" id="cmp"></div>
+    </section>
+  </div>
 </main>
 
 <div class="toast" id="toast" role="status" hidden><span id="toast-msg"></span><button type="button" id="toast-undo">Undo</button></div>
@@ -711,6 +887,7 @@ button.d:hover { color: var(--ink); }
     mode = "account";
     dirty = false;
     if (areas) applyRemote(areas); else showSample();
+    afterPlanReady();
   }
   $("#retry-load").addEventListener("click", () => { if (userId) loadPlan(); });
 
@@ -1471,7 +1648,698 @@ button.d:hover { color: var(--ink); }
     drawWeek();
     drawLegend();
     drawGrip();
+    drawActual();
   }
+
+  // ---------- actual time (weeks) ----------
+  // Each week (Monday start, local time) is one record: the logged entries, a running timer, and a
+  // copy of that week's plan so later reviews compare against what was planned at the time.
+  // Entry: { id, a: area id, d: day 0-6 (Mon-Sun), m: minutes (negative = a correction), t: ISO time, s: source }
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const fmtKey = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  const fromKey = (k) => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const mondayOf = (date) => addDays(new Date(date.getFullYear(), date.getMonth(), date.getDate()), -((date.getDay() + 6) % 7));
+  const thisWeekKey = () => fmtKey(mondayOf(new Date()));
+  const todayIdx = () => (new Date().getDay() + 6) % 7;
+  const shiftKey = (k, by) => fmtKey(addDays(fromKey(k), 7 * by));
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function rangeText(k) {
+    const s = fromKey(k), e = addDays(s, 6);
+    return s.getMonth() === e.getMonth()
+      ? `${MONTHS[s.getMonth()]} ${s.getDate()} – ${e.getDate()}`
+      : `${MONTHS[s.getMonth()]} ${s.getDate()} – ${MONTHS[e.getMonth()]} ${e.getDate()}`;
+  }
+  const hoursLeftThisWeek = () => Math.max(0, (addDays(fromKey(thisWeekKey()), 7) - Date.now()) / 3600000);
+
+  const weeks = new Map();            // week key -> { entries, timer, plan }
+  const weekSaveTimers = new Map();   // week key -> pending save timeout
+  let viewKey = thisWeekKey(), logDay = todayIdx();
+  let weeksMissing = false, weekLoading = false, weekFailed = false, activeTab = "planned";
+
+  function normWeek(raw) {
+    const d = raw && typeof raw === "object" ? raw : {};
+    const entries = (Array.isArray(d.entries) ? d.entries : [])
+      .filter((e) => e && typeof e.a === "string" && Number.isFinite(+e.m))
+      .map((e) => ({ id: String(e.id || uid()), a: e.a, d: clamp(Math.round(+e.d) || 0, 0, 6), m: Math.round(+e.m), t: String(e.t || ""), s: String(e.s || "quick") }));
+    const timer = d.timer && typeof d.timer.a === "string" && Number.isFinite(+d.timer.start) ? { a: d.timer.a, start: +d.timer.start } : null;
+    return { entries, timer, plan: Array.isArray(d.plan) ? d.plan : null };
+  }
+  const weekLsKey = (k) => "focus168.week." + k;
+  const isMissingTable = (err) => !!err && (err.code === "42P01" || err.code === "PGRST205"
+    || (/weeks/i.test(err.message || "") && /schema cache|does not exist|could not find/i.test(err.message || "")));
+
+  async function fetchWeek(k) {
+    if (mode === "local") return normWeek(lsGet(weekLsKey(k)));
+    const { data, error } = await sb.from("weeks").select("data").eq("user_id", userId).eq("week_start", k).maybeSingle();
+    if (error) throw error;
+    return normWeek(data && data.data);
+  }
+
+  // force: re-read even if cached (unless this device has unsaved changes for that week).
+  async function loadWeek(k, force) {
+    if (!mode) return null;
+    if (weeks.has(k) && !force) return weeks.get(k);
+    const owner = userId, m = mode;
+    try {
+      const w = await fetchWeek(k);
+      if (owner !== userId || m !== mode) return null;
+      if (!(force && weekSaveTimers.has(k))) weeks.set(k, w);
+      return weeks.get(k);
+    } catch (err) {
+      if (isMissingTable(err)) weeksMissing = true;
+      throw err;
+    }
+  }
+
+  function saveWeek(k) {
+    if (!mode || weeksMissing) return;
+    setSync("saving");
+    clearTimeout(weekSaveTimers.get(k));
+    weekSaveTimers.set(k, setTimeout(() => flushWeek(k), 500));
+  }
+  function flushWeek(k) {
+    clearTimeout(weekSaveTimers.get(k));
+    weekSaveTimers.delete(k);
+    const w = weeks.get(k);
+    if (!w) return writing;
+    if (k === thisWeekKey()) w.plan = serialize();   // keep this week's plan copy current
+    const data = JSON.parse(JSON.stringify(w));
+    if (mode === "local") {
+      lsSet(weekLsKey(k), data);
+      if (!saveTimer && !weekSaveTimers.size) setSync("local");
+    } else if (mode === "account") {
+      const owner = userId;
+      writing = writing.then(() => writeWeek(owner, k, data, 0));
+    }
+    return writing;
+  }
+  async function writeWeek(owner, k, data, tries) {
+    if (owner !== userId) return;
+    let error;
+    try { ({ error } = await sb.from("weeks").upsert({ user_id: owner, week_start: k, data, updated_at: new Date().toISOString() })); }
+    catch (e) { error = e; }
+    if (owner !== userId) return;
+    if (!error) { if (!saveTimer && !weekSaveTimers.size) setSync("cloud"); return; }
+    if (isMissingTable(error)) { weeksMissing = true; setSync("error"); drawActual(); return; }
+    if (tries < 2) { await sleep(800 * (tries + 1)); return writeWeek(owner, k, data, tries + 1); }
+    if (!saveTimer && !weekSaveTimers.size) setSync("error");
+  }
+  const flushAllWeeks = () => { [...weekSaveTimers.keys()].forEach(flushWeek); return writing; };
+
+  // The areas a week is measured against: the live plan for this week, the saved copy for past weeks.
+  function planFor(k) {
+    if (k === thisWeekKey()) return state.areas;
+    const w = weeks.get(k);
+    return w && w.plan ? normalize(w.plan) : state.areas;
+  }
+  const plannedOn = (a, d) => (a.days.includes(d) ? a.hours[d] : 0);
+  const plannedThrough = (a, last) => a.days.reduce((s, d) => s + (d <= last ? a.hours[d] : 0), 0);
+  const sumBy = (list, f) => list.reduce((s, x) => s + f(x), 0);
+
+  function actualsOf(w) {
+    const by = new Map();   // area id -> { week, days[7] } in hours
+    if (!w) return by;
+    for (const e of w.entries) {
+      let r = by.get(e.a);
+      if (!r) by.set(e.a, (r = { week: 0, days: [0, 0, 0, 0, 0, 0, 0] }));
+      r.week += e.m / 60;
+      r.days[e.d] += e.m / 60;
+    }
+    by.forEach((r) => { r.week = Math.max(0, r.week); r.days = r.days.map((h) => Math.max(0, h)); });
+    return by;
+  }
+  const gotFor = (act, id) => (act.get(id) || { week: 0 }).week;
+
+  function areaName(id, k) {
+    const live = state.areas.find((x) => x.id === id);
+    if (live) return label(live);
+    const w = weeks.get(k || thisWeekKey());
+    const snap = w && w.plan && w.plan.find((x) => x.id === id);
+    return snap ? (String(snap.name || "").trim() || "Untitled area") : "Removed area";
+  }
+
+  // ----- logging -----
+  const logBlocked = () => !mode || (mode === "account" && weeksMissing);
+  // The sample plan isn't saved until edited, and its area ids change on every load.
+  // Logging time against it makes it the person's plan, so the log stays tied to those areas.
+  function adoptSample() { if (state.sample && viewKey === thisWeekKey()) edited(); }
+
+  function quickLog(area, mins, src) {
+    if (logBlocked() || !mins) return;
+    const k = viewKey, w = weeks.get(k);
+    if (!w) return;
+    adoptSample();
+    const e = { id: uid(), a: area.id, d: logDay, m: mins, t: new Date().toISOString(), s: src };
+    w.entries.push(e);
+    saveWeek(k);
+    drawActual();
+    const msg = src === "edit"
+      ? `${label(area)} set to ${fmt(gotFor(actualsOf(w), area.id))} this week`
+      : `Logged ${fmt(mins / 60)} to ${label(area)}`;
+    showToast(msg, () => removeEntry(k, e.id));
+  }
+
+  function removeEntry(k, id) {
+    const w = weeks.get(k);
+    if (!w) return;
+    w.entries = w.entries.filter((e) => e.id !== id);
+    saveWeek(k);
+    drawActual();
+  }
+
+  // ----- timer (one at a time, kept on this week's record so it survives reloads and other devices) -----
+  const runningTimer = () => { const w = weeks.get(thisWeekKey()); return w && w.timer; };
+
+  async function startTimer(area) {
+    if (logBlocked()) return;
+    const k = thisWeekKey();
+    let w = weeks.get(k);
+    if (!w) { try { w = await loadWeek(k); } catch { return; } }
+    if (!w) return;
+    adoptSample();
+    if (w.timer) stopTimer();
+    w.timer = { a: area.id, start: Date.now() };
+    saveWeek(k);
+    drawActual();
+  }
+
+  function stopTimer() {
+    const k = thisWeekKey(), w = weeks.get(k);
+    if (!w || !w.timer) return;
+    const { a, start } = w.timer;
+    w.timer = null;
+    let mins = Math.round((Date.now() - start) / 60000);
+    const name = areaName(a, k);
+    if (mins < 1) {
+      saveWeek(k);
+      drawActual();
+      showToast(`Timer for ${name} ran under a minute, so nothing was logged`, null);
+      return;
+    }
+    const capped = mins > 18 * 60;
+    if (capped) mins = 18 * 60;
+    // Log on the day the timer started; a timer left running from last week lands on Monday.
+    const day = start >= fromKey(k).getTime() ? (new Date(start).getDay() + 6) % 7 : 0;
+    const e = { id: uid(), a, d: day, m: mins, t: new Date().toISOString(), s: "timer" };
+    w.entries.push(e);
+    saveWeek(k);
+    drawActual();
+    showToast(capped ? `Logged 18h to ${name}. The timer ran longer, so check it.` : `Logged ${fmt(mins / 60)} to ${name}`, () => removeEntry(k, e.id));
+  }
+
+  function elapsedText(ms) {
+    const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    return h ? `${h}:${pad2(m)}:${pad2(s % 60)}` : `${m}:${pad2(s % 60)}`;
+  }
+
+  $("#runner-stop").addEventListener("click", stopTimer);
+
+  // ----- always-visible chrome: timer pill + "of 168" counter -----
+  function updateChrome() {
+    const t = runningTimer();
+    $("#runner").hidden = !t;
+    if (t) {
+      $("#runner-name").textContent = areaName(t.a);
+      $("#runner-time").textContent = elapsedText(Date.now() - t.start);
+    }
+    const c = $("#left-counter");
+    c.textContent = "";
+    const b = document.createElement("b");
+    let over = false;
+    if (activeTab === "planned" || !mode) {
+      const left = 168 - sumBy(state.areas, weekly);
+      over = left < -EPS;
+      b.textContent = fmt(Math.abs(left));
+      c.append(b, over ? " over 168h planned" : " of 168h unplanned");
+    } else if (viewKey === thisWeekKey()) {
+      b.textContent = fmt(hoursLeftThisWeek());
+      c.append(b, " of 168h left this week");
+    } else {
+      let logged = 0;
+      actualsOf(weeks.get(viewKey)).forEach((r) => { logged += r.week; });
+      b.textContent = fmt(logged);
+      c.append(b, " of 168h logged");
+    }
+    c.classList.toggle("over", over);
+  }
+
+  setInterval(() => {
+    const t = runningTimer();
+    if (!t) return;
+    const txt = elapsedText(Date.now() - t.start);
+    $("#runner-time").textContent = txt;
+    const btn = [...document.querySelectorAll("#log-rows .lrow")].find((r) => r.dataset.id === t.a);
+    if (btn) btn.querySelector(".qbtn.timer").textContent = "■ " + txt;
+  }, 1000);
+  // Hours left this week tick down; refresh the numbers every minute.
+  setInterval(() => { if (mode) drawActual(); }, 60000);
+
+  // ----- drawing the Actual tab -----
+  const logRowsFocused = () => $("#log-rows").contains(document.activeElement) && document.activeElement.matches("input");
+
+  function drawActual() {
+    updateChrome();
+    if ($("#tab-actual").hidden) return;
+    const cur = thisWeekKey(), isCur = viewKey === cur, w = weeks.get(viewKey);
+    $("#wk-kicker").textContent = isCur ? "This week" : viewKey === shiftKey(cur, -1) ? "Last week" : "Week of";
+    $("#wk-range").textContent = rangeText(viewKey);
+    $("#wk-next").disabled = isCur;
+    $("#wk-today").hidden = isCur;
+    $("#weeks-missing").hidden = !(weeksMissing && mode === "account");
+    $("#week-error").hidden = !weekFailed;
+    $("#review-last").hidden = !isCur;
+
+    const areas = planFor(viewKey);
+    const act = actualsOf(w);
+    const through = isCur ? todayIdx() : 6;
+    drawTiles(areas, act, isCur, through);
+    drawReview(areas, act, isCur, through, w);
+    drawLogDays(isCur);
+    if (!logRowsFocused()) drawLog(areas, act, isCur, w);
+    drawCompare(areas, act, isCur);
+  }
+
+  function setBar(id, frac) { $(id).style.width = Math.min(100, Math.max(0, frac * 100)) + "%"; }
+
+  function drawTiles(areas, act, isCur, through) {
+    let logged = 0;
+    act.forEach((r) => { logged += r.week; });
+    const planned = sumBy(areas, weekly), toDate = sumBy(areas, (a) => plannedThrough(a, through));
+    $("#t-logged").textContent = fmt(logged);
+    $("#t-logged-of").textContent = planned > EPS ? `of ${fmt(planned)} planned` : "logged";
+    setBar("#t-logged-bar", planned > EPS ? logged / planned : 0);
+    $("#t-logged-sub").textContent = isCur
+      ? `Planned through ${DAY_NAMES[through]}: ${fmt(toDate)}${toDate > EPS ? ` · ${pct(logged, toDate)} done` : ""}`
+      : planned > EPS ? `${pct(logged, planned)} of the plan` : "No plan for this week";
+
+    if (isCur) {
+      const left = hoursLeftThisWeek();
+      $("#t-left-label").textContent = "Left this week";
+      $("#t-left").textContent = fmt(left);
+      $("#t-left-of").textContent = "of 168h";
+      setBar("#t-left-bar", left / 168);
+      $("#t-left-sub").textContent = `${fmt(Math.max(0, planned - logged))} of your plan still to do`;
+    } else {
+      const untracked = Math.max(0, 168 - logged);
+      $("#t-left-label").textContent = "Not logged";
+      $("#t-left").textContent = fmt(untracked);
+      $("#t-left-of").textContent = "of 168h";
+      setBar("#t-left-bar", untracked / 168);
+      $("#t-left-sub").textContent = "Time not logged to any area";
+    }
+
+    const deepAreas = areas.filter((a) => a.deep);
+    const dp = sumBy(deepAreas, weekly), dpTo = sumBy(deepAreas, (a) => plannedThrough(a, through));
+    const dg = sumBy(deepAreas, (a) => gotFor(act, a.id));
+    $("#t-deep-icon").innerHTML = TARGET_SVG;
+    $("#t-deep").textContent = fmt(dg);
+    $("#t-deep-of").textContent = dp > EPS ? `of ${fmt(dp)} planned` : "logged";
+    setBar("#t-deep-bar", dp > EPS ? dg / dp : 0);
+    $("#t-deep-sub").textContent = !deepAreas.length ? "Tag areas with the target to track Deep Focus"
+      : isCur ? `${pct(dg, dpTo || dp)} of what you planned so far` : `${pct(dg, dp || 1)} of the plan`;
+  }
+
+  // Builds one review line from text pieces: strings stay plain, {b} is bold, {n} is a number.
+  function reviewLine(list, icon, k, parts) {
+    const li = document.createElement("li");
+    const ri = document.createElement("span");
+    ri.className = "ri";
+    ri.style.setProperty("--k", k);
+    if (icon === "target") ri.innerHTML = TARGET_SVG; else ri.textContent = icon;
+    const p = document.createElement("span");
+    parts.forEach((x) => {
+      if (typeof x === "string") { p.append(x); return; }
+      const el = document.createElement(x.b ? "b" : "span");
+      if (x.n) el.className = "rn";
+      el.textContent = x.b || x.n;
+      p.append(el);
+    });
+    li.append(ri, p);
+    list.append(li);
+  }
+
+  function drawReview(areas, act, isCur, through, w) {
+    const list = $("#review-list");
+    list.textContent = "";
+    $("#review-title").textContent = isCur ? "This week so far" : "Weekly review";
+    if (logBlocked() && mode === "account") {
+      reviewLine(list, "!", "var(--clay)", ["Your review appears here once logging is set up."]);
+      return;
+    }
+    if (!w || !w.entries.length) {
+      reviewLine(list, "+", "var(--accent)", [isCur
+        ? "Nothing logged yet this week. Tap +15m, the block you just did, or start a timer below."
+        : "Nothing was logged this week. You can still fill it in below."]);
+      return;
+    }
+    const soFar = isCur ? " so far" : "";
+    const items = areas
+      .map((a) => ({ a, p: isCur ? plannedThrough(a, through) : weekly(a), got: gotFor(act, a.id) }))
+      .filter((x) => x.p > EPS || x.got > EPS);
+    let logged = 0;
+    act.forEach((r) => { logged += r.week; });
+    const totalP = sumBy(items, (x) => x.p);
+
+    reviewLine(list, "%", "var(--accent)", ["You logged ", { n: fmt(logged) }, " of ", { n: fmt(totalP) }, ` planned${soFar} `,
+      totalP > EPS ? { b: `(${pct(logged, totalP)})` } : "", "."]);
+
+    items.filter((x) => x.p - x.got >= 0.5).sort((x, y) => (y.p - y.got) - (x.p - x.got)).slice(0, 3)
+      .forEach((x) => reviewLine(list, "↓", "var(--clay)", ["You planned ", { n: fmt(x.p) }, " ", { b: label(x.a) }, `${soFar}, got `, { n: fmt(x.got) }, "."]));
+
+    items.filter((x) => x.got - x.p >= 0.5).sort((x, y) => (y.got - y.p) - (x.got - x.p)).slice(0, 2)
+      .forEach((x) => reviewLine(list, "↑", "var(--cat-r)", [{ b: label(x.a) }, " got ", { n: fmt(x.got - x.p) }, " more than planned (", { n: fmt(x.got) }, " vs ", { n: fmt(x.p) }, ")."]));
+
+    const onTrack = items.filter((x) => x.p > EPS && Math.abs(x.got - x.p) < Math.max(0.25, x.p * 0.1));
+    if (onTrack.length) reviewLine(list, "✓", "var(--ok)", ["On track: ", { b: onTrack.map((x) => label(x.a)).join(", ") }, "."]);
+
+    const deepItems = items.filter((x) => x.a.deep), dp = sumBy(deepItems, (x) => x.p);
+    if (dp > EPS) {
+      const dg = sumBy(deepItems, (x) => x.got);
+      reviewLine(list, "target", "var(--clay)", [{ b: "Deep Focus" }, ": ", { n: fmt(dg) }, " of ", { n: fmt(dp) }, ` planned${soFar} (${pct(dg, dp)}).`]);
+    }
+
+    const catGaps = CAT_KEYS.map((k) => {
+      const inCat = items.filter((x) => x.a.categories.includes(k));
+      return { k, gap: sumBy(inCat, (x) => x.p) - sumBy(inCat, (x) => x.got) };
+    }).sort((x, y) => y.gap - x.gap);
+    if (catGaps[0].gap >= 1) {
+      const { k, gap } = catGaps[0];
+      reviewLine(list, k, catVar(k), ["Biggest category gap: ", { b: CATS[k].name }, ", ", { n: fmt(gap) }, " short."]);
+    }
+  }
+
+  const logDayBtns = DAYS.map((name, d) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = name;
+    b.addEventListener("click", () => { logDay = d; drawActual(); });
+    $("#log-days").append(b);
+    return b;
+  });
+  function drawLogDays(isCur) {
+    const today = todayIdx();
+    logDayBtns.forEach((b, d) => {
+      b.setAttribute("aria-pressed", String(d === logDay));
+      b.disabled = isCur && d > today;   // no logging into the future
+      b.classList.toggle("today", isCur && d === today);
+      b.setAttribute("aria-label", DAY_NAMES[d] + (isCur && d === today ? ", today" : ""));
+    });
+  }
+
+  function emptyLine(box, text) {
+    const p = document.createElement("p");
+    p.className = "log-empty";
+    p.textContent = text;
+    box.append(p);
+  }
+
+  function qbtn(act, text, title, extra) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "qbtn" + (extra ? " " + extra : "");
+    b.dataset.act = act;
+    b.textContent = text;
+    if (title) b.title = title;
+    return b;
+  }
+
+  function drawLog(areas, act, isCur, w) {
+    const box = $("#log-rows");
+    box.textContent = "";
+    if (mode === "account" && weeksMissing) { emptyLine(box, "Logging turns on after the database update above."); return; }
+    if (weekLoading || !w) { emptyLine(box, weekFailed ? "Couldn't load this week." : "Loading this week…"); return; }
+    if (!areas.length) { emptyLine(box, "Add areas of focus on the Planned focus tab, then log your time here."); return; }
+    const t = runningTimer();
+    areas.forEach((a) => {
+      const got = act.get(a.id) || { week: 0, days: [0, 0, 0, 0, 0, 0, 0] };
+      const p = weekly(a), blockH = plannedOn(a, logDay);
+      const row = document.createElement("div");
+      row.className = "lrow";
+      row.dataset.id = a.id;
+      row.style.setProperty("--c", colorOf(a));
+
+      const main = document.createElement("div");
+      main.className = "lrow-main";
+      const top = document.createElement("div");
+      top.className = "lrow-top";
+      const dot = document.createElement("span");
+      dot.className = "ldot";
+      const name = document.createElement("span");
+      name.className = "lname";
+      name.textContent = label(a);
+      top.append(dot, name);
+      if (a.deep) {
+        const dz = document.createElement("span");
+        dz.className = "ldeep";
+        dz.title = "Deep Focus";
+        dz.innerHTML = TARGET_SVG;
+        top.append(dz);
+      }
+      const nums = document.createElement("label");
+      nums.className = "lnums";
+      const input = document.createElement("input");
+      input.className = "ltotal";
+      input.type = "text";
+      input.inputMode = "decimal";
+      input.autocomplete = "off";
+      input.id = "lt-" + a.id;
+      input.value = numStr(got.week);
+      input.setAttribute("aria-label", `Hours logged this week for ${label(a)}`);
+      const of = document.createElement("span");
+      of.textContent = p > EPS ? `of ${fmt(p)}` : "h · not planned";
+      nums.append(input, of);
+      top.append(nums);
+
+      const track = document.createElement("div");
+      track.className = "ltrack";
+      const scale = Math.max(p, got.week, EPS);
+      const fill = document.createElement("i");
+      fill.style.width = (got.week / scale) * 100 + "%";
+      track.append(fill);
+      if (p > EPS) {
+        const mark = document.createElement("span");
+        mark.className = "mark";
+        mark.style.left = (p / scale) * 100 + "%";
+        mark.title = `Planned ${fmt(p)}`;
+        track.append(mark);
+      }
+      const sub = document.createElement("div");
+      sub.className = "lsub";
+      sub.textContent = `${DAY_NAMES[logDay]}: ${fmt(got.days[logDay])} logged` + (blockH > EPS ? ` · ${fmt(blockH)} planned` : "");
+      main.append(top, track, sub);
+
+      const acts = document.createElement("div");
+      acts.className = "lacts";
+      acts.append(qbtn("15", "+15m"), qbtn("30", "+30m"), qbtn("60", "+1h"));
+      if (blockH > EPS) acts.append(qbtn("block", `✓ ${fmt(blockH)} block`, `Log the ${fmt(blockH)} you planned for ${DAY_NAMES[logDay]}`, "block"));
+      if (isCur) {
+        const on = t && t.a === a.id;
+        const tb = qbtn("timer", on ? "■ " + elapsedText(Date.now() - t.start) : "▶ Start", on ? "Stop the timer and log the time" : "Start a timer", "timer" + (on ? " on" : ""));
+        tb.setAttribute("aria-label", on ? `Stop timer for ${label(a)}` : `Start timer for ${label(a)}`);
+        acts.append(tb);
+      }
+      row.append(main, acts);
+      box.append(row);
+    });
+  }
+
+  $("#log-rows").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-act]");
+    if (!btn) return;
+    const row = btn.closest(".lrow");
+    const area = planFor(viewKey).find((x) => x.id === row.dataset.id);
+    if (!area) return;
+    const act = btn.dataset.act;
+    if (act === "timer") {
+      const t = runningTimer();
+      if (t && t.a === area.id) stopTimer(); else startTimer(area);
+    } else if (act === "block") {
+      quickLog(area, Math.round(plannedOn(area, logDay) * 60), "block");
+    } else {
+      quickLog(area, +act, "quick");
+    }
+  });
+  // Typing a weekly total records the difference as a correction on the selected day.
+  $("#log-rows").addEventListener("change", (e) => {
+    const inp = e.target.closest(".ltotal");
+    if (!inp) return;
+    const area = planFor(viewKey).find((x) => x.id === inp.closest(".lrow").dataset.id);
+    const v = parseHours(inp.value);
+    if (!area || Number.isNaN(v)) { inp.blur(); drawActual(); return; }
+    const diff = Math.round((clamp(v, 0, 168) - gotFor(actualsOf(weeks.get(viewKey)), area.id)) * 60);
+    inp.blur();
+    if (diff) quickLog(area, diff, "edit"); else drawActual();
+  });
+  $("#log-rows").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.matches(".ltotal")) { e.preventDefault(); e.target.blur(); }
+  });
+
+  function cmpRow(box, { name, badge, k, dot, p, got, total }) {
+    const row = document.createElement("div");
+    row.className = "cmp-row" + (total ? " total" : "");
+    row.style.setProperty("--k", k || "var(--muted)");
+    if (dot) row.style.setProperty("--c", dot);
+    const n = document.createElement("div");
+    n.className = "cmp-name";
+    if (badge) {
+      const b = document.createElement("span");
+      b.className = "cat-badge";
+      if (badge === "target") b.innerHTML = TARGET_SVG; else b.textContent = badge;
+      n.append(b);
+    } else if (dot) {
+      const d = document.createElement("span");
+      d.className = "ldot";
+      n.append(d);
+    }
+    const t = document.createElement("span");
+    t.textContent = name;
+    n.append(t);
+    const pv = document.createElement("div");
+    pv.className = "cmp-v";
+    pv.textContent = fmt(p);
+    const gv = document.createElement("div");
+    gv.className = "cmp-v";
+    gv.textContent = fmt(got);
+    const diff = got - p;
+    const gap = document.createElement("div");
+    gap.className = "cmp-gap " + (Math.abs(diff) < 0.25 ? "on" : diff < 0 ? "short" : "over");
+    gap.textContent = Math.abs(diff) < 0.25 ? "on plan" : diff < 0 ? `${fmt(-diff)} short` : `${fmt(diff)} over`;
+    const bar = document.createElement("div");
+    bar.className = "cmp-bar";
+    const track = document.createElement("div");
+    track.className = "ltrack";
+    track.style.setProperty("--c", dot || k || "var(--accent)");
+    const scale = Math.max(p, got, EPS);
+    const fill = document.createElement("i");
+    fill.style.width = (got / scale) * 100 + "%";
+    track.append(fill);
+    if (p > EPS) {
+      const mark = document.createElement("span");
+      mark.className = "mark";
+      mark.style.left = (p / scale) * 100 + "%";
+      track.append(mark);
+    }
+    bar.append(track);
+    row.append(n, pv, gv, gap, bar);
+    box.append(row);
+  }
+
+  function cmpHead(box, title) {
+    const row = document.createElement("div");
+    row.className = "cmp-row cmp-head";
+    ["", "Planned", "Logged", "Gap", ""].forEach((txt, i) => {
+      const s = document.createElement("span");
+      s.textContent = i === 0 ? title : txt;
+      if (i > 0 && i < 4) s.className = "r";
+      row.append(s);
+    });
+    box.append(row);
+  }
+
+  function drawCompare(areas, act, isCur) {
+    const box = $("#cmp");
+    box.textContent = "";
+    $("#cmp-hint").textContent = isCur
+      ? "This week so far, against the full week's plan. The bar shows what you've logged; the mark shows what you planned."
+      : "The bar shows what you logged; the mark shows what you planned.";
+    const shown = areas.filter((a) => weekly(a) > EPS || gotFor(act, a.id) > EPS);
+    if (!shown.length && !act.size) { emptyLine(box, "Nothing planned or logged for this week."); return; }
+
+    cmpHead(box, "Area");
+    shown.forEach((a) => cmpRow(box, { name: label(a), dot: colorOf(a), p: weekly(a), got: gotFor(act, a.id) }));
+    act.forEach((r, id) => {
+      if (!areas.some((a) => a.id === id) && r.week > EPS) cmpRow(box, { name: areaName(id, viewKey), dot: "var(--muted)", p: 0, got: r.week });
+    });
+    let logged = 0;
+    act.forEach((r) => { logged += r.week; });
+    cmpRow(box, { name: "Total", p: sumBy(areas, weekly), got: logged, total: true, k: "var(--accent)" });
+
+    cmpHead(box, "Category");
+    CAT_KEYS.forEach((k) => {
+      const inCat = areas.filter((a) => a.categories.includes(k));
+      cmpRow(box, { name: CATS[k].name, badge: k, k: catVar(k), p: sumBy(inCat, weekly), got: sumBy(inCat, (a) => gotFor(act, a.id)) });
+    });
+    const deepAreas = areas.filter((a) => a.deep);
+    cmpRow(box, { name: "Deep Focus", badge: "target", k: "var(--clay)", p: sumBy(deepAreas, weekly), got: sumBy(deepAreas, (a) => gotFor(act, a.id)) });
+  }
+
+  // ----- week navigation -----
+  async function openWeek(k) {
+    viewKey = k;
+    logDay = k === thisWeekKey() ? todayIdx() : 6;
+    weekFailed = false;
+    weekLoading = !!mode && !weeks.has(k) && !(mode === "account" && weeksMissing);
+    drawActual();
+    if (!weekLoading) return;
+    try { await loadWeek(k); } catch { weekFailed = !weeksMissing; }
+    weekLoading = false;
+    if (viewKey === k) drawActual();
+  }
+  $("#wk-prev").addEventListener("click", () => openWeek(shiftKey(viewKey, -1)));
+  $("#wk-next").addEventListener("click", () => { if (viewKey !== thisWeekKey()) openWeek(shiftKey(viewKey, 1)); });
+  $("#wk-today").addEventListener("click", () => openWeek(thisWeekKey()));
+  $("#review-last").addEventListener("click", () => openWeek(shiftKey(thisWeekKey(), -1)));
+  $("#retry-week").addEventListener("click", () => { weeks.delete(viewKey); openWeek(viewKey); });
+
+  // Called once a plan is on screen (signed in or local): load this week so the timer and counter work.
+  async function afterPlanReady() {
+    weeks.clear();
+    weeksMissing = false;
+    weekFailed = false;
+    viewKey = thisWeekKey();
+    logDay = todayIdx();
+    weekLoading = true;
+    drawActual();
+    try { await loadWeek(viewKey); } catch { weekFailed = !weeksMissing; }
+    weekLoading = false;
+    drawActual();
+  }
+
+  function resetWeeks() {
+    weekSaveTimers.forEach((t) => clearTimeout(t));
+    weekSaveTimers.clear();
+    weeks.clear();
+    weeksMissing = false;
+    weekFailed = false;
+    viewKey = thisWeekKey();
+  }
+
+  // Another device may have logged time or started a timer.
+  document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState !== "visible" || !mode || weekSaveTimers.size || (mode === "account" && weeksMissing)) return;
+    try {
+      await writing;
+      await loadWeek(thisWeekKey(), true);
+      if (viewKey !== thisWeekKey() && weeks.has(viewKey)) await loadWeek(viewKey, true);
+      drawActual();
+    } catch {}
+  });
+
+  // ----- tabs -----
+  const TAB_BTNS = { planned: $("#tab-btn-planned"), actual: $("#tab-btn-actual") };
+  function setTab(t, focus) {
+    activeTab = t === "actual" ? "actual" : "planned";
+    const isA = activeTab === "actual";
+    $("#tab-planned").hidden = isA;
+    $("#tab-actual").hidden = !isA;
+    Object.entries(TAB_BTNS).forEach(([name, b]) => {
+      b.setAttribute("aria-selected", String(name === activeTab));
+      b.tabIndex = name === activeTab ? 0 : -1;
+      if (focus && name === activeTab) b.focus();
+    });
+    try { localStorage.setItem("focus168.tab", activeTab); } catch {}
+    if (location.hash !== "#" + activeTab) history.replaceState(null, "", "#" + activeTab);
+    hidePop(false);
+    if (isA) openWeek(viewKey); else updateChrome();
+  }
+  TAB_BTNS.planned.addEventListener("click", () => setTab("planned"));
+  TAB_BTNS.actual.addEventListener("click", () => setTab("actual"));
+  $(".tabs").addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    setTab(activeTab === "planned" ? "actual" : "planned", true);
+  });
 
   // ---------- accounts ----------
   const authEl = $("#auth"), appEl = $("#app");
@@ -1599,6 +2467,7 @@ button.d:hover { color: var(--ink); }
     userId = null;
     mode = null;
     clearTimeout(saveTimer); saveTimer = null;
+    resetWeeks();
     clearTimeout(retryTimer);
     state.areas = [];
     renderRows();
@@ -1613,6 +2482,7 @@ button.d:hover { color: var(--ink); }
     btn.disabled = true;
     try {
       if (saveTimer) flush();
+      flushAllWeeks();
       await writing.catch(() => {});
       await sb.auth.signOut({ scope: "local" });
     } catch {}
@@ -1631,10 +2501,17 @@ button.d:hover { color: var(--ink); }
     const saved = lsGet(LOCAL_KEY);
     if (saved && Array.isArray(saved.areas)) { showPlan(saved.areas); setSync("local"); }
     else showSample();
+    afterPlanReady();
   }
 
   // ---------- boot ----------
   $("#auth-logo").append($(".mast .logo svg").cloneNode(true));
+  {
+    let saved = null;
+    try { saved = localStorage.getItem("focus168.tab"); } catch {}
+    const fromHash = location.hash.slice(1);
+    setTab(fromHash === "actual" || fromHash === "planned" ? fromHash : saved || "planned");
+  }
   if (sb) {
     // Fires once on load (with the saved session, if any) and again on every sign-in or sign-out.
     // Work is deferred with setTimeout so it doesn't run inside the auth library's own lock.
