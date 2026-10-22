@@ -33,6 +33,7 @@
   --accent-ink: #FFFFFF;
   --clay: #B37B64;
   --clay-ink: #FFFFFF;
+  --tile-shade: rgb(0 0 0 / .16);
   --ok: #4E7A5C;
   --bad: #A8452C;
   --logo-ink: #66766C;
@@ -46,7 +47,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
-    --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --ok: #8FC09E; --bad: #E58A6E;
+    --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --tile-shade: rgb(0 0 0 / .4); --ok: #8FC09E; --bad: #E58A6E;
     --logo-ink: #A9B8AE; --logo-clay: #D3967C;
     --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A;    --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
     --a4: #8FA3BA; --a5: #D9B266; --a6: #B596A4; --a7: #6FA3A1;
@@ -55,7 +56,7 @@
 }
 :root[data-theme="dark"] {
   --paper: #1B201D; --surface: #232925; --ink: #F2F2F0; --muted: #A3A9A0; --rule: #37403A; --empty: #2E3531;
-  --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --ok: #8FC09E; --bad: #E58A6E;
+  --accent: #9DAEA2; --accent-ink: #1B201D; --clay: #D3967C; --clay-ink: #1B201D; --tile-shade: rgb(0 0 0 / .4); --ok: #8FC09E; --bad: #E58A6E;
   --logo-ink: #A9B8AE; --logo-clay: #D3967C;
     --cat-g: #9CB5A0; --cat-r: #93AECB; --cat-i: #DE9C82; --cat-p: #DDB76A;  --a0: #91A497; --a1: #D3967C; --a2: #B9BEB5; --a3: #DCC9AF;
   --a4: #8FA3BA; --a5: #D9B266; --a6: #B596A4; --a7: #6FA3A1;
@@ -70,7 +71,7 @@ button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 28px 72px; display: grid; gap: 24px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 28px 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 /* masthead */
 .mast { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
@@ -312,6 +313,42 @@ button.d:hover { color: var(--ink); }
 .runner-stop { border: 0; border-radius: 999px; padding: 5px 12px; background: var(--clay); color: var(--clay-ink); font-weight: 600; font-size: 13px; }
 .tabpanel { display: grid; gap: 24px; min-width: 0; }
 
+/* timer button (pinned under the tabs) and the tap-to-track grid */
+.trackbar { flex-basis: 100%; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.track-btn { flex: none; width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 14px; background: #B37B64; color: #FFFFFF; box-shadow: 0 3px 10px color-mix(in srgb, #B37B64 40%, transparent); }
+.track-btn svg { width: 28px; height: 28px; display: block; }
+.track-btn:hover { filter: brightness(1.06); }
+.track-btn:active { transform: scale(.96); }
+.track-btn[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px #B37B64; }
+.track-btn.on svg { animation: nudge 2.6s ease-in-out infinite; }
+@keyframes nudge { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-10deg); } 90% { transform: rotate(10deg); } 95% { transform: rotate(-6deg); } }
+.track-hint { font-size: 13.5px; color: var(--muted); }
+.trackbar .runner { flex: 0 1 auto; }
+.track-panel { flex-basis: 100%; max-height: min(64vh, 580px); overflow: auto; overscroll-behavior: contain; padding: 14px; background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; box-shadow: 0 14px 36px color-mix(in srgb, var(--ink) 16%, transparent); }
+.track-head { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px 14px; margin-bottom: 12px; }
+.track-copy { flex: 1 1 220px; min-width: 0; }
+.track-title { margin: 0; font: 600 1.1rem/1.2 var(--display); }
+.track-sub { margin: 3px 0 0; font-size: 13px; color: var(--muted); }
+.switch { position: relative; display: inline-flex; align-items: center; gap: 8px; padding-top: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.switch-ui { position: relative; width: 40px; height: 24px; border-radius: 999px; background: var(--rule); transition: background .2s; }
+.switch-ui::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgb(0 0 0 / .25); transition: transform .2s; }
+.switch input:checked + .switch-ui { background: var(--clay); }
+.switch input:checked + .switch-ui::after { transform: translateX(16px); }
+.switch input:focus-visible + .switch-ui { outline: 2px solid var(--accent); outline-offset: 2px; }
+.track-msg { margin: 0; padding: 18px 4px; color: var(--muted); }
+.track-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 10px; }
+.ttile { position: relative; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 12px; border: 0; border-radius: 14px; text-align: left; color: #FFFFFF; background: linear-gradient(var(--tile-shade), var(--tile-shade)), var(--c); transition: transform .1s; }
+.ttile:active { transform: scale(.97); }
+.tname { font-size: 15px; font-weight: 700; line-height: 1.2; text-shadow: 0 1px 2px rgb(0 0 0 / .3); overflow-wrap: anywhere; }
+.tfoot { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; }
+.ttime { font: 600 12.5px var(--mono); font-variant-numeric: tabular-nums; text-shadow: 0 1px 2px rgb(0 0 0 / .3); }
+.tdeep svg { display: block; width: 15px; height: 15px; color: #FFFFFF; }
+.ttile.on { box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px #B37B64; }
+.ttile.on .ttime { font-size: 19px; }
+.ttile.on .tname { padding-right: 16px; }
+.ttile.on::after { content: ""; position: absolute; top: 12px; right: 12px; width: 10px; height: 10px; border-radius: 50%; background: #FFFFFF; animation: pulse 1.4s ease-in-out infinite; }
+
 /* actual tab */
 .banner code { font: 12.5px var(--mono); background: var(--paper); padding: 1px 5px; border-radius: 4px; }
 .weekhead { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
@@ -399,8 +436,12 @@ button.d:hover { color: var(--ink); }
   .tabs { display: grid; width: 100%; }
   .tabs button { padding-inline: 8px; }
   .left-counter { margin-left: 0; }
-  .runner { width: 100%; }
-  .runner-name { max-width: none; flex: 1; }
+  .trackbar .runner { flex: 1 1 auto; }
+  .runner-name { max-width: none; flex: 1 1 0; width: 0; }
+  .track-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .ttile { min-height: 88px; padding: 10px; }
+  .tname { font-size: 13.5px; }
+  .ttile.on .ttime { font-size: 16px; }
   .tiles { grid-template-columns: minmax(0, 1fr); }
   .lrow { grid-template-columns: minmax(0, 1fr); }
   .lacts { justify-content: flex-start; width: auto; }
@@ -418,7 +459,7 @@ button.d:hover { color: var(--ink); }
   .wrow { grid-template-columns: 30px minmax(0, 1fr) 58px; gap: 6px; }
   .hours { gap: 1px; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
@@ -488,13 +529,31 @@ button.d:hover { color: var(--ink); }
       <button type="button" role="tab" id="tab-btn-planned" aria-controls="tab-planned" aria-selected="true">Planned focus</button>
       <button type="button" role="tab" id="tab-btn-actual" aria-controls="tab-actual" aria-selected="false" tabindex="-1">Actual focus</button>
     </div>
-    <div class="runner" id="runner" hidden>
-      <span class="runner-dot" aria-hidden="true"></span>
-      <span class="runner-name" id="runner-name"></span>
-      <b class="runner-time" id="runner-time" role="timer">0:00</b>
-      <button type="button" class="runner-stop" id="runner-stop">Stop</button>
-    </div>
     <p class="left-counter" id="left-counter" aria-live="polite"></p>
+    <div class="trackbar">
+      <button type="button" class="track-btn" id="track-btn" aria-expanded="false" aria-controls="track-panel" aria-label="Track time" title="Track time">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/><path d="M6.6 19.8 5 21.5"/><path d="M17.4 19.8 19 21.5"/></svg>
+      </button>
+      <span class="track-hint" id="track-hint">Tap to track your time</span>
+      <div class="runner" id="runner" hidden>
+        <span class="runner-dot" aria-hidden="true"></span>
+        <span class="runner-name" id="runner-name"></span>
+        <b class="runner-time" id="runner-time" role="timer">0:00</b>
+        <button type="button" class="runner-stop" id="runner-stop">Stop</button>
+      </div>
+    </div>
+    <div class="track-panel" id="track-panel" role="region" aria-labelledby="track-title" hidden>
+      <div class="track-head">
+        <div class="track-copy">
+          <p class="track-title" id="track-title">Tap an area to start tracking</p>
+          <p class="track-sub" id="track-sub"></p>
+        </div>
+        <label class="switch"><input type="checkbox" id="multitask" role="switch"><span class="switch-ui" aria-hidden="true"></span><span>Multitasking</span></label>
+        <button type="button" class="icon-btn" id="track-close" aria-label="Close">×</button>
+      </div>
+      <p class="track-msg" id="track-msg" hidden></p>
+      <div class="track-grid" id="track-grid"></div>
+    </div>
   </nav>
 
   <div class="banner" id="load-error" hidden>
@@ -1672,7 +1731,7 @@ button.d:hover { color: var(--ink); }
   }
   const hoursLeftThisWeek = () => Math.max(0, (addDays(fromKey(thisWeekKey()), 7) - Date.now()) / 3600000);
 
-  const weeks = new Map();            // week key -> { entries, timer, plan }
+  const weeks = new Map();            // week key -> { entries, timers, plan }
   const weekSaveTimers = new Map();   // week key -> pending save timeout
   let viewKey = thisWeekKey(), logDay = todayIdx();
   let weeksMissing = false, weekLoading = false, weekFailed = false, activeTab = "planned";
@@ -1682,8 +1741,12 @@ button.d:hover { color: var(--ink); }
     const entries = (Array.isArray(d.entries) ? d.entries : [])
       .filter((e) => e && typeof e.a === "string" && Number.isFinite(+e.m))
       .map((e) => ({ id: String(e.id || uid()), a: e.a, d: clamp(Math.round(+e.d) || 0, 0, 6), m: Math.round(+e.m), t: String(e.t || ""), s: String(e.s || "quick") }));
-    const timer = d.timer && typeof d.timer.a === "string" && Number.isFinite(+d.timer.start) ? { a: d.timer.a, start: +d.timer.start } : null;
-    return { entries, timer, plan: Array.isArray(d.plan) ? d.plan : null };
+    // Older records held a single `timer`; now `timers` lists every running one.
+    const timers = (Array.isArray(d.timers) ? d.timers : d.timer ? [d.timer] : [])
+      .filter((t) => t && typeof t.a === "string" && Number.isFinite(+t.start))
+      .map((t) => ({ a: t.a, start: +t.start }))
+      .filter((t, i, all) => all.findIndex((x) => x.a === t.a) === i);
+    return { entries, timers, plan: Array.isArray(d.plan) ? d.plan : null };
   }
   const weekLsKey = (k) => "focus168.week." + k;
   const isMissingTable = (err) => !!err && (err.code === "42P01" || err.code === "PGRST205"
@@ -1808,33 +1871,41 @@ button.d:hover { color: var(--ink); }
     drawActual();
   }
 
-  // ----- timer (one at a time, kept on this week's record so it survives reloads and other devices) -----
-  const runningTimer = () => { const w = weeks.get(thisWeekKey()); return w && w.timer; };
+  // ----- timers (kept on this week's record so they survive reloads and show on other devices) -----
+  // Normally one runs at a time and starting another switches to it. With Multitasking on,
+  // several can run together and each logs its own full time when stopped.
+  const MULTI_KEY = "focus168.multitask";
+  let multitask = false;
+  try { multitask = localStorage.getItem(MULTI_KEY) === "1"; } catch {}
+  const runningTimers = () => { const w = weeks.get(thisWeekKey()); return (w && w.timers) || []; };
+  const timerFor = (id) => runningTimers().find((t) => t.a === id);
 
   async function startTimer(area) {
     if (logBlocked()) return;
     const k = thisWeekKey();
     let w = weeks.get(k);
     if (!w) { try { w = await loadWeek(k); } catch { return; } }
-    if (!w) return;
+    if (!w || w.timers.some((t) => t.a === area.id)) return;
     adoptSample();
-    if (w.timer) stopTimer();
-    w.timer = { a: area.id, start: Date.now() };
+    if (!multitask) w.timers.slice().forEach((t) => stopTimer(t.a, true));
+    w.timers.push({ a: area.id, start: Date.now() });
     saveWeek(k);
     drawActual();
   }
 
-  function stopTimer() {
+  // switching: stopped because another area started; a too-short timer is dropped without a message.
+  function stopTimer(id, switching) {
     const k = thisWeekKey(), w = weeks.get(k);
-    if (!w || !w.timer) return;
-    const { a, start } = w.timer;
-    w.timer = null;
+    const t = w && w.timers.find((x) => x.a === id);
+    if (!t) return;
+    w.timers = w.timers.filter((x) => x !== t);
+    const { a, start } = t;
     let mins = Math.round((Date.now() - start) / 60000);
     const name = areaName(a, k);
     if (mins < 1) {
       saveWeek(k);
       drawActual();
-      showToast(`Timer for ${name} ran under a minute, so nothing was logged`, null);
+      if (!switching) showToast(`Timer for ${name} ran under a minute, so nothing was logged`, null);
       return;
     }
     const capped = mins > 18 * 60;
@@ -1853,16 +1924,21 @@ button.d:hover { color: var(--ink); }
     return h ? `${h}:${pad2(m)}:${pad2(s % 60)}` : `${m}:${pad2(s % 60)}`;
   }
 
-  $("#runner-stop").addEventListener("click", stopTimer);
+  const stopAllTimers = () => runningTimers().slice().forEach((t) => stopTimer(t.a));
+  $("#runner-stop").addEventListener("click", stopAllTimers);
 
-  // ----- always-visible chrome: timer pill + "of 168" counter -----
+  // ----- always-visible chrome: timer button + what's running + "of 168" counter -----
   function updateChrome() {
-    const t = runningTimer();
-    $("#runner").hidden = !t;
-    if (t) {
-      $("#runner-name").textContent = areaName(t.a);
-      $("#runner-time").textContent = elapsedText(Date.now() - t.start);
+    const ts = runningTimers();
+    $("#runner").hidden = !ts.length;
+    $("#track-hint").hidden = !!ts.length;
+    $("#track-btn").classList.toggle("on", ts.length > 0);
+    if (ts.length) {
+      $("#runner-name").textContent = ts.map((t) => areaName(t.a)).join(", ");
+      $("#runner-time").textContent = ts.length === 1 ? elapsedText(Date.now() - ts[0].start) : `${ts.length} running`;
+      $("#runner-stop").textContent = ts.length > 1 ? "Stop all" : "Stop";
     }
+    drawTrack();
     const c = $("#left-counter");
     c.textContent = "";
     const b = document.createElement("b");
@@ -1885,13 +1961,99 @@ button.d:hover { color: var(--ink); }
   }
 
   setInterval(() => {
-    const t = runningTimer();
-    if (!t) return;
-    const txt = elapsedText(Date.now() - t.start);
-    $("#runner-time").textContent = txt;
-    const btn = [...document.querySelectorAll("#log-rows .lrow")].find((r) => r.dataset.id === t.a);
-    if (btn) btn.querySelector(".qbtn.timer").textContent = "■ " + txt;
+    const ts = runningTimers();
+    if (!ts.length) return;
+    if (ts.length === 1) $("#runner-time").textContent = elapsedText(Date.now() - ts[0].start);
+    const rows = [...document.querySelectorAll("#log-rows .lrow")], tiles = [...document.querySelectorAll("#track-grid .ttile")];
+    ts.forEach((t) => {
+      const txt = elapsedText(Date.now() - t.start);
+      const row = rows.find((r) => r.dataset.id === t.a);
+      if (row) row.querySelector(".qbtn.timer").textContent = "■ " + txt;
+      const tile = tiles.find((x) => x.dataset.id === t.a);
+      if (tile) tile.querySelector(".ttime").textContent = txt;
+    });
   }, 1000);
+
+  // ----- tracking grid: tap an area to start its timer, tap again to stop -----
+  const trackPanel = $("#track-panel");
+  function setTrackOpen(open) {
+    trackPanel.hidden = !open;
+    $("#track-btn").setAttribute("aria-expanded", String(open));
+    if (open) {
+      hidePop(false);
+      drawTrack();
+      const first = trackPanel.querySelector(".ttile");
+      if (first) first.focus({ preventScroll: true });
+    }
+  }
+  $("#track-btn").addEventListener("click", () => setTrackOpen(trackPanel.hidden));
+  $("#track-close").addEventListener("click", () => { setTrackOpen(false); $("#track-btn").focus(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !trackPanel.hidden) { setTrackOpen(false); $("#track-btn").focus(); } });
+
+  const multiInput = $("#multitask");
+  function syncMultitask() {
+    multiInput.checked = multitask;
+    $("#track-sub").textContent = multitask
+      ? "Multitasking is on: each area keeps running until you tap it again."
+      : "Tap it again to stop. Tapping another area switches to it.";
+  }
+  multiInput.addEventListener("change", () => {
+    multitask = multiInput.checked;
+    try { localStorage.setItem(MULTI_KEY, multitask ? "1" : "0"); } catch {}
+    syncMultitask();
+  });
+  syncMultitask();
+
+  function drawTrack() {
+    if (trackPanel.hidden) return;
+    const grid = $("#track-grid");
+    const focused = grid.contains(document.activeElement) ? document.activeElement.dataset.id : null;
+    grid.textContent = "";
+    const msg = !mode ? "Sign in to track your time."
+      : mode === "account" && weeksMissing ? "Tracking turns on after the database update on the Actual focus tab."
+      : !weeks.has(thisWeekKey()) ? "Loading this week…"
+      : !state.areas.length ? "Add areas of focus on the Planned focus tab first."
+      : "";
+    $("#track-msg").hidden = !msg;
+    $("#track-msg").textContent = msg;
+    if (msg) return;
+    const act = actualsOf(weeks.get(thisWeekKey()));
+    state.areas.forEach((a) => {
+      const t = timerFor(a.id);
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "ttile" + (t ? " on" : "");
+      tile.dataset.id = a.id;
+      tile.style.setProperty("--c", colorOf(a));
+      tile.setAttribute("aria-pressed", String(!!t));
+      tile.setAttribute("aria-label", `${t ? "Stop" : "Start"} tracking ${label(a)}`);
+      const name = document.createElement("span");
+      name.className = "tname";
+      name.textContent = label(a);
+      const foot = document.createElement("span");
+      foot.className = "tfoot";
+      const time = document.createElement("span");
+      time.className = "ttime";
+      time.textContent = t ? elapsedText(Date.now() - t.start) : `${fmt(gotFor(act, a.id))} this week`;
+      foot.append(time);
+      if (a.deep) {
+        const dz = document.createElement("span");
+        dz.className = "tdeep";
+        dz.innerHTML = TARGET_SVG;
+        foot.append(dz);
+      }
+      tile.append(name, foot);
+      grid.append(tile);
+    });
+    if (focused) { const again = [...grid.children].find((x) => x.dataset.id === focused); if (again) again.focus({ preventScroll: true }); }
+  }
+
+  $("#track-grid").addEventListener("click", (e) => {
+    const tile = e.target.closest(".ttile");
+    const area = tile && state.areas.find((x) => x.id === tile.dataset.id);
+    if (!area) return;
+    if (timerFor(area.id)) stopTimer(area.id); else startTimer(area);
+  });
   // Hours left this week tick down; refresh the numbers every minute.
   setInterval(() => { if (mode) drawActual(); }, 60000);
 
@@ -2070,7 +2232,6 @@ button.d:hover { color: var(--ink); }
     if (mode === "account" && weeksMissing) { emptyLine(box, "Logging turns on after the database update above."); return; }
     if (weekLoading || !w) { emptyLine(box, weekFailed ? "Couldn't load this week." : "Loading this week…"); return; }
     if (!areas.length) { emptyLine(box, "Add areas of focus on the Planned focus tab, then log your time here."); return; }
-    const t = runningTimer();
     areas.forEach((a) => {
       const got = act.get(a.id) || { week: 0, days: [0, 0, 0, 0, 0, 0, 0] };
       const p = weekly(a), blockH = plannedOn(a, logDay);
@@ -2134,7 +2295,7 @@ button.d:hover { color: var(--ink); }
       acts.append(qbtn("15", "+15m"), qbtn("30", "+30m"), qbtn("60", "+1h"));
       if (blockH > EPS) acts.append(qbtn("block", `✓ ${fmt(blockH)} block`, `Log the ${fmt(blockH)} you planned for ${DAY_NAMES[logDay]}`, "block"));
       if (isCur) {
-        const on = t && t.a === a.id;
+        const t = timerFor(a.id), on = !!t;
         const tb = qbtn("timer", on ? "■ " + elapsedText(Date.now() - t.start) : "▶ Start", on ? "Stop the timer and log the time" : "Start a timer", "timer" + (on ? " on" : ""));
         tb.setAttribute("aria-label", on ? `Stop timer for ${label(a)}` : `Start timer for ${label(a)}`);
         acts.append(tb);
@@ -2152,8 +2313,7 @@ button.d:hover { color: var(--ink); }
     if (!area) return;
     const act = btn.dataset.act;
     if (act === "timer") {
-      const t = runningTimer();
-      if (t && t.a === area.id) stopTimer(); else startTimer(area);
+      if (timerFor(area.id)) stopTimer(area.id); else startTimer(area);
     } else if (act === "block") {
       quickLog(area, Math.round(plannedOn(area, logDay) * 60), "block");
     } else {
