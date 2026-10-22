@@ -71,7 +71,7 @@ button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 18px calc(104px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 18px 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 /* masthead */
 .mast { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
@@ -474,14 +474,14 @@ button.d:hover { color: var(--ink); }
 .pomo-actions .btn { padding: 11px 22px; font-size: 15px; }
 .pomo-stats { margin: 0; font-size: 13px; color: var(--muted); }
 
-.bottomnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 8; display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 max(0px, calc((100% - 560px) / 2)) env(safe-area-inset-bottom, 0px); background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--rule); }
-.bottomnav button { position: relative; display: grid; justify-items: center; gap: 3px; padding: 9px 0 11px; border: 0; background: none; color: var(--muted); font-size: 11.5px; font-weight: 600; }
-.bottomnav svg { width: 26px; height: 26px; display: block; }
-.bottomnav button:hover { color: var(--ink); }
-.bottomnav button.on { color: var(--ink); }
-.bottomnav button.on::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--ink); }
+.viewnav { flex-basis: 100%; display: grid; grid-template-columns: repeat(3, 1fr); margin: -4px 0 2px; border-bottom: 1px solid var(--rule); }
+.viewnav button { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 10px; border: 0; background: none; color: var(--muted); font-size: 14px; font-weight: 600; }
+.viewnav svg { width: 22px; height: 22px; display: block; flex: none; }
+.viewnav button:hover { color: var(--ink); }
+.viewnav button.on { color: var(--ink); }
+.viewnav button.on::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--ink); }
 
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
 .toast button { background: none; border: 1px solid currentColor; color: inherit; border-radius: 8px; padding: 4px 10px; font-weight: 600; }
 
 /* The areas table stacks each row into cards once the columns no longer fit side by side. */
@@ -593,6 +593,20 @@ button.d:hover { color: var(--ink); }
   </header>
 
   <div class="topbar">
+    <nav class="viewnav" aria-label="Sections">
+      <button type="button" data-view="areas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/></svg>
+        <span>Areas</span>
+      </button>
+      <button type="button" data-view="charts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 20V11"/><path d="M12 20V5"/><path d="M18 20v-6"/></svg>
+        <span>Charts</span>
+      </button>
+      <button type="button" data-view="focus">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/></svg>
+        <span>Focus</span>
+      </button>
+    </nav>
     <div class="trackbar">
       <button type="button" class="track-btn" id="track-btn" aria-expanded="false" aria-controls="track-panel" aria-label="Track time" title="Track time">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/><path d="M6.6 19.8 5 21.5"/><path d="M17.4 19.8 19 21.5"/></svg>
@@ -869,20 +883,6 @@ button.d:hover { color: var(--ink); }
     </section>
   </section>
 
-  <nav class="bottomnav" aria-label="Sections">
-    <button type="button" data-view="areas">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/></svg>
-      <span>Areas</span>
-    </button>
-    <button type="button" data-view="charts">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 20V11"/><path d="M12 20V5"/><path d="M18 20v-6"/></svg>
-      <span>Charts</span>
-    </button>
-    <button type="button" data-view="focus">
-      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/></svg>
-      <span>Focus</span>
-    </button>
-  </nav>
 </main>
 
 <div class="toast" id="toast" role="status" hidden><span id="toast-msg"></span><button type="button" id="toast-undo">Undo</button></div>
@@ -1957,7 +1957,7 @@ button.d:hover { color: var(--ink); }
     meter($("#m-day"), dayAreas.map((a) => ({ a, v: a.hours[selDay] })), dayTotal, 24);
     meter($("#m-week"), state.areas.map((a) => ({ a, v: weekly(a) })), week, 168);
     $("#m-day .count").textContent = dayAreas.length;
-    const avg = (168 - week) / 7;
+    const avg = Math.round(((168 - week) / 7) * 60) / 60;   // an average: whole minutes are plenty
     $("#m-week .avg").textContent = avg < -EPS ? `over by ${fmt(-avg)}` : fmt(avg);
     paintDayChips();
     document.querySelectorAll(".t-day-name").forEach((s) => { s.textContent = `(${DAYS[selDay]} · week)`; });
@@ -2927,7 +2927,7 @@ button.d:hover { color: var(--ink); }
   function setView(v, keepScroll) {
     activeView = VIEWS.includes(v) ? v : "areas";
     VIEWS.forEach((n) => { $("#view-" + n).hidden = n !== activeView; });
-    document.querySelectorAll(".bottomnav button").forEach((b) => {
+    document.querySelectorAll(".viewnav button").forEach((b) => {
       const on = b.dataset.view === activeView;
       b.classList.toggle("on", on);
       if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
@@ -2937,7 +2937,7 @@ button.d:hover { color: var(--ink); }
     hidePop(false);
     if (!keepScroll) window.scrollTo({ top: 0 });
   }
-  document.querySelector(".bottomnav").addEventListener("click", (e) => {
+  document.querySelector(".viewnav").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-view]");
     if (b) setView(b.dataset.view);
   });
