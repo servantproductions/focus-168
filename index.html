@@ -227,8 +227,8 @@ button.d:hover { color: var(--ink); }
 .days-btn .dots { display: flex; gap: 3px; }
 .days-btn .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--empty); }
 .days-btn .dots i.on { background: var(--c); }
-.daypicker { width: 256px; gap: 8px; }
-.day-line { display: grid; grid-template-columns: minmax(0, 1fr) 72px; align-items: center; gap: 8px; }
+.daypicker { width: 276px; gap: 8px; }
+.day-line { display: grid; grid-template-columns: minmax(0, 1fr) 92px; align-items: center; gap: 8px; }
 .day-head { padding: 2px 6px 0; font: 600 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .day-head span:last-child { text-align: right; padding-right: 10px; }
 .day-h { padding: 5px 9px; border-color: var(--rule); }
@@ -315,7 +315,7 @@ button.d:hover { color: var(--ink); }
 
 /* timer button (pinned under the tabs) and the tap-to-track grid */
 .trackbar { flex-basis: 100%; display: flex; align-items: center; gap: 12px; min-width: 0; }
-.track-btn { flex: none; width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 14px; background: #B37B64; color: #FFFFFF; box-shadow: 0 3px 10px color-mix(in srgb, #B37B64 40%, transparent); }
+.track-btn { flex: none; width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 14px; background: #B37B64; color: #FFFFFF; }
 .track-btn svg { width: 28px; height: 28px; display: block; }
 .track-btn:hover { filter: brightness(1.06); }
 .track-btn:active { transform: scale(.96); }
@@ -384,7 +384,7 @@ button.d:hover { color: var(--ink); }
 .lname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .ldeep svg { display: block; width: 14px; height: 14px; color: var(--clay); }
 .lnums { margin-left: auto; display: flex; align-items: center; gap: 6px; font: 13px var(--mono); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ltotal { width: 66px; padding: 4px 7px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); font: 600 14px var(--mono); text-align: right; }
+.ltotal { width: 108px; padding: 4px 7px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); color: var(--ink); font: 600 14px var(--mono); text-align: right; }
 .ltotal:focus { outline: none; border-color: var(--accent); background: var(--surface); }
 .ltrack { position: relative; height: 8px; border-radius: 4px; background: var(--empty); }
 .ltrack i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--c); transition: width .3s ease; }
@@ -620,7 +620,7 @@ button.d:hover { color: var(--ink); }
     </div>
     <div class="add-row">
       <button class="btn btn-add" id="add-bottom" type="button">+ Add area</button>
-      <span class="tip">Hours accept <code>1.5</code>, <code>1:30</code>, <code>1h30</code> or <code>90m</code>.</span>
+      <span class="tip">Type hours as <code>1h 30m</code>, <code>1:30</code>, <code>1.5</code> or <code>90m</code>.</span>
     </div>
   </section>
 
@@ -743,7 +743,7 @@ button.d:hover { color: var(--ink); }
 
 <script>
 (() => {
-  const COLORS = 8, EPS = 1 / 120;
+  const COLORS = 8, EPS = 1 / 7200;   // half a second, in hours
   const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const ALL = [0, 1, 2, 3, 4, 5, 6], WEEKDAYS = [0, 1, 2, 3, 4], WEEKENDS = [5, 6];
   const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -795,29 +795,39 @@ button.d:hover { color: var(--ink); }
     }
     return ALL.slice(0, clamp(Math.round(+v) || 7, 1, 7));
   }
-  const numStr = (n) => String(round2(n));
   const HEX = /^#[0-9a-f]{6}$/i;
   const COLOR_NAMES = ["Sage", "Terracotta", "Stone", "Sand", "Slate", "Ochre", "Mauve", "Teal"];
   // A color is either a palette index (follows light/dark theme) or a custom "#rrggbb".
   const colorOf = (a) => (typeof a.color === "number" ? `var(--a${a.color})` : a.color);
   const paletteHex = (i) => getComputedStyle(document.documentElement).getPropertyValue(`--a${i}`).trim();
 
+  const pad2 = (n) => String(n).padStart(2, "0");
+
+  // Hours as "7h 30m", "45m 10s", "1h 05m 30s"; seconds appear only when there are some.
   function fmt(h) {
     const neg = h < -EPS;
-    const mins = Math.round(Math.abs(h) * 60);
-    const hh = Math.floor(mins / 60), mm = mins % 60;
-    let s = mins === 0 ? "0h" : hh && mm ? `${hh}h ${String(mm).padStart(2, "0")}m` : hh ? `${hh}h` : `${mm}m`;
-    return (neg ? "−" : "") + s;
+    const secs = Math.round(Math.abs(h) * 3600);
+    const hh = Math.floor(secs / 3600), mm = Math.floor((secs % 3600) / 60), ss = secs % 60;
+    if (!secs) return "0h";
+    const parts = [];
+    if (hh) parts.push(`${hh}h`);
+    if (mm || (hh && ss)) parts.push(`${hh ? pad2(mm) : mm}m`);
+    if (ss) parts.push(`${hh || mm ? pad2(ss) : ss}s`);
+    return (neg ? "−" : "") + parts.join(" ");
   }
+  // For hour fields: same format, never negative.
+  const fmtIn = (h) => fmt(Math.max(0, h));
 
+  // Accepts 1.5, 1:30, 1:30:15, 1h30, 1h 30m, 90m, 45s, 1h 12m 30s.
   function parseHours(raw) {
     const s = String(raw).trim().toLowerCase().replace(",", ".");
     if (!s) return 0;
     let m;
-    if ((m = s.match(/^(\d+):(\d{1,2})$/))) return +m[1] + +m[2] / 60;
-    if ((m = s.match(/^(\d+(?:\.\d+)?)\s*h(?:rs?|ours?)?\s*(?:(\d+)\s*m?(?:in)?)?$/))) return +m[1] + (m[2] ? +m[2] / 60 : 0);
-    if ((m = s.match(/^(\d+(?:\.\d+)?)\s*m(?:in)?$/))) return +m[1] / 60;
+    if ((m = s.match(/^(\d+):(\d{1,2})(?::(\d{1,2}))?$/))) return +m[1] + +m[2] / 60 + (m[3] ? +m[3] / 3600 : 0);
     if (/^\d*\.?\d+$|^\d+\.$/.test(s)) return parseFloat(s);
+    m = s.match(/^(?:(\d+(?:\.\d+)?)\s*h(?:rs?|ours?)?)?\s*(?:(\d+(?:\.\d+)?)\s*m(?:ins?|inutes?)?)?\s*(?:(\d+(?:\.\d+)?)\s*s(?:ecs?|econds?)?)?$/);
+    if (m && (m[1] || m[2] || m[3])) return (+m[1] || 0) + (+m[2] || 0) / 60 + (+m[3] || 0) / 3600;
+    if ((m = s.match(/^(\d+(?:\.\d+)?)\s*h\s*(\d+)$/))) return +m[1] + +m[2] / 60;
     return NaN;
   }
 
@@ -1018,10 +1028,10 @@ button.d:hover { color: var(--ink); }
   function refreshNums(row, a, skip) {
     const pd = row.querySelector(".perday"), wk = row.querySelector(".perweek");
     const even = evenHours(a);
-    if (pd !== skip) pd.value = even === null ? "" : numStr(even);
+    if (pd !== skip) pd.value = even === null ? "" : fmtIn(even);
     pd.placeholder = even === null ? "Varies" : "0";
     pd.title = even === null ? "Hours differ by day (set them under Days). Typing here sets the same hours on every selected day." : "";
-    if (wk !== skip) wk.value = numStr(weekly(a));
+    if (wk !== skip) wk.value = fmtIn(weekly(a));
     const n = a.days.length, avg = row.querySelector(".avg");
     avg.textContent = `avg ${fmt(weekly(a) / n)}`;
     avg.title = `Average over the ${n} selected day${n === 1 ? "" : "s"}`;
@@ -1293,7 +1303,7 @@ button.d:hover { color: var(--ink); }
       box.disabled = box.checked && a.days.length === 1; // keep at least one day
       const hrs = dayHourInputs[d];
       hrs.disabled = !box.checked;
-      if (hrs !== skip) { hrs.value = box.checked ? numStr(a.hours[d]) : ""; hrs.removeAttribute("aria-invalid"); }
+      if (hrs !== skip) { hrs.value = box.checked ? fmtIn(a.hours[d]) : ""; hrs.removeAttribute("aria-invalid"); }
       hrs.placeholder = box.checked ? "0" : "off";
     });
     daypicker.querySelectorAll("[data-preset]").forEach((b) => b.setAttribute("aria-pressed", String(sameDays(a.days, PRESETS[b.dataset.preset]))));
@@ -1580,6 +1590,7 @@ button.d:hover { color: var(--ink); }
   // ---------- life categories (GRIP) ----------
   const pct = (h, of) => {
     const p = of > 0 ? (h / of) * 100 : 0;
+    if (p > 0 && p < 0.05) return "under 0.1%";
     return (p > 0 && p < 9.95 ? p.toFixed(1) : String(Math.round(p))) + "%";
   };
 
@@ -1713,9 +1724,8 @@ button.d:hover { color: var(--ink); }
   // ---------- actual time (weeks) ----------
   // Each week (Monday start, local time) is one record: the logged entries, a running timer, and a
   // copy of that week's plan so later reviews compare against what was planned at the time.
-  // Entry: { id, a: area id, d: day 0-6 (Mon-Sun), m: minutes (negative = a correction), t: ISO time, s: source }
-  const pad2 = (n) => String(n).padStart(2, "0");
-  const fmtKey = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  // Entry: { id, a: area id, d: day 0-6 (Mon-Sun), m: minutes, to the second (negative = a correction), t: ISO time, s: source }
+  const fmtKey =(d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
   const fromKey = (k) => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
   const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
   const mondayOf = (date) => addDays(new Date(date.getFullYear(), date.getMonth(), date.getDate()), -((date.getDay() + 6) % 7));
@@ -1729,7 +1739,8 @@ button.d:hover { color: var(--ink); }
       ? `${MONTHS[s.getMonth()]} ${s.getDate()} – ${e.getDate()}`
       : `${MONTHS[s.getMonth()]} ${s.getDate()} – ${MONTHS[e.getMonth()]} ${e.getDate()}`;
   }
-  const hoursLeftThisWeek = () => Math.max(0, (addDays(fromKey(thisWeekKey()), 7) - Date.now()) / 3600000);
+  // Whole minutes only: this counts down on screen, so seconds would just flicker.
+  const hoursLeftThisWeek = () => Math.max(0, Math.floor((addDays(fromKey(thisWeekKey()), 7) - Date.now()) / 60000) / 60);
 
   const weeks = new Map();            // week key -> { entries, timers, plan }
   const weekSaveTimers = new Map();   // week key -> pending save timeout
@@ -1740,7 +1751,7 @@ button.d:hover { color: var(--ink); }
     const d = raw && typeof raw === "object" ? raw : {};
     const entries = (Array.isArray(d.entries) ? d.entries : [])
       .filter((e) => e && typeof e.a === "string" && Number.isFinite(+e.m))
-      .map((e) => ({ id: String(e.id || uid()), a: e.a, d: clamp(Math.round(+e.d) || 0, 0, 6), m: Math.round(+e.m), t: String(e.t || ""), s: String(e.s || "quick") }));
+      .map((e) => ({ id: String(e.id || uid()), a: e.a, d: clamp(Math.round(+e.d) || 0, 0, 6), m: Math.round(+e.m * 60) / 60, t: String(e.t || ""), s: String(e.s || "quick") }));
     // Older records held a single `timer`; now `timers` lists every running one.
     const timers = (Array.isArray(d.timers) ? d.timers : d.timer ? [d.timer] : [])
       .filter((t) => t && typeof t.a === "string" && Number.isFinite(+t.start))
@@ -1893,30 +1904,31 @@ button.d:hover { color: var(--ink); }
     drawActual();
   }
 
-  // switching: stopped because another area started; a too-short timer is dropped without a message.
+  // Logs exactly how long the timer ran, to the second.
+  // switching: stopped because another area started, so an instant stop is dropped without a message.
   function stopTimer(id, switching) {
     const k = thisWeekKey(), w = weeks.get(k);
     const t = w && w.timers.find((x) => x.a === id);
     if (!t) return;
     w.timers = w.timers.filter((x) => x !== t);
     const { a, start } = t;
-    let mins = Math.round((Date.now() - start) / 60000);
+    let secs = Math.round((Date.now() - start) / 1000);
     const name = areaName(a, k);
-    if (mins < 1) {
+    if (secs < 1) {
       saveWeek(k);
       drawActual();
-      if (!switching) showToast(`Timer for ${name} ran under a minute, so nothing was logged`, null);
+      if (!switching) showToast(`Timer for ${name} was stopped right away, so nothing was logged`, null);
       return;
     }
-    const capped = mins > 18 * 60;
-    if (capped) mins = 18 * 60;
+    const capped = secs > 18 * 3600;
+    if (capped) secs = 18 * 3600;
     // Log on the day the timer started; a timer left running from last week lands on Monday.
     const day = start >= fromKey(k).getTime() ? (new Date(start).getDay() + 6) % 7 : 0;
-    const e = { id: uid(), a, d: day, m: mins, t: new Date().toISOString(), s: "timer" };
+    const e = { id: uid(), a, d: day, m: secs / 60, t: new Date().toISOString(), s: "timer" };
     w.entries.push(e);
     saveWeek(k);
     drawActual();
-    showToast(capped ? `Logged 18h to ${name}. The timer ran longer, so check it.` : `Logged ${fmt(mins / 60)} to ${name}`, () => removeEntry(k, e.id));
+    showToast(capped ? `Logged 18h to ${name}. The timer ran longer, so check it.` : `Logged ${fmt(secs / 3600)} to ${name}`, () => removeEntry(k, e.id));
   }
 
   function elapsedText(ms) {
@@ -2265,7 +2277,7 @@ button.d:hover { color: var(--ink); }
       input.inputMode = "decimal";
       input.autocomplete = "off";
       input.id = "lt-" + a.id;
-      input.value = numStr(got.week);
+      input.value = fmtIn(got.week);
       input.setAttribute("aria-label", `Hours logged this week for ${label(a)}`);
       const of = document.createElement("span");
       of.textContent = p > EPS ? `of ${fmt(p)}` : "h · not planned";
@@ -2327,7 +2339,7 @@ button.d:hover { color: var(--ink); }
     const area = planFor(viewKey).find((x) => x.id === inp.closest(".lrow").dataset.id);
     const v = parseHours(inp.value);
     if (!area || Number.isNaN(v)) { inp.blur(); drawActual(); return; }
-    const diff = Math.round((clamp(v, 0, 168) - gotFor(actualsOf(weeks.get(viewKey)), area.id)) * 60);
+    const diff = Math.round((clamp(v, 0, 168) - gotFor(actualsOf(weeks.get(viewKey)), area.id)) * 3600) / 60;   // minutes, to the second
     inp.blur();
     if (diff) quickLog(area, diff, "edit"); else drawActual();
   });
