@@ -71,13 +71,13 @@ button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 28px 72px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 18px calc(104px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 
 /* masthead */
-.mast { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+.mast { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
 .eyebrow, .label { font: 600 11px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
 h1.logo { margin: 4px 0 12px; line-height: 0; }
-h1.logo svg { width: clamp(240px, 46vw, 400px); height: auto; display: block; }
+h1.logo svg { width: clamp(170px, 32vw, 270px); height: auto; display: block; }
 .logo .lg-i { fill: var(--logo-ink); }
 .logo .lg-c { fill: var(--logo-clay); }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -161,12 +161,12 @@ h2 { font: 600 1.45rem/1.15 var(--display); letter-spacing: -.01em; margin: 0; t
 .thead { padding: 10px 0 8px; border-bottom: 1px solid var(--rule); }
 .thead span { font: 600 10.5px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .thead .r { text-align: right; padding-right: 10px; }
-.row { padding: 6px 0; border-bottom: 1px solid var(--rule); background: var(--surface); }
+.row { padding: 6px 0; background: var(--surface); }
 .handle { width: 18px; height: 32px; padding: 0; border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: grab; touch-action: none; display: grid; place-items: center; }
 .handle::before { content: ""; width: 8px; height: 14px; background: radial-gradient(circle, currentColor 1.4px, transparent 1.6px) 0 0 / 4px 4.67px; }
 .handle:hover { color: var(--ink); background: var(--paper); }
-.row.dragging { position: relative; z-index: 2; border-radius: 10px; border-bottom-color: transparent; box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 16%, transparent), 0 0 0 1px var(--rule); }
-.row.dragging .handle { cursor: grabbing; color: var(--accent); }
+.acard.dragging { position: relative; z-index: 2; border-radius: 10px; border-bottom-color: transparent; box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 16%, transparent), 0 0 0 1px var(--rule); }
+.acard.dragging .handle { cursor: grabbing; color: var(--accent); }
 body.is-dragging, body.is-dragging * { cursor: grabbing !important; user-select: none; }
 .swatch { width: 22px; height: 22px; border-radius: 50%; border: 0; background: var(--c); justify-self: center; box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--rule); }
 .swatch:hover { transform: scale(1.1); }
@@ -297,12 +297,12 @@ button.d:hover { color: var(--ink); }
 .grip-val.over { color: var(--bad); }
 
 /* tabs + always-visible "of 168" counter (sticks to the top while scrolling) */
-.tabbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 0; margin-block: -8px; background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 0; margin-block: -8px; background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
 .tabs { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; }
 .tabs button { border: 0; background: none; border-radius: 9px; padding: 8px 16px; font-weight: 600; color: var(--muted); white-space: nowrap; }
 .tabs button:hover { color: var(--ink); }
 .tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
-.left-counter { margin: 0 0 0 auto; font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.left-counter { margin: 0 0 0 auto; text-align: right; font: 13px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .left-counter b { font-size: 15px; color: var(--ink); }
 .left-counter.over b { color: var(--bad); }
 .runner { display: inline-flex; align-items: center; gap: 10px; min-width: 0; padding: 4px 4px 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--clay) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--clay) 45%, transparent); font-size: 13px; }
@@ -376,7 +376,7 @@ button.d:hover { color: var(--ink); }
 .review .linkish { margin-top: 14px; }
 
 .log-day { display: grid; gap: 6px; margin: 6px 0 4px; }
-.lrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.lrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 20px; align-items: center; padding: 12px 0 8px; }
 .lrow:last-child { border-bottom: 0; }
 .lrow-main { display: grid; gap: 7px; min-width: 0; }
 .lrow-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
@@ -413,7 +413,75 @@ button.d:hover { color: var(--ink); }
 .cmp-gap.on { color: var(--ok); }
 .cmp-row.total { border-bottom: 0; font-weight: 600; }
 
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
+/* views, flips (Planned ⇄ Actual), area cards, bottom nav */
+.trackbar { flex-wrap: wrap; }
+.view { display: grid; gap: 18px; min-width: 0; }
+.view-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.view-head h2 { font-size: 1.7rem; }
+.chart-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.flip { display: grid; gap: 12px; }
+.flip-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.flip-head .label { margin: 0; }
+.flip .meter { padding: 0; border: 0; border-radius: 0; background: none; }
+.faces { position: relative; min-width: 0; touch-action: pan-y; }
+.face { min-width: 0; transition: transform .2s ease; }
+.face:not(.on) { display: none; }
+.face.in-right { animation: face-in-right .28s ease; }
+.face.in-left { animation: face-in-left .28s ease; }
+@keyframes face-in-right { from { opacity: .3; transform: translateX(32px); } }
+@keyframes face-in-left { from { opacity: .3; transform: translateX(-32px); } }
+.flip-dots { display: flex; justify-content: center; gap: 6px; padding-top: 2px; }
+.flip-dots i { width: 6px; height: 6px; border-radius: 3px; background: var(--rule); transition: width .2s, background .2s; }
+.flip-dots i.on { width: 18px; background: var(--accent); }
+.flip-dots i:last-child.on { background: var(--clay); }
+.seg { display: inline-grid; grid-auto-flow: column; gap: 2px; padding: 3px; border: 1px solid var(--rule); border-radius: 10px; background: var(--paper); }
+.seg button { padding: 5px 12px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px color-mix(in srgb, var(--ink) 14%, transparent); }
+.seg button[data-face="actual"][aria-pressed="true"] { color: var(--clay); }
+.seg button:disabled { opacity: .45; cursor: default; }
+.weeknav { display: flex; align-items: center; gap: 8px; }
+.wk-btn { width: 32px; height: 32px; font-size: 18px; }
+.wk-text { display: grid; line-height: 1.15; min-width: 0; }
+.wk-text .label { font-size: 10px; }
+.wk-text b { font: 600 15px var(--display); white-space: nowrap; }
+.wk-today { font-size: 13px; }
+.ctx { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 4px 0 10px; }
+.areas-card .daychips { margin-bottom: 6px; }
+.acard { border-bottom: 1px solid var(--rule); padding-bottom: 4px; background: var(--surface); touch-action: pan-y; }
+.acard .flip-dots { padding: 0 0 4px; }
+.acard .flip-dots i { width: 5px; height: 5px; }
+.acard .flip-dots i.on { width: 14px; }
+.areas-card.showing-actual .thead, .areas-card.showing-actual .tfoot { display: none; }
+.legend-empty { color: var(--muted); }
+.grip-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.grip-top .hint { margin: 0; flex: 1 1 240px; }
+
+.pomo-body { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 20px 32px; margin-top: 8px; }
+.pomo-ring { position: relative; width: 200px; height: 200px; }
+.pomo-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.pomo-track { fill: none; stroke: var(--empty); stroke-width: 9; }
+.pomo-prog { fill: none; stroke: var(--clay); stroke-width: 9; stroke-linecap: round; transition: stroke-dashoffset .9s linear; }
+.pomo-prog.brk { stroke: var(--cat-r); }
+.pomo-prog.idle { stroke: var(--rule); }
+.pomo-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 2px; }
+.pomo-phase { font: 600 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.pomo-time { font: 800 2.6rem/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.pomo-controls { display: grid; gap: 14px; min-width: 0; }
+.pomo-field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; justify-items: start; }
+.pomo-select { width: 100%; max-width: 360px; padding: 9px 12px; border: 1px solid var(--rule); border-radius: 10px; background: var(--paper); color: var(--ink); font: 15px var(--body); }
+.pomo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.pomo-actions .btn { padding: 11px 22px; font-size: 15px; }
+.pomo-stats { margin: 0; font-size: 13px; color: var(--muted); }
+
+.bottomnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 8; display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 max(0px, calc((100% - 560px) / 2)) env(safe-area-inset-bottom, 0px); background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--rule); }
+.bottomnav button { position: relative; display: grid; justify-items: center; gap: 3px; padding: 9px 0 11px; border: 0; background: none; color: var(--muted); font-size: 11.5px; font-weight: 600; }
+.bottomnav svg { width: 26px; height: 26px; display: block; }
+.bottomnav button:hover { color: var(--ink); }
+.bottomnav button.on { color: var(--ink); }
+.bottomnav button.on::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--ink); }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--paper); border-radius: 12px; padding: 10px 12px 10px 16px; display: flex; gap: 14px; align-items: center; font-size: 14px; max-width: calc(100% - 32px); z-index: 10; }
 .toast button { background: none; border: 1px solid currentColor; color: inherit; border-radius: 8px; padding: 4px 10px; font-weight: 600; }
 
 /* The areas table stacks each row into cards once the columns no longer fit side by side. */
@@ -433,9 +501,11 @@ button.d:hover { color: var(--ink); }
   .tfoot .gap { display: none; }
 }
 @media (max-width: 760px) {
-  .tabs { display: grid; width: 100%; }
-  .tabs button { padding-inline: 8px; }
-  .left-counter { margin-left: 0; }
+  .chart-pair { grid-template-columns: minmax(0, 1fr); }
+  .view-head h2 { font-size: 1.4rem; }
+  .pomo-body { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .pomo-ring { width: 180px; height: 180px; }
+  .pomo-controls { width: 100%; }
   .trackbar .runner { flex: 1 1 auto; }
   .runner-name { max-width: none; flex: 1 1 0; width: 0; }
   .track-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
@@ -492,7 +562,6 @@ button.d:hover { color: var(--ink); }
 <main class="wrap" id="app" hidden>
   <header class="mast">
     <div>
-      <p class="eyebrow">Time budget · areas of focus</p>
       <h1 class="logo"><span class="vh">Focus 168</span><svg viewBox="46 176 408 148" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <g class="lg-c">
           <path d="M432.17,249.994h-51.386l6.825-25.429,6.496-24.191c3.294.883,6.456,2.082,9.447,3.571.198.105.408.198.606.303.369.198.738.382,1.094.58.382.211.764.422,1.133.632,7.273,4.203,13.426,10.132,17.906,17.234.567.896,1.107,1.818,1.621,2.754,3.992,7.299,6.259,15.666,6.259,24.547Z"/>
@@ -516,7 +585,6 @@ button.d:hover { color: var(--ink); }
           <path d="M364.503,271.452h-17.13c-1.485-.38-2.341-1.332-2.57-2.855l4.739-1.713h13.703l1.257,4.568ZM344.918,267.456l1.485-14.846,1.256-1.141,3.083,3.425-1.085,10.848-4.739,1.714ZM352.627,236.051l-1.086,10.848-3.767,3.426-1.028-1.141,1.485-14.846,4.397,1.713ZM366.443,234.91h-13.645l-4.397-1.714c.533-1.522,1.579-2.473,3.14-2.854h17.073l-2.171,4.568ZM366.216,248.613l2.056,2.284-2.513,2.284h-14.846l-2.055-2.284,2.512-2.284h14.846ZM369.357,251.468l1.027,1.141-1.598,15.987c-.534,1.523-1.58,2.476-3.141,2.855l-1.256-4.568,1.199-11.991,3.769-3.425ZM366.387,246.899l1.199-11.989,2.169-4.568c1.485.381,2.342,1.332,2.57,2.854l-1.598,15.989-1.257,1.141-3.083-3.426Z"/>
         </g>
       </svg></h1>
-      <p class="lede">Give each area of focus its hours per day and per week. What's left of your 24-hour day and 168-hour week updates as you type.</p>
     </div>
     <div class="mast-side">
       <div class="account"><span class="who" id="who"></span><button class="btn-ghost" id="logout" type="button">Log out</button></div>
@@ -524,12 +592,7 @@ button.d:hover { color: var(--ink); }
     </div>
   </header>
 
-  <nav class="tabbar" aria-label="Views">
-    <div class="tabs" role="tablist" aria-label="Planned or actual">
-      <button type="button" role="tab" id="tab-btn-planned" aria-controls="tab-planned" aria-selected="true">Planned focus</button>
-      <button type="button" role="tab" id="tab-btn-actual" aria-controls="tab-actual" aria-selected="false" tabindex="-1">Actual focus</button>
-    </div>
-    <p class="left-counter" id="left-counter" aria-live="polite"></p>
+  <div class="topbar">
     <div class="trackbar">
       <button type="button" class="track-btn" id="track-btn" aria-expanded="false" aria-controls="track-panel" aria-label="Track time" title="Track time">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/><path d="M6.6 19.8 5 21.5"/><path d="M17.4 19.8 19 21.5"/></svg>
@@ -541,6 +604,7 @@ button.d:hover { color: var(--ink); }
         <b class="runner-time" id="runner-time" role="timer">0:00</b>
         <button type="button" class="runner-stop" id="runner-stop">Stop</button>
       </div>
+      <p class="left-counter" id="left-counter" aria-live="polite"></p>
     </div>
     <div class="track-panel" id="track-panel" role="region" aria-labelledby="track-title" hidden>
       <div class="track-head">
@@ -554,150 +618,271 @@ button.d:hover { color: var(--ink); }
       <p class="track-msg" id="track-msg" hidden></p>
       <div class="track-grid" id="track-grid"></div>
     </div>
-  </nav>
+  </div>
 
   <div class="banner" id="load-error" hidden>
     <span><b>Couldn't load your plan.</b> Check your connection, then</span>
     <button class="linkish" id="retry-load" type="button">try again</button>
   </div>
-
-  <div class="tabpanel" id="tab-planned" role="tabpanel" aria-labelledby="tab-btn-planned">
-  <section class="meters" aria-label="Time remaining">
-    <article class="meter" id="m-day">
-      <div class="meter-top"><p class="label" id="day-label">Per day · 24 hours</p><span class="chip"></span></div>
-      <div class="day-tabs" id="day-tabs" role="group" aria-label="Choose a day"></div>
-      <div class="big"><span class="num">0h</span><span class="unit-text">left of 24h</span></div>
-      <div class="bar" role="img" style="--tick: calc(100% / 24)"></div>
-      <div class="scale"><span>0</span><span>6</span><span>12</span><span>18</span><span>24h</span></div>
-      <p class="stats"><span>Allocated <b class="alloc">0h</b></span><span>Areas that day <b class="count">0</b></span></p>
-    </article>
-    <article class="meter" id="m-week">
-      <div class="meter-top"><p class="label">Per week · 168 hours</p><span class="chip"></span></div>
-      <div class="big"><span class="num">0h</span><span class="unit-text">left of 168h</span></div>
-      <div class="bar" role="img" style="--tick: calc(100% / 7)"></div>
-      <div class="scale"><span>0</span><span>48</span><span>96</span><span>144</span><span>168h</span></div>
-      <p class="stats"><span>Allocated <b class="alloc">0h</b></span><span>Free per day, on average <b class="avg">0h</b></span></p>
-    </article>
-  </section>
-
-  <section class="card grip" aria-labelledby="grip-title">
-    <div class="card-head">
-      <div>
-        <h2 id="grip-title">Life categories</h2>
-        <p class="hint">Time given to Growth, Restoration, Interpersonal and Production, plus your Deep Focus.</p>
-      </div>
-      <p class="deep-stat" id="deep-stat"></p>
-    </div>
-    <div class="grip-table">
-      <div class="grip-row grip-head" aria-hidden="true"><span>Category</span><span class="r" id="grip-day-head">Day</span><span class="r">Week</span></div>
-      <div id="grip-rows"></div>
-    </div>
-    <p class="grip-note" id="grip-note" hidden></p>
-  </section>
-
+  <div class="banner" id="weeks-missing" hidden>
+    <span><b>One more setup step.</b> Tracking actual time needs a new table in your database. Run the <code>weeks</code> section of <code>setup.sql</code> in Supabase's SQL Editor, then reload this page.</span>
+  </div>
+  <div class="banner" id="week-error" hidden>
+    <span><b>Couldn't load this week's log.</b> Check your connection, then</span>
+    <button class="linkish" id="retry-week" type="button">try again</button>
+  </div>
   <div class="banner" id="sample-banner" hidden>
     <span><b>Sample plan.</b> Edit any area to make it yours, or</span>
     <button class="linkish" id="clear-sample" type="button">start from a blank plan</button>
   </div>
 
-  <section class="card" aria-labelledby="ledger-title">
-    <div class="card-head">
-      <div>
-        <h2 id="ledger-title">Areas of focus</h2>
-        <p class="hint">Change hours per day, pick the days, or set hours per week. The other numbers follow. For different hours on different days, set each day under Days. Click the target next to a name to tag it Deep Focus. Drag the grip to reorder.</p>
-      </div>
-      <button class="btn btn-add" id="add-top" type="button">+ Add area</button>
-    </div>
-    <div class="thead cols" aria-hidden="true">
-      <span></span><span></span><span>Area</span><span>Categories</span><span class="r">Per day</span><span class="r">Days</span><span class="r">Per week</span><span class="r">Share of week</span><span></span>
-    </div>
-    <div id="rows"></div>
-    <div class="tfoot cols">
-      <span class="t-l">Allocated <span class="t-day-name"></span></span><span class="r" id="t-day"></span><span class="gap"></span><span class="r" id="t-week"></span><span class="gap"></span><span class="gap"></span>
-    </div>
-    <div class="tfoot cols">
-      <span class="t-l">Remaining <span class="t-day-name"></span></span><span class="r" id="r-day"></span><span class="gap"></span><span class="r" id="r-week"></span><span class="gap"></span><span class="gap"></span>
-    </div>
-    <div class="add-row">
-      <button class="btn btn-add" id="add-bottom" type="button">+ Add area</button>
-      <span class="tip">Type hours as <code>1h 30m</code>, <code>1:30</code>, <code>1.5</code> or <code>90m</code>.</span>
-    </div>
-  </section>
-
-  <section class="card" aria-labelledby="week-title">
-    <h2 id="week-title">Your week, hour by hour</h2>
-    <p class="hint">Each square is one hour, rounded to the nearest hour. Each area fills the days you picked for it.</p>
-    <div class="week" id="week"></div>
-    <ul class="legend" id="legend"></ul>
-  </section>
-  </div>
-
-  <div class="tabpanel" id="tab-actual" role="tabpanel" aria-labelledby="tab-btn-actual" hidden>
-    <div class="banner" id="weeks-missing" hidden>
-      <span><b>One more setup step.</b> Tracking actual time needs a new table in your database. Run the <code>weeks</code> section of <code>setup.sql</code> in Supabase's SQL Editor, then reload this page.</span>
-    </div>
-    <div class="banner" id="week-error" hidden>
-      <span><b>Couldn't load this week's log.</b> Check your connection, then</span>
-      <button class="linkish" id="retry-week" type="button">try again</button>
-    </div>
-
-    <section class="weekhead" aria-label="Week">
-      <button type="button" class="icon-btn" id="wk-prev" aria-label="Previous week">‹</button>
-      <div class="weekhead-text">
-        <p class="label" id="wk-kicker">This week</p>
-        <h2 id="wk-range"></h2>
-      </div>
-      <button type="button" class="icon-btn" id="wk-next" aria-label="Next week">›</button>
-      <button type="button" class="linkish" id="wk-today" hidden>Back to this week</button>
-    </section>
-
-    <section class="tiles" aria-label="Week summary">
-      <article class="tile">
-        <p class="label">Logged</p>
-        <p class="tile-big"><b id="t-logged">0h</b> <span id="t-logged-of">of 0h planned</span></p>
-        <div class="tile-track"><i id="t-logged-bar"></i></div>
-        <p class="tile-sub" id="t-logged-sub"></p>
-      </article>
-      <article class="tile">
-        <p class="label" id="t-left-label">Left this week</p>
-        <p class="tile-big"><b id="t-left">0h</b> <span id="t-left-of">of 168h</span></p>
-        <div class="tile-track"><i id="t-left-bar"></i></div>
-        <p class="tile-sub" id="t-left-sub"></p>
-      </article>
-      <article class="tile tile-deep">
-        <p class="label"><span class="tile-icon" id="t-deep-icon"></span>Deep Focus</p>
-        <p class="tile-big"><b id="t-deep">0h</b> <span id="t-deep-of">of 0h planned</span></p>
-        <div class="tile-track"><i id="t-deep-bar"></i></div>
-        <p class="tile-sub" id="t-deep-sub"></p>
-      </article>
-    </section>
-
-    <section class="card review" aria-labelledby="review-title">
-      <h2 id="review-title">Weekly review</h2>
-      <ul class="review-list" id="review-list"></ul>
-      <button type="button" class="linkish" id="review-last" hidden>Review last week</button>
-    </section>
-
-    <section class="card" aria-labelledby="log-title">
+  <!-- ===== Areas: each card swipes between its plan and what was logged ===== -->
+  <section class="view" id="view-areas" aria-labelledby="ledger-title">
+    <section class="card areas-card">
       <div class="card-head">
         <div>
-          <h2 id="log-title">Log your time</h2>
-          <p class="hint">Quick-add, start a timer, or tap the block you just did. Type a weekly total to set it in one go.</p>
+          <h2 id="ledger-title">Areas of focus</h2>
+          <p class="hint">Swipe a card left or right to switch between what you planned and what you actually did.</p>
+        </div>
+        <button class="btn btn-add" id="add-top" type="button">+ Add area</button>
+      </div>
+      <div class="ctx">
+        <div class="seg" id="areas-seg" role="group" aria-label="Show every card as">
+          <button type="button" data-face="planned">Planned</button>
+          <button type="button" data-face="actual">Actual</button>
+        </div>
+        <div class="weeknav"></div>
+      </div>
+      <div class="day-tabs daychips" role="group" aria-label="Day"></div>
+      <div class="thead cols" aria-hidden="true">
+        <span></span><span></span><span>Area</span><span>Categories</span><span class="r">Per day</span><span class="r">Days</span><span class="r">Per week</span><span class="r">Share of week</span><span></span>
+      </div>
+      <div id="rows"></div>
+      <div class="tfoot cols">
+        <span class="t-l">Planned <span class="t-day-name"></span></span><span class="r" id="t-day"></span><span class="gap"></span><span class="r" id="t-week"></span><span class="gap"></span><span class="gap"></span>
+      </div>
+      <div class="tfoot cols">
+        <span class="t-l">Unplanned <span class="t-day-name"></span></span><span class="r" id="r-day"></span><span class="gap"></span><span class="r" id="r-week"></span><span class="gap"></span><span class="gap"></span>
+      </div>
+      <div class="add-row">
+        <button class="btn btn-add" id="add-bottom" type="button">+ Add area</button>
+        <span class="tip">Type hours as <code>1h 30m</code>, <code>1:30</code>, <code>1.5</code> or <code>90m</code>.</span>
+      </div>
+    </section>
+  </section>
+
+  <!-- ===== Charts: each card swipes between planned and actual ===== -->
+  <section class="view" id="view-charts" aria-label="Charts" hidden>
+    <div class="view-head">
+      <h2>Charts</h2>
+      <div class="weeknav"></div>
+    </div>
+    <div class="day-tabs daychips" role="group" aria-label="Day"></div>
+
+    <div class="chart-pair">
+      <section class="card flip" data-flip="day" aria-label="Day">
+        <div class="flip-head">
+          <p class="label day-label"></p>
+          <div class="seg"><button type="button" data-face="planned">Planned</button><button type="button" data-face="actual">Actual</button></div>
+        </div>
+        <div class="faces">
+          <div class="face" data-face="planned">
+            <article class="meter" id="m-day">
+              <div class="meter-top"><span class="chip"></span></div>
+              <div class="big"><span class="num">0h</span><span class="unit-text">left of 24h</span></div>
+              <div class="bar" role="img" style="--tick: calc(100% / 24)"></div>
+              <div class="scale"><span>0</span><span>6</span><span>12</span><span>18</span><span>24h</span></div>
+              <p class="stats"><span>Planned <b class="alloc">0h</b></span><span>Areas that day <b class="count">0</b></span></p>
+            </article>
+          </div>
+          <div class="face" data-face="actual">
+            <article class="meter" id="m-day-a">
+              <div class="meter-top"><span class="chip"></span></div>
+              <div class="big"><span class="num">0h</span><span class="unit-text">tracked of 24h</span></div>
+              <div class="bar" role="img" style="--tick: calc(100% / 24)"></div>
+              <div class="scale"><span>0</span><span>6</span><span>12</span><span>18</span><span>24h</span></div>
+              <p class="stats"><span>Planned <b class="alloc">0h</b></span><span>Areas tracked <b class="count">0</b></span></p>
+            </article>
+          </div>
+        </div>
+        <div class="flip-dots" aria-hidden="true"><i></i><i></i></div>
+      </section>
+
+      <section class="card flip" data-flip="week" aria-label="Week">
+        <div class="flip-head">
+          <p class="label">Week · 168 hours</p>
+          <div class="seg"><button type="button" data-face="planned">Planned</button><button type="button" data-face="actual">Actual</button></div>
+        </div>
+        <div class="faces">
+          <div class="face" data-face="planned">
+            <article class="meter" id="m-week">
+              <div class="meter-top"><span class="chip"></span></div>
+              <div class="big"><span class="num">0h</span><span class="unit-text">left of 168h</span></div>
+              <div class="bar" role="img" style="--tick: calc(100% / 7)"></div>
+              <div class="scale"><span>0</span><span>48</span><span>96</span><span>144</span><span>168h</span></div>
+              <p class="stats"><span>Planned <b class="alloc">0h</b></span><span>Free per day, on average <b class="avg">0h</b></span></p>
+            </article>
+          </div>
+          <div class="face" data-face="actual">
+            <article class="meter" id="m-week-a">
+              <div class="meter-top"><span class="chip"></span></div>
+              <div class="big"><span class="num">0h</span><span class="unit-text">tracked of 168h</span></div>
+              <div class="bar" role="img" style="--tick: calc(100% / 7)"></div>
+              <div class="scale"><span>0</span><span>48</span><span>96</span><span>144</span><span>168h</span></div>
+              <p class="stats"><span>Planned <b class="alloc">0h</b></span><span><span class="left-l">Left this week</span> <b class="left">0h</b></span></p>
+            </article>
+          </div>
+        </div>
+        <div class="flip-dots" aria-hidden="true"><i></i><i></i></div>
+      </section>
+    </div>
+
+    <section class="card flip" data-flip="grid" aria-labelledby="week-title">
+      <div class="flip-head">
+        <h2 id="week-title">Your week, hour by hour</h2>
+        <div class="seg"><button type="button" data-face="planned">Planned</button><button type="button" data-face="actual">Actual</button></div>
+      </div>
+      <div class="faces">
+        <div class="face" data-face="planned">
+          <p class="hint">Each square is one planned hour, rounded to the nearest hour. Tap a day to select it.</p>
+          <div class="week" id="week"></div>
+          <ul class="legend" id="legend"></ul>
+        </div>
+        <div class="face" data-face="actual">
+          <p class="hint">Each square is one tracked hour, rounded to the nearest hour. Tap a day to select it.</p>
+          <div class="week" id="week-a"></div>
+          <ul class="legend" id="legend-a"></ul>
         </div>
       </div>
-      <div class="log-day">
-        <p class="label">Logging for</p>
-        <div class="day-tabs" id="log-days" role="group" aria-label="Day to log"></div>
-      </div>
-      <div id="log-rows"></div>
+      <div class="flip-dots" aria-hidden="true"><i></i><i></i></div>
     </section>
 
-    <section class="card" aria-labelledby="cmp-title">
-      <h2 id="cmp-title">Planned vs actual</h2>
-      <p class="hint" id="cmp-hint">Each bar shows what you logged; the mark shows what you planned.</p>
-      <div class="cmp" id="cmp"></div>
+    <section class="card flip review" data-flip="review" aria-labelledby="review-title">
+      <div class="flip-head">
+        <h2 id="review-title">This week so far</h2>
+        <div class="seg"><button type="button" data-face="summary">Summary</button><button type="button" data-face="details">Details</button></div>
+      </div>
+      <div class="faces">
+        <div class="face" data-face="summary">
+          <div class="tiles" aria-label="Week summary">
+            <article class="tile">
+              <p class="label">Logged</p>
+              <p class="tile-big"><b id="t-logged">0h</b> <span id="t-logged-of">of 0h planned</span></p>
+              <div class="tile-track"><i id="t-logged-bar"></i></div>
+              <p class="tile-sub" id="t-logged-sub"></p>
+            </article>
+            <article class="tile">
+              <p class="label" id="t-left-label">Left this week</p>
+              <p class="tile-big"><b id="t-left">0h</b> <span id="t-left-of">of 168h</span></p>
+              <div class="tile-track"><i id="t-left-bar"></i></div>
+              <p class="tile-sub" id="t-left-sub"></p>
+            </article>
+            <article class="tile tile-deep">
+              <p class="label"><span class="tile-icon" id="t-deep-icon"></span>Deep Focus</p>
+              <p class="tile-big"><b id="t-deep">0h</b> <span id="t-deep-of">of 0h planned</span></p>
+              <div class="tile-track"><i id="t-deep-bar"></i></div>
+              <p class="tile-sub" id="t-deep-sub"></p>
+            </article>
+          </div>
+          <ul class="review-list" id="review-list"></ul>
+          <button type="button" class="linkish" id="review-last" hidden>Review last week</button>
+        </div>
+        <div class="face" data-face="details">
+          <p class="hint" id="cmp-hint"></p>
+          <div class="cmp" id="cmp"></div>
+        </div>
+      </div>
+      <div class="flip-dots" aria-hidden="true"><i></i><i></i></div>
     </section>
-  </div>
+  </section>
+
+  <!-- ===== Focus: life categories and Deep Focus sessions ===== -->
+  <section class="view" id="view-focus" aria-label="Focus" hidden>
+    <div class="view-head">
+      <h2>Focus</h2>
+      <div class="weeknav"></div>
+    </div>
+    <div class="day-tabs daychips" role="group" aria-label="Day"></div>
+
+    <section class="card flip grip" data-flip="grip" aria-labelledby="grip-title">
+      <div class="flip-head">
+        <h2 id="grip-title">Life categories</h2>
+        <div class="seg"><button type="button" data-face="planned">Planned</button><button type="button" data-face="actual">Actual</button></div>
+      </div>
+      <div class="faces">
+        <div class="face" data-face="planned">
+          <div class="grip-top"><p class="hint">Time planned for Growth, Restoration, Interpersonal and Production, plus your Deep Focus.</p><p class="deep-stat" id="deep-stat"></p></div>
+          <div class="grip-table">
+            <div class="grip-row grip-head" aria-hidden="true"><span>Category</span><span class="r" id="grip-day-head">Day</span><span class="r">Week</span></div>
+            <div id="grip-rows"></div>
+          </div>
+          <p class="grip-note" id="grip-note" hidden></p>
+        </div>
+        <div class="face" data-face="actual">
+          <div class="grip-top"><p class="hint">Time you tracked in each category, plus your Deep Focus.</p><p class="deep-stat" id="deep-stat-a"></p></div>
+          <div class="grip-table">
+            <div class="grip-row grip-head" aria-hidden="true"><span>Category</span><span class="r" id="grip-day-head-a">Day</span><span class="r">Week</span></div>
+            <div id="grip-rows-a"></div>
+          </div>
+          <p class="grip-note" id="grip-note-a" hidden></p>
+        </div>
+      </div>
+      <div class="flip-dots" aria-hidden="true"><i></i><i></i></div>
+    </section>
+
+    <section class="card pomo" aria-labelledby="pomo-title">
+      <div class="card-head">
+        <div>
+          <h2 id="pomo-title">Deep Focus sessions</h2>
+          <p class="hint">Work in one focused block. When the time is up, it's logged to the area and a short break starts.</p>
+        </div>
+      </div>
+      <div class="pomo-body">
+        <div class="pomo-ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+            <circle class="pomo-track" cx="60" cy="60" r="52"/>
+            <circle class="pomo-prog" id="pomo-prog" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="pomo-center">
+            <span class="pomo-phase" id="pomo-phase">Ready</span>
+            <b class="pomo-time" id="pomo-time" role="timer">25:00</b>
+          </div>
+        </div>
+        <div class="pomo-controls">
+          <label class="pomo-field">Area
+            <select class="pomo-select" id="pomo-area"></select>
+          </label>
+          <div class="pomo-field">Length
+            <div class="seg" id="pomo-len" role="group" aria-label="Session length">
+              <button type="button" data-len="25">25m</button>
+              <button type="button" data-len="50">50m</button>
+              <button type="button" data-len="90">90m</button>
+            </div>
+          </div>
+          <div class="pomo-actions">
+            <button type="button" class="btn btn-add" id="pomo-start">Start focus</button>
+            <button type="button" class="btn-ghost" id="pomo-stop" hidden>Stop</button>
+          </div>
+          <p class="pomo-stats" id="pomo-stats"></p>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <nav class="bottomnav" aria-label="Sections">
+    <button type="button" data-view="areas">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8"/><path d="M3.5 6.2 6.6 3.3"/><path d="M20.5 6.2 17.4 3.3"/></svg>
+      <span>Areas</span>
+    </button>
+    <button type="button" data-view="charts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 20V11"/><path d="M12 20V5"/><path d="M18 20v-6"/></svg>
+      <span>Charts</span>
+    </button>
+    <button type="button" data-view="focus">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/></svg>
+      <span>Focus</span>
+    </button>
+  </nav>
 </main>
 
 <div class="toast" id="toast" role="status" hidden><span id="toast-msg"></span><button type="button" id="toast-undo">Undo</button></div>
@@ -981,8 +1166,7 @@ button.d:hover { color: var(--ink); }
 
   function makeRow(a) {
     const row = tpl.content.firstElementChild.cloneNode(true);
-    row.dataset.id = a.id;
-    row.style.setProperty("--c", colorOf(a));
+    row.dataset.id = a.id;   // its color (--c) comes from the area card around it
     const q = (s) => row.querySelector(s);
     q(".name").id = "name-" + a.id;
     q(".perday").id = "pd-" + a.id;
@@ -1049,6 +1233,31 @@ button.d:hover { color: var(--ink); }
     btn.setAttribute("aria-label", `Days: ${n} selected, ${summary}`);
   }
 
+  // Each area is a two-sided card: its plan (the editable row) and what was logged (filled in by drawLogFaces).
+  function makeCard(a) {
+    const card = document.createElement("div");
+    card.className = "acard";
+    card.dataset.id = a.id;
+    card.style.setProperty("--c", colorOf(a));
+    const faces = document.createElement("div");
+    faces.className = "faces";
+    const planned = document.createElement("div");
+    planned.className = "face face-p";
+    planned.dataset.face = "planned";
+    planned.append(makeRow(a));
+    const actual = document.createElement("div");
+    actual.className = "face face-a";
+    actual.dataset.face = "actual";
+    faces.append(planned, actual);
+    const dots = document.createElement("div");
+    dots.className = "flip-dots";
+    dots.setAttribute("aria-hidden", "true");
+    dots.append(document.createElement("i"), document.createElement("i"));
+    card.append(faces, dots);
+    setFace(card, areaFaces.get(a.id) || faceState.areas || "planned");
+    return card;
+  }
+
   function renderRows() {
     hidePop(false);
     rowsEl.textContent = "";
@@ -1059,7 +1268,7 @@ button.d:hover { color: var(--ink); }
       rowsEl.append(e);
       return;
     }
-    for (const a of state.areas) rowsEl.append(makeRow(a));
+    for (const a of state.areas) rowsEl.append(makeCard(a));
   }
 
   function rowOf(el) {
@@ -1117,7 +1326,7 @@ button.d:hover { color: var(--ink); }
     e.preventDefault();
     const order = [".name", ".perday", ".days-btn", ".perweek"];
     const i = order.findIndex((s) => e.target.matches(s));
-    const next = order[i + 1] ? row.querySelector(order[i + 1]) : row.nextElementSibling?.querySelector(".name");
+    const next = order[i + 1] ? row.querySelector(order[i + 1]) : row.closest(".acard").nextElementSibling?.querySelector(".name");
     (next || e.target).focus();
     if (next && next.select) next.select();
   });
@@ -1152,9 +1361,9 @@ button.d:hover { color: var(--ink); }
   });
 
   // ---------- reorder ----------
-  // The DOM order of rows is the source of truth while dragging; it's copied into state on drop.
+  // The DOM order of area cards is the source of truth while dragging; it's copied into state on drop.
   function commitOrder() {
-    const ids = [...rowsEl.querySelectorAll(".row")].map((r) => r.dataset.id);
+    const ids = [...rowsEl.querySelectorAll(".acard")].map((r) => r.dataset.id);
     if (ids.join() === state.areas.map((a) => a.id).join()) return;
     const byId = new Map(state.areas.map((a) => [a.id, a]));
     state.areas = ids.map((id) => byId.get(id)).filter(Boolean);
@@ -1167,7 +1376,7 @@ button.d:hover { color: var(--ink); }
     if (!handle || e.button !== 0 || drag) return;
     e.preventDefault();
     hidePop(false);
-    drag = { row: handle.closest(".row"), handle };
+    drag = { row: handle.closest(".acard"), handle };
     drag.row.classList.add("dragging");
     document.body.classList.add("is-dragging");
     document.addEventListener("pointermove", onDragMove);
@@ -1178,7 +1387,7 @@ button.d:hover { color: var(--ink); }
   function onDragMove(e) {
     if (!drag) return;
     const y = e.clientY;
-    const others = [...rowsEl.querySelectorAll(".row")].filter((r) => r !== drag.row);
+    const others = [...rowsEl.querySelectorAll(".acard")].filter((r) => r !== drag.row);
     const before = others.find((r) => { const b = r.getBoundingClientRect(); return y < b.top + b.height / 2; }) || null;
     if (drag.row.nextElementSibling !== before && before !== drag.row) rowsEl.insertBefore(drag.row, before);
     if (y < 56) scrollBy(0, -14); else if (y > innerHeight - 56) scrollBy(0, 14);
@@ -1201,7 +1410,7 @@ button.d:hover { color: var(--ink); }
     const handle = e.target.closest(".handle");
     if (!handle || !["ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) return;
     e.preventDefault();
-    const row = handle.closest(".row");
+    const row = handle.closest(".acard");
     if (e.key === "ArrowUp" && row.previousElementSibling) rowsEl.insertBefore(row, row.previousElementSibling);
     else if (e.key === "ArrowDown" && row.nextElementSibling) rowsEl.insertBefore(row.nextElementSibling, row);
     else if (e.key === "Home") rowsEl.prepend(row);
@@ -1295,7 +1504,7 @@ button.d:hover { color: var(--ink); }
     dayHourInputs.push(hrs);
   });
   const dayArea = () => state.areas.find((x) => x.id === daypicker.dataset.id);
-  const rowFor = (a) => rowsEl.querySelector(`[data-id="${a.id}"]`);
+  const rowFor = (a) => rowsEl.querySelector(`.acard[data-id="${a.id}"]`);
 
   function syncDayPicker(a, skip) {
     dayChecks.forEach((box, d) => {
@@ -1431,9 +1640,10 @@ button.d:hover { color: var(--ink); }
   function addArea() {
     const a = { id: uid(), name: "", color: nextColor(), hours: new Array(7).fill(1), days: ALL.slice(), categories: [], deep: false };
     state.areas.push(a);
-    if (state.areas.length === 1) renderRows(); else rowsEl.append(makeRow(a));
+    areaFaces.set(a.id, "planned");   // a new area starts on its plan so it can be named
+    if (state.areas.length === 1) renderRows(); else rowsEl.append(makeCard(a));
     edited();
-    const input = rowsEl.querySelector(`[data-id="${a.id}"] .name`);
+    const input = rowsEl.querySelector(`.acard[data-id="${a.id}"] .name`);
     input.scrollIntoView({ block: "nearest", behavior: "smooth" });
     input.focus({ preventScroll: true });
   }
@@ -1464,23 +1674,11 @@ button.d:hover { color: var(--ink); }
   // ---------- summary ----------
   const label = (a) => a.name.trim() || "Untitled area";
 
-  function meter(el, values, total, cap) {
-    const left = cap - total;
-    const num = el.querySelector(".num"), chip = el.querySelector(".chip");
-    num.textContent = fmt(Math.abs(left));
-    num.classList.toggle("over", left < -EPS);
-    el.querySelector(".unit-text").textContent = left < -EPS ? `over the ${cap}h limit` : `left of ${cap}h`;
-    chip.className = "chip";
-    if (left < -EPS) { chip.classList.add("over"); chip.textContent = `Over by ${fmt(-left)}`; }
-    else if (left < EPS) { chip.classList.add("ok"); chip.textContent = "Fully planned"; }
-    else chip.textContent = `${Math.round((total / cap) * 100)}% planned`;
-    el.querySelector(".alloc").textContent = fmt(total);
-
-    const bar = el.querySelector(".bar");
+  function paintBar(bar, values, total, cap, what) {
     bar.textContent = "";
     const scale = Math.max(cap, total);
     values.forEach(({ a, v }) => {
-      if (v <= 0) return;
+      if (v <= EPS) return;
       const s = document.createElement("span");
       s.className = "seg";
       s.style.width = (v / scale) * 100 + "%";
@@ -1494,7 +1692,36 @@ button.d:hover { color: var(--ink); }
       l.style.left = (cap / scale) * 100 + "%";
       bar.append(l);
     }
-    bar.setAttribute("aria-label", `${fmt(total)} of ${cap} hours allocated`);
+    bar.setAttribute("aria-label", `${fmt(total)} of ${cap} hours ${what}`);
+  }
+
+  // Planned meter: how much of the day or week is still free.
+  function meter(el, values, total, cap) {
+    const left = cap - total;
+    const num = el.querySelector(".num"), chip = el.querySelector(".chip");
+    num.textContent = fmt(Math.abs(left));
+    num.classList.toggle("over", left < -EPS);
+    el.querySelector(".unit-text").textContent = left < -EPS ? `over the ${cap}h limit` : `left of ${cap}h`;
+    chip.className = "chip";
+    if (left < -EPS) { chip.classList.add("over"); chip.textContent = `Over by ${fmt(-left)}`; }
+    else if (left < EPS) { chip.classList.add("ok"); chip.textContent = "Fully planned"; }
+    else chip.textContent = `${Math.round((total / cap) * 100)}% planned`;
+    el.querySelector(".alloc").textContent = fmt(total);
+    paintBar(el.querySelector(".bar"), values, total, cap, "planned");
+  }
+
+  // Actual meter: same look, filled with tracked time.
+  function meterActual(el, values, total, cap, plan) {
+    const num = el.querySelector(".num"), chip = el.querySelector(".chip");
+    num.textContent = fmt(total);
+    num.classList.remove("over");
+    chip.className = "chip";
+    if (plan > EPS) {
+      chip.textContent = `${pct(total, plan)} of plan`;
+      if (total >= plan - EPS) chip.classList.add("ok");
+    } else chip.textContent = total > EPS ? "Nothing planned" : "Nothing tracked yet";
+    el.querySelector(".alloc").textContent = fmt(plan);
+    paintBar(el.querySelector(".bar"), values, total, cap, "tracked");
   }
 
   function lrRound(vals) {
@@ -1506,82 +1733,115 @@ button.d:hover { color: var(--ink); }
     return out;
   }
 
-  // ---------- selected day (drives the 24-hour meter) ----------
+  // ---------- selected day (one choice shared by every view) ----------
   const TODAY = (new Date().getDay() + 6) % 7; // Mon = 0
   let selDay = TODAY;
   function selectDay(d) { if (d !== selDay) { selDay = d; update(); } }
 
-  const dayTabs = DAYS.map((name, d) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.textContent = name;
-    if (d === TODAY) b.classList.add("today");
-    b.addEventListener("click", () => selectDay(d));
-    $("#day-tabs").append(b);
-    return b;
-  });
-  $("#day-tabs").addEventListener("keydown", (e) => {
-    const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-    if (!step) return;
-    e.preventDefault();
-    selectDay((selDay + step + 7) % 7);
-    dayTabs[selDay].focus();
+  const dayChipSets = [...document.querySelectorAll(".daychips")].map((box) => {
+    const btns = DAYS.map((name, d) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = name;
+      b.addEventListener("click", () => selectDay(d));
+      box.append(b);
+      return b;
+    });
+    box.addEventListener("keydown", (e) => {
+      const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      selectDay((selDay + step + 7) % 7);
+      btns[selDay].focus();
+    });
+    return btns;
   });
 
-  const weekEl = $("#week");
-  const weekRows = DAYS.map((d, i) => {
-    const r = document.createElement("div");
-    r.className = "wrow";
-    const dl = document.createElement("button");
-    dl.type = "button"; dl.className = "d"; dl.textContent = d;
-    dl.title = `Show ${DAY_NAMES[i]} in the 24-hour meter`;
-    dl.addEventListener("click", () => selectDay(i));
-    const hours = document.createElement("div"); hours.className = "hours";
-    const cells = Array.from({ length: 24 }, () => hours.appendChild(document.createElement("span")));
-    const f = document.createElement("span"); f.className = "f";
-    r.append(dl, hours, f);
-    weekEl.append(r);
-    return { r, cells, f };
-  });
-  {
+  function paintDayChips() {
+    const today = todayIdx();
+    const planned = (d) => state.areas.reduce((s, a) => s + (a.days.includes(d) ? a.hours[d] : 0), 0);
+    const over = DAYS.map((_, d) => planned(d) > 24 + EPS);
+    dayChipSets.forEach((btns) => btns.forEach((b, d) => {
+      b.setAttribute("aria-pressed", String(d === selDay));
+      b.classList.toggle("today", d === today);
+      b.classList.toggle("over", over[d]);
+      b.setAttribute("aria-label", `${DAY_NAMES[d]}${d === today ? ", today" : ""}${over[d] ? ", over 24 hours planned" : ""}`);
+    }));
+    document.querySelectorAll(".day-label").forEach((el) => {
+      el.textContent = `${DAY_NAMES[selDay]}${selDay === today ? " (today)" : ""} · 24 hours`;
+    });
+  }
+
+  // ---------- week grids: 7 days × 24 hour squares (planned and tracked) ----------
+  function buildWeekGrid(el, rightHead) {
+    const rows = DAYS.map((d, i) => {
+      const r = document.createElement("div");
+      r.className = "wrow";
+      const dl = document.createElement("button");
+      dl.type = "button"; dl.className = "d"; dl.textContent = d;
+      dl.title = `Select ${DAY_NAMES[i]}`;
+      dl.addEventListener("click", () => selectDay(i));
+      const hours = document.createElement("div"); hours.className = "hours";
+      const cells = Array.from({ length: 24 }, () => hours.appendChild(document.createElement("span")));
+      const f = document.createElement("span"); f.className = "f";
+      r.append(dl, hours, f);
+      el.append(r);
+      return { r, cells, f };
+    });
     const axis = document.createElement("div");
     axis.className = "wrow axis";
     axis.setAttribute("aria-hidden", "true");
     const hours = document.createElement("div"); hours.className = "hours";
     for (let h = 0; h < 24; h++) { const s = document.createElement("span"); s.textContent = h % 6 === 0 ? h : ""; hours.append(s); }
-    const f = document.createElement("span"); f.className = "f"; f.textContent = "free";
+    const f = document.createElement("span"); f.className = "f"; f.textContent = rightHead;
     axis.append(document.createElement("span"), hours, f);
-    weekEl.append(axis);
+    el.append(axis);
+    return rows;
   }
+  const gridPlanned = buildWeekGrid($("#week"), "free");
+  const gridTracked = buildWeekGrid($("#week-a"), "tracked");
 
-  function drawWeek() {
-    weekRows.forEach(({ r, cells, f }, d) => {
+  // perDay(d) -> [{ a, h }] in order; right(d, total) -> { text, over }
+  function paintWeekGrid(grid, perDay, right) {
+    grid.forEach(({ r, cells, f }, d) => {
       r.classList.toggle("sel", d === selDay);
-      const active = state.areas.filter((a) => a.days.includes(d) && a.hours[d] > 0);
-      const counts = lrRound(active.map((a) => a.hours[d]));
+      const items = perDay(d).filter((x) => x.h > EPS);
+      const counts = lrRound(items.map((x) => x.h));
       let idx = 0;
       cells.forEach((c) => { c.style.background = ""; c.title = ""; });
-      active.forEach((a, k) => {
+      items.forEach((x, k) => {
         for (let j = 0; j < counts[k] && idx < 24; j++, idx++) {
-          cells[idx].style.background = colorOf(a);
-          cells[idx].title = label(a);
+          cells[idx].style.background = colorOf(x.a);
+          cells[idx].title = label(x.a);
         }
       });
-      const free = 24 - active.reduce((s, a) => s + a.hours[d], 0);
-      f.textContent = free < -EPS ? `over ${fmt(-free)}` : fmt(free);
-      f.classList.toggle("over", free < -EPS);
+      const res = right(d, items.reduce((s, x) => s + x.h, 0));
+      f.textContent = res.text;
+      f.classList.toggle("over", !!res.over);
     });
   }
 
-  function drawLegend() {
-    const ul = $("#legend");
+  function drawWeek() {
+    paintWeekGrid(gridPlanned,
+      (d) => state.areas.filter((a) => a.days.includes(d)).map((a) => ({ a, h: a.hours[d] })),
+      (d, sum) => { const free = 24 - sum; return free < -EPS ? { text: `over ${fmt(-free)}`, over: true } : { text: fmt(free) }; });
+  }
+
+  function drawLegend(ul, items, emptyText) {
     ul.textContent = "";
-    state.areas.forEach((a) => {
+    if (!items.length && emptyText) {
+      const li = document.createElement("li");
+      li.className = "legend-empty";
+      li.textContent = emptyText;
+      ul.append(li);
+      return;
+    }
+    items.forEach(({ a, h }) => {
       const li = document.createElement("li");
       li.style.setProperty("--c", colorOf(a));
       const i = document.createElement("i");
       const n = document.createElement("span"); n.textContent = label(a);
-      const b = document.createElement("b"); b.textContent = fmt(weekly(a)) + "/wk";
+      const b = document.createElement("b"); b.textContent = fmt(h) + "/wk";
       li.append(i, n, b);
       ul.append(li);
     });
@@ -1635,88 +1895,91 @@ button.d:hover { color: var(--ink); }
     return cell;
   }
 
-  function drawGrip() {
-    const dayH = (a) => (a.days.includes(selDay) ? a.hours[selDay] : 0);
-    const total = (pred, f) => state.areas.reduce((s, a) => s + (pred(a) ? f(a) : 0), 0);
-    const both = (pred) => ({ day: total(pred, dayH), week: total(pred, weekly) });
-
-    // An area in several categories counts its full hours toward each of them.
+  // Shared by the planned and tracked faces. o: { areas, dayH(a), weekH(a), rest: {name, desc}, deepDesc(deep, all), statTail(deep), noun }
+  // An area in several categories counts its full hours toward each of them.
+  function drawGripInto(ids, o) {
+    const both = (pred) => ({
+      day: o.areas.reduce((s, a) => s + (pred(a) ? o.dayH(a) : 0), 0),
+      week: o.areas.reduce((s, a) => s + (pred(a) ? o.weekH(a) : 0), 0),
+    });
     const cats = CAT_KEYS.map((k) => ({ k, ...both((a) => a.categories.includes(k)) }));
     const deep = both((a) => a.deep);
     const none = both((a) => !a.categories.length);
     const all = both(() => true);
 
-    const rows = $("#grip-rows");
+    const rows = $(ids.rows);
     rows.textContent = "";
     cats.forEach(({ k, day, week }) => {
       rows.append(gripRow({ badge: k, k: catVar(k), name: CATS[k].name, desc: CATS[k].desc, day, week, track: true }));
     });
-    rows.append(gripRow({
-      icon: TARGET_SVG, k: "var(--clay)", name: "Deep Focus", day: deep.day, week: deep.week, track: true,
-      desc: all.week > EPS ? `${pct(deep.week, all.week)} of your planned time` : "Tag areas with the target icon",
-    }));
+    rows.append(gripRow({ icon: TARGET_SVG, k: "var(--clay)", name: "Deep Focus", day: deep.day, week: deep.week, track: true, desc: o.deepDesc(deep.week, all.week) }));
     if (none.week > EPS || none.day > EPS) {
       rows.append(gripRow({ badge: "?", k: "var(--muted)", name: "No category", desc: "Areas not assigned yet", day: none.day, week: none.week, quiet: true }));
     }
-    rows.append(gripRow({ badge: "–", k: "var(--muted)", name: "Unplanned", desc: "Time not given to any area", day: 24 - all.day, week: 168 - all.week, quiet: true }));
+    rows.append(gripRow({ badge: "–", k: "var(--muted)", name: o.rest.name, desc: o.rest.desc, day: 24 - all.day, week: 168 - all.week, quiet: true }));
 
-    $("#grip-day-head").textContent = DAYS[selDay];
+    $(ids.head).textContent = DAYS[selDay];
 
-    const multi = state.areas.filter((a) => a.categories.length > 1 && weekly(a) > EPS).length;
-    const note = $("#grip-note");
+    const multi = o.areas.filter((a) => a.categories.length > 1 && o.weekH(a) > EPS).length;
+    const note = $(ids.note);
     note.hidden = !multi;
     note.textContent = multi
-      ? `${multi} area${multi === 1 ? " counts" : "s count"} toward more than one category, so the categories add up to more than your planned time.`
+      ? `${multi} area${multi === 1 ? " counts" : "s count"} toward more than one category, so the categories add up to more than your ${o.noun} time.`
       : "";
 
-    const stat = $("#deep-stat");
+    const stat = $(ids.stat);
     stat.innerHTML = TARGET_SVG;
-    const label = document.createElement("span");
-    label.textContent = "Deep Focus";
+    const name = document.createElement("span");
+    name.textContent = "Deep Focus";
     const val = document.createElement("b");
     val.textContent = fmt(deep.week);
     const tail = document.createElement("span");
-    tail.textContent = `a week · ${pct(deep.week, 168)} of your week`;
-    stat.append(label, val, tail);
+    tail.textContent = o.statTail(deep.week);
+    stat.append(name, val, tail);
+  }
+
+  function drawGrip() {
+    drawGripInto({ rows: "#grip-rows", head: "#grip-day-head", note: "#grip-note", stat: "#deep-stat" }, {
+      areas: state.areas,
+      dayH: (a) => (a.days.includes(selDay) ? a.hours[selDay] : 0),
+      weekH: weekly,
+      rest: { name: "Unplanned", desc: "Time not given to any area" },
+      deepDesc: (d, all) => (all > EPS ? `${pct(d, all)} of your planned time` : "Tag areas with the target icon"),
+      statTail: (d) => `a week · ${pct(d, 168)} of your week`,
+      noun: "planned",
+    });
   }
 
   function update() {
-    const dayTotal = (d) => state.areas.reduce((s, a) => s + (a.days.includes(d) ? a.hours[d] : 0), 0);
+    const dayTotal = state.areas.reduce((s, a) => s + (a.days.includes(selDay) ? a.hours[selDay] : 0), 0);
     const dayAreas = state.areas.filter((a) => a.days.includes(selDay) && a.hours[selDay] > 0);
-    const day = dayTotal(selDay);
     const week = state.areas.reduce((s, a) => s + weekly(a), 0);
-    meter($("#m-day"), dayAreas.map((a) => ({ a, v: a.hours[selDay] })), day, 24);
+    meter($("#m-day"), dayAreas.map((a) => ({ a, v: a.hours[selDay] })), dayTotal, 24);
     meter($("#m-week"), state.areas.map((a) => ({ a, v: weekly(a) })), week, 168);
     $("#m-day .count").textContent = dayAreas.length;
-    $("#day-label").textContent = `${DAY_NAMES[selDay]}${selDay === TODAY ? " (today)" : ""} · 24 hours`;
-    dayTabs.forEach((b, d) => {
-      b.setAttribute("aria-pressed", String(d === selDay));
-      const over = dayTotal(d) > 24 + EPS;
-      b.classList.toggle("over", over);
-      b.setAttribute("aria-label", `${DAY_NAMES[d]}${d === TODAY ? ", today" : ""}${over ? ", over 24 hours" : ""}`);
-    });
-    document.querySelectorAll(".t-day-name").forEach((s) => { s.textContent = `(${DAYS[selDay]} · week)`; });
     const avg = (168 - week) / 7;
     $("#m-week .avg").textContent = avg < -EPS ? `over by ${fmt(-avg)}` : fmt(avg);
+    paintDayChips();
+    document.querySelectorAll(".t-day-name").forEach((s) => { s.textContent = `(${DAYS[selDay]} · week)`; });
 
     const rows = rowsEl.querySelectorAll(".row");
     rows.forEach((row, i) => {
       const a = state.areas.find((x) => x.id === row.dataset.id);
       if (!a) return;
       row.querySelector(".handle").setAttribute("aria-label", `Move ${label(a)}, position ${i + 1} of ${rows.length}. Use the up and down arrow keys.`);
-      const pct = (weekly(a) / 168) * 100;
-      row.querySelector(".pct").textContent = (pct > 0 && pct < 10 ? pct.toFixed(1) : Math.round(pct)) + "%";
-      row.querySelector(".track i").style.width = Math.min(100, pct) + "%";
+      const share = (weekly(a) / 168) * 100;
+      row.querySelector(".pct").textContent = (share > 0 && share < 10 ? share.toFixed(1) : Math.round(share)) + "%";
+      row.querySelector(".track i").style.width = Math.min(100, share) + "%";
     });
 
-    $("#t-day").textContent = fmt(day);
+    $("#t-day").textContent = fmt(dayTotal);
     $("#t-week").textContent = fmt(week);
     const rd = $("#r-day"), rw = $("#r-week");
-    rd.textContent = fmt(24 - day); rd.classList.toggle("over", 24 - day < -EPS);
+    rd.textContent = fmt(24 - dayTotal); rd.classList.toggle("over", 24 - dayTotal < -EPS);
     rw.textContent = fmt(168 - week); rw.classList.toggle("over", 168 - week < -EPS);
 
     drawWeek();
-    drawLegend();
+    drawLegend($("#legend"), state.areas.map((a) => ({ a, h: weekly(a) })));
     drawGrip();
     drawActual();
   }
@@ -1744,8 +2007,8 @@ button.d:hover { color: var(--ink); }
 
   const weeks = new Map();            // week key -> { entries, timers, plan }
   const weekSaveTimers = new Map();   // week key -> pending save timeout
-  let viewKey = thisWeekKey(), logDay = todayIdx();
-  let weeksMissing = false, weekLoading = false, weekFailed = false, activeTab = "planned";
+  let viewKey = thisWeekKey();
+  let weeksMissing = false, weekLoading = false, weekFailed = false;
 
   function normWeek(raw) {
     const d = raw && typeof raw === "object" ? raw : {};
@@ -1864,7 +2127,7 @@ button.d:hover { color: var(--ink); }
     const k = viewKey, w = weeks.get(k);
     if (!w) return;
     adoptSample();
-    const e = { id: uid(), a: area.id, d: logDay, m: mins, t: new Date().toISOString(), s: src };
+    const e = { id: uid(), a: area.id, d: selDay, m: mins, t: new Date().toISOString(), s: src };
     w.entries.push(e);
     saveWeek(k);
     drawActual();
@@ -1906,29 +2169,30 @@ button.d:hover { color: var(--ink); }
 
   // Logs exactly how long the timer ran, to the second.
   // switching: stopped because another area started, so an instant stop is dropped without a message.
-  function stopTimer(id, switching) {
+  // opts: { endAt (log up to this time), source (entry source), quiet (no message) }
+  function stopTimer(id, switching, opts = {}) {
     const k = thisWeekKey(), w = weeks.get(k);
     const t = w && w.timers.find((x) => x.a === id);
     if (!t) return;
     w.timers = w.timers.filter((x) => x !== t);
     const { a, start } = t;
-    let secs = Math.round((Date.now() - start) / 1000);
+    let secs = Math.round(((opts.endAt || Date.now()) - start) / 1000);
     const name = areaName(a, k);
     if (secs < 1) {
       saveWeek(k);
       drawActual();
-      if (!switching) showToast(`Timer for ${name} was stopped right away, so nothing was logged`, null);
+      if (!switching && !opts.quiet) showToast(`Timer for ${name} was stopped right away, so nothing was logged`, null);
       return;
     }
     const capped = secs > 18 * 3600;
     if (capped) secs = 18 * 3600;
     // Log on the day the timer started; a timer left running from last week lands on Monday.
     const day = start >= fromKey(k).getTime() ? (new Date(start).getDay() + 6) % 7 : 0;
-    const e = { id: uid(), a, d: day, m: secs / 60, t: new Date().toISOString(), s: "timer" };
+    const e = { id: uid(), a, d: day, m: secs / 60, t: new Date().toISOString(), s: opts.source || "timer" };
     w.entries.push(e);
     saveWeek(k);
     drawActual();
-    showToast(capped ? `Logged 18h to ${name}. The timer ran longer, so check it.` : `Logged ${fmt(secs / 3600)} to ${name}`, () => removeEntry(k, e.id));
+    if (!opts.quiet) showToast(capped ? `Logged 18h to ${name}. The timer ran longer, so check it.` : `Logged ${fmt(secs / 3600)} to ${name}`, () => removeEntry(k, e.id));
   }
 
   function elapsedText(ms) {
@@ -1951,23 +2215,19 @@ button.d:hover { color: var(--ink); }
       $("#runner-stop").textContent = ts.length > 1 ? "Stop all" : "Stop";
     }
     drawTrack();
+    // Always visible: real hours left in this week (the trade-off), or unplanned hours before signing in.
     const c = $("#left-counter");
     c.textContent = "";
     const b = document.createElement("b");
     let over = false;
-    if (activeTab === "planned" || !mode) {
+    if (mode) {
+      b.textContent = fmt(hoursLeftThisWeek());
+      c.append(b, " of 168h left");
+    } else {
       const left = 168 - sumBy(state.areas, weekly);
       over = left < -EPS;
       b.textContent = fmt(Math.abs(left));
-      c.append(b, over ? " over 168h planned" : " of 168h unplanned");
-    } else if (viewKey === thisWeekKey()) {
-      b.textContent = fmt(hoursLeftThisWeek());
-      c.append(b, " of 168h left this week");
-    } else {
-      let logged = 0;
-      actualsOf(weeks.get(viewKey)).forEach((r) => { logged += r.week; });
-      b.textContent = fmt(logged);
-      c.append(b, " of 168h logged");
+      c.append(b, over ? " over 168h" : " of 168h unplanned");
     }
     c.classList.toggle("over", over);
   }
@@ -1976,7 +2236,7 @@ button.d:hover { color: var(--ink); }
     const ts = runningTimers();
     if (!ts.length) return;
     if (ts.length === 1) $("#runner-time").textContent = elapsedText(Date.now() - ts[0].start);
-    const rows = [...document.querySelectorAll("#log-rows .lrow")], tiles = [...document.querySelectorAll("#track-grid .ttile")];
+    const rows = [...document.querySelectorAll("#rows .lrow")], tiles = [...document.querySelectorAll("#track-grid .ttile")];
     ts.forEach((t) => {
       const txt = elapsedText(Date.now() - t.start);
       const row = rows.find((r) => r.dataset.id === t.a);
@@ -2022,9 +2282,9 @@ button.d:hover { color: var(--ink); }
     const focused = grid.contains(document.activeElement) ? document.activeElement.dataset.id : null;
     grid.textContent = "";
     const msg = !mode ? "Sign in to track your time."
-      : mode === "account" && weeksMissing ? "Tracking turns on after the database update on the Actual focus tab."
+      : mode === "account" && weeksMissing ? "Tracking turns on after the database update shown above."
       : !weeks.has(thisWeekKey()) ? "Loading this week…"
-      : !state.areas.length ? "Add areas of focus on the Planned focus tab first."
+      : !state.areas.length ? "Add areas of focus on the Areas tab first."
       : "";
     $("#track-msg").hidden = !msg;
     $("#track-msg").textContent = msg;
@@ -2069,17 +2329,24 @@ button.d:hover { color: var(--ink); }
   // Hours left this week tick down; refresh the numbers every minute.
   setInterval(() => { if (mode) drawActual(); }, 60000);
 
-  // ----- drawing the Actual tab -----
-  const logRowsFocused = () => $("#log-rows").contains(document.activeElement) && document.activeElement.matches("input");
+  // ----- drawing everything that shows tracked time -----
+  const typingIn = (el) => !!el && el.contains(document.activeElement) && document.activeElement.matches("input");
+
+  // Logged areas for a week, including ones since removed from the plan (shown in muted grey).
+  function trackedList(areas, act) {
+    const list = areas.filter((a) => act.has(a.id)).map((a) => ({ a, r: act.get(a.id) }));
+    act.forEach((r, id) => {
+      if (!areas.some((a) => a.id === id)) {
+        list.push({ a: { id, name: areaName(id, viewKey), color: "var(--muted)", categories: [], deep: false, days: [], hours: [0, 0, 0, 0, 0, 0, 0] }, r });
+      }
+    });
+    return list;
+  }
 
   function drawActual() {
     updateChrome();
-    if ($("#tab-actual").hidden) return;
     const cur = thisWeekKey(), isCur = viewKey === cur, w = weeks.get(viewKey);
-    $("#wk-kicker").textContent = isCur ? "This week" : viewKey === shiftKey(cur, -1) ? "Last week" : "Week of";
-    $("#wk-range").textContent = rangeText(viewKey);
-    $("#wk-next").disabled = isCur;
-    $("#wk-today").hidden = isCur;
+    drawWeekNavs(isCur, cur);
     $("#weeks-missing").hidden = !(weeksMissing && mode === "account");
     $("#week-error").hidden = !weekFailed;
     $("#review-last").hidden = !isCur;
@@ -2089,9 +2356,39 @@ button.d:hover { color: var(--ink); }
     const through = isCur ? todayIdx() : 6;
     drawTiles(areas, act, isCur, through);
     drawReview(areas, act, isCur, through, w);
-    drawLogDays(isCur);
-    if (!logRowsFocused()) drawLog(areas, act, isCur, w);
     drawCompare(areas, act, isCur);
+    drawLogFaces(areas, act, isCur, w);
+    drawTrackedCharts(areas, act, isCur);
+    drawPomo();
+  }
+
+  function drawTrackedCharts(areas, act, isCur) {
+    const list = trackedList(areas, act);
+    const dayVals = list.map(({ a, r }) => ({ a, v: r.days[selDay] }));
+    const dayTotal = sumBy(dayVals, (x) => x.v);
+    meterActual($("#m-day-a"), dayVals, dayTotal, 24, sumBy(areas, (a) => plannedOn(a, selDay)));
+    $("#m-day-a .count").textContent = dayVals.filter((x) => x.v > EPS).length;
+
+    const weekVals = list.map(({ a, r }) => ({ a, v: r.week }));
+    const weekTotal = sumBy(weekVals, (x) => x.v);
+    meterActual($("#m-week-a"), weekVals, weekTotal, 168, sumBy(areas, weekly));
+    $("#m-week-a .left-l").textContent = isCur ? "Left this week" : "Not tracked";
+    $("#m-week-a .left").textContent = fmt(isCur ? hoursLeftThisWeek() : Math.max(0, 168 - weekTotal));
+
+    paintWeekGrid(gridTracked,
+      (d) => list.map(({ a, r }) => ({ a, h: r.days[d] })),
+      (d, sum) => ({ text: fmt(sum) }));
+    drawLegend($("#legend-a"), list.filter((x) => x.r.week > EPS).map((x) => ({ a: x.a, h: x.r.week })), "Nothing tracked this week yet.");
+
+    drawGripInto({ rows: "#grip-rows-a", head: "#grip-day-head-a", note: "#grip-note-a", stat: "#deep-stat-a" }, {
+      areas: list.map((x) => x.a),
+      dayH: (a) => (act.get(a.id) || { days: [] }).days[selDay] || 0,
+      weekH: (a) => gotFor(act, a.id),
+      rest: { name: "Not tracked", desc: "Time not logged to any area" },
+      deepDesc: (d, all) => (all > EPS ? `${pct(d, all)} of your tracked time` : "Nothing tracked yet"),
+      statTail: (d) => `this week · ${pct(d, 168)} of your week`,
+      noun: "tracked",
+    });
   }
 
   function setBar(id, frac) { $(id).style.width = Math.min(100, Math.max(0, frac * 100)) + "%"; }
@@ -2163,8 +2460,8 @@ button.d:hover { color: var(--ink); }
     }
     if (!w || !w.entries.length) {
       reviewLine(list, "+", "var(--accent)", [isCur
-        ? "Nothing logged yet this week. Tap +15m, the block you just did, or start a timer below."
-        : "Nothing was logged this week. You can still fill it in below."]);
+        ? "Nothing logged yet this week. On the Areas tab, swipe a card to Actual and tap +15m, the block you just did, or start a timer."
+        : "Nothing was logged this week. You can still fill it in on the Areas tab."]);
       return;
     }
     const soFar = isCur ? " so far" : "";
@@ -2203,24 +2500,6 @@ button.d:hover { color: var(--ink); }
     }
   }
 
-  const logDayBtns = DAYS.map((name, d) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.textContent = name;
-    b.addEventListener("click", () => { logDay = d; drawActual(); });
-    $("#log-days").append(b);
-    return b;
-  });
-  function drawLogDays(isCur) {
-    const today = todayIdx();
-    logDayBtns.forEach((b, d) => {
-      b.setAttribute("aria-pressed", String(d === logDay));
-      b.disabled = isCur && d > today;   // no logging into the future
-      b.classList.toggle("today", isCur && d === today);
-      b.setAttribute("aria-label", DAY_NAMES[d] + (isCur && d === today ? ", today" : ""));
-    });
-  }
-
   function emptyLine(box, text) {
     const p = document.createElement("p");
     p.className = "log-empty";
@@ -2238,112 +2517,124 @@ button.d:hover { color: var(--ink); }
     return b;
   }
 
-  function drawLog(areas, act, isCur, w) {
-    const box = $("#log-rows");
-    box.textContent = "";
-    if (mode === "account" && weeksMissing) { emptyLine(box, "Logging turns on after the database update above."); return; }
-    if (weekLoading || !w) { emptyLine(box, weekFailed ? "Couldn't load this week." : "Loading this week…"); return; }
-    if (!areas.length) { emptyLine(box, "Add areas of focus on the Planned focus tab, then log your time here."); return; }
-    areas.forEach((a) => {
-      const got = act.get(a.id) || { week: 0, days: [0, 0, 0, 0, 0, 0, 0] };
-      const p = weekly(a), blockH = plannedOn(a, logDay);
-      const row = document.createElement("div");
-      row.className = "lrow";
-      row.dataset.id = a.id;
-      row.style.setProperty("--c", colorOf(a));
-
-      const main = document.createElement("div");
-      main.className = "lrow-main";
-      const top = document.createElement("div");
-      top.className = "lrow-top";
-      const dot = document.createElement("span");
-      dot.className = "ldot";
-      const name = document.createElement("span");
-      name.className = "lname";
-      name.textContent = label(a);
-      top.append(dot, name);
-      if (a.deep) {
-        const dz = document.createElement("span");
-        dz.className = "ldeep";
-        dz.title = "Deep Focus";
-        dz.innerHTML = TARGET_SVG;
-        top.append(dz);
-      }
-      const nums = document.createElement("label");
-      nums.className = "lnums";
-      const input = document.createElement("input");
-      input.className = "ltotal";
-      input.type = "text";
-      input.inputMode = "decimal";
-      input.autocomplete = "off";
-      input.id = "lt-" + a.id;
-      input.value = fmtIn(got.week);
-      input.setAttribute("aria-label", `Hours logged this week for ${label(a)}`);
-      const of = document.createElement("span");
-      of.textContent = p > EPS ? `of ${fmt(p)}` : "h · not planned";
-      nums.append(input, of);
-      top.append(nums);
-
-      const track = document.createElement("div");
-      track.className = "ltrack";
-      const scale = Math.max(p, got.week, EPS);
-      const fill = document.createElement("i");
-      fill.style.width = (got.week / scale) * 100 + "%";
-      track.append(fill);
-      if (p > EPS) {
-        const mark = document.createElement("span");
-        mark.className = "mark";
-        mark.style.left = (p / scale) * 100 + "%";
-        mark.title = `Planned ${fmt(p)}`;
-        track.append(mark);
-      }
-      const sub = document.createElement("div");
-      sub.className = "lsub";
-      sub.textContent = `${DAY_NAMES[logDay]}: ${fmt(got.days[logDay])} logged` + (blockH > EPS ? ` · ${fmt(blockH)} planned` : "");
-      main.append(top, track, sub);
-
-      const acts = document.createElement("div");
-      acts.className = "lacts";
-      acts.append(qbtn("15", "+15m"), qbtn("30", "+30m"), qbtn("60", "+1h"));
-      if (blockH > EPS) acts.append(qbtn("block", `✓ ${fmt(blockH)} block`, `Log the ${fmt(blockH)} you planned for ${DAY_NAMES[logDay]}`, "block"));
-      if (isCur) {
-        const t = timerFor(a.id), on = !!t;
-        const tb = qbtn("timer", on ? "■ " + elapsedText(Date.now() - t.start) : "▶ Start", on ? "Stop the timer and log the time" : "Start a timer", "timer" + (on ? " on" : ""));
-        tb.setAttribute("aria-label", on ? `Stop timer for ${label(a)}` : `Start timer for ${label(a)}`);
-        acts.append(tb);
-      }
-      row.append(main, acts);
-      box.append(row);
+  // The Actual side of each area card on the Areas view.
+  function drawLogFaces(areas, act, isCur, w) {
+    const msg = mode === "account" && weeksMissing ? "Logging turns on after the database update above."
+      : weekLoading || !w ? (weekFailed ? "Couldn't load this week." : "Loading this week…")
+      : "";
+    rowsEl.querySelectorAll(".acard").forEach((card) => {
+      const face = card.querySelector(".face-a");
+      if (typingIn(face)) return;
+      const a = state.areas.find((x) => x.id === card.dataset.id);
+      face.textContent = "";
+      if (!a) return;
+      if (msg) { emptyLine(face, msg); return; }
+      face.append(logRow(a, planFor(viewKey).find((x) => x.id === a.id) || a, act.get(a.id), isCur));
     });
   }
 
-  $("#log-rows").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-act]");
+  function logRow(a, plan, got, isCur) {
+    got = got || { week: 0, days: [0, 0, 0, 0, 0, 0, 0] };
+    const p = weekly(plan), blockH = plannedOn(plan, selDay);
+    const future = isCur && selDay > todayIdx();
+    const row = document.createElement("div");
+    row.className = "lrow";
+    row.dataset.id = a.id;
+
+    const main = document.createElement("div");
+    main.className = "lrow-main";
+    const top = document.createElement("div");
+    top.className = "lrow-top";
+    const dot = document.createElement("span");
+    dot.className = "ldot";
+    const name = document.createElement("span");
+    name.className = "lname";
+    name.textContent = label(a);
+    top.append(dot, name);
+    if (a.deep) {
+      const dz = document.createElement("span");
+      dz.className = "ldeep";
+      dz.title = "Deep Focus";
+      dz.innerHTML = TARGET_SVG;
+      top.append(dz);
+    }
+    const nums = document.createElement("label");
+    nums.className = "lnums";
+    const input = document.createElement("input");
+    input.className = "ltotal";
+    input.type = "text";
+    input.inputMode = "decimal";
+    input.autocomplete = "off";
+    input.id = "lt-" + a.id;
+    input.value = fmtIn(got.week);
+    input.setAttribute("aria-label", `Time logged this week for ${label(a)}`);
+    const of = document.createElement("span");
+    of.textContent = p > EPS ? `of ${fmt(p)}` : "· not planned";
+    nums.append(input, of);
+    top.append(nums);
+
+    const track = document.createElement("div");
+    track.className = "ltrack";
+    const scale = Math.max(p, got.week, EPS);
+    const fill = document.createElement("i");
+    fill.style.width = (got.week / scale) * 100 + "%";
+    track.append(fill);
+    if (p > EPS) {
+      const mark = document.createElement("span");
+      mark.className = "mark";
+      mark.style.left = (p / scale) * 100 + "%";
+      mark.title = `Planned ${fmt(p)}`;
+      track.append(mark);
+    }
+    const sub = document.createElement("div");
+    sub.className = "lsub";
+    sub.textContent = future
+      ? `${DAY_NAMES[selDay]} hasn't happened yet` + (blockH > EPS ? ` · ${fmt(blockH)} planned` : "")
+      : `${DAY_NAMES[selDay]}: ${fmt(got.days[selDay])} logged` + (blockH > EPS ? ` · ${fmt(blockH)} planned` : "");
+    main.append(top, track, sub);
+
+    const acts = document.createElement("div");
+    acts.className = "lacts";
+    const quick = [qbtn("15", "+15m"), qbtn("30", "+30m"), qbtn("60", "+1h")];
+    if (blockH > EPS) quick.push(qbtn("block", `✓ ${fmt(blockH)} block`, `Log the ${fmt(blockH)} you planned for ${DAY_NAMES[selDay]}`, "block"));
+    quick.forEach((b) => { b.disabled = future; acts.append(b); });
+    if (isCur) {
+      const t = timerFor(a.id), on = !!t;
+      const tb = qbtn("timer", on ? "■ " + elapsedText(Date.now() - t.start) : "▶ Start", on ? "Stop the timer and log the time" : "Start a timer", "timer" + (on ? " on" : ""));
+      tb.setAttribute("aria-label", on ? `Stop timer for ${label(a)}` : `Start timer for ${label(a)}`);
+      acts.append(tb);
+    }
+    row.append(main, acts);
+    return row;
+  }
+
+  rowsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".lrow button[data-act]");
     if (!btn) return;
-    const row = btn.closest(".lrow");
-    const area = planFor(viewKey).find((x) => x.id === row.dataset.id);
+    const area = state.areas.find((x) => x.id === btn.closest(".lrow").dataset.id);
     if (!area) return;
     const act = btn.dataset.act;
     if (act === "timer") {
       if (timerFor(area.id)) stopTimer(area.id); else startTimer(area);
     } else if (act === "block") {
-      quickLog(area, Math.round(plannedOn(area, logDay) * 60), "block");
+      const plan = planFor(viewKey).find((x) => x.id === area.id) || area;
+      quickLog(area, Math.round(plannedOn(plan, selDay) * 60), "block");
     } else {
       quickLog(area, +act, "quick");
     }
   });
   // Typing a weekly total records the difference as a correction on the selected day.
-  $("#log-rows").addEventListener("change", (e) => {
+  rowsEl.addEventListener("change", (e) => {
     const inp = e.target.closest(".ltotal");
     if (!inp) return;
-    const area = planFor(viewKey).find((x) => x.id === inp.closest(".lrow").dataset.id);
+    const area = state.areas.find((x) => x.id === inp.closest(".lrow").dataset.id);
     const v = parseHours(inp.value);
     if (!area || Number.isNaN(v)) { inp.blur(); drawActual(); return; }
     const diff = Math.round((clamp(v, 0, 168) - gotFor(actualsOf(weeks.get(viewKey)), area.id)) * 3600) / 60;   // minutes, to the second
     inp.blur();
     if (diff) quickLog(area, diff, "edit"); else drawActual();
   });
-  $("#log-rows").addEventListener("keydown", (e) => {
+  rowsEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && e.target.matches(".ltotal")) { e.preventDefault(); e.target.blur(); }
   });
 
@@ -2436,21 +2727,51 @@ button.d:hover { color: var(--ink); }
     cmpRow(box, { name: "Deep Focus", badge: "target", k: "var(--clay)", p: sumBy(deepAreas, weekly), got: sumBy(deepAreas, (a) => gotFor(act, a.id)) });
   }
 
-  // ----- week navigation -----
+  // ----- week navigation (one control at the top of each view, all in sync) -----
+  const weekNavs = [...document.querySelectorAll(".weeknav")].map((box) => {
+    const mk = (cls, text, aria) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = cls;
+      b.textContent = text;
+      if (aria) b.setAttribute("aria-label", aria);
+      return b;
+    };
+    const prev = mk("icon-btn wk-btn", "‹", "Previous week");
+    const next = mk("icon-btn wk-btn", "›", "Next week");
+    const text = document.createElement("div");
+    text.className = "wk-text";
+    const kicker = document.createElement("span");
+    kicker.className = "label";
+    const range = document.createElement("b");
+    text.append(kicker, range);
+    const today = mk("linkish wk-today", "This week");
+    prev.addEventListener("click", () => openWeek(shiftKey(viewKey, -1)));
+    next.addEventListener("click", () => { if (viewKey !== thisWeekKey()) openWeek(shiftKey(viewKey, 1)); });
+    today.addEventListener("click", () => openWeek(thisWeekKey()));
+    box.append(prev, text, next, today);
+    return { prev, next, kicker, range, today };
+  });
+  function drawWeekNavs(isCur, cur) {
+    weekNavs.forEach((n) => {
+      n.kicker.textContent = isCur ? "This week" : viewKey === shiftKey(cur, -1) ? "Last week" : "Week of";
+      n.range.textContent = rangeText(viewKey);
+      n.next.disabled = isCur;
+      n.today.hidden = isCur;
+    });
+  }
+
   async function openWeek(k) {
     viewKey = k;
-    logDay = k === thisWeekKey() ? todayIdx() : 6;
+    if (k === thisWeekKey()) selDay = todayIdx();
     weekFailed = false;
     weekLoading = !!mode && !weeks.has(k) && !(mode === "account" && weeksMissing);
-    drawActual();
+    update();
     if (!weekLoading) return;
     try { await loadWeek(k); } catch { weekFailed = !weeksMissing; }
     weekLoading = false;
     if (viewKey === k) drawActual();
   }
-  $("#wk-prev").addEventListener("click", () => openWeek(shiftKey(viewKey, -1)));
-  $("#wk-next").addEventListener("click", () => { if (viewKey !== thisWeekKey()) openWeek(shiftKey(viewKey, 1)); });
-  $("#wk-today").addEventListener("click", () => openWeek(thisWeekKey()));
   $("#review-last").addEventListener("click", () => openWeek(shiftKey(thisWeekKey(), -1)));
   $("#retry-week").addEventListener("click", () => { weeks.delete(viewKey); openWeek(viewKey); });
 
@@ -2460,9 +2781,9 @@ button.d:hover { color: var(--ink); }
     weeksMissing = false;
     weekFailed = false;
     viewKey = thisWeekKey();
-    logDay = todayIdx();
+    selDay = todayIdx();
     weekLoading = true;
-    drawActual();
+    update();
     try { await loadWeek(viewKey); } catch { weekFailed = !weeksMissing; }
     weekLoading = false;
     drawActual();
@@ -2488,30 +2809,285 @@ button.d:hover { color: var(--ink); }
     } catch {}
   });
 
-  // ----- tabs -----
-  const TAB_BTNS = { planned: $("#tab-btn-planned"), actual: $("#tab-btn-actual") };
-  function setTab(t, focus) {
-    activeTab = t === "actual" ? "actual" : "planned";
-    const isA = activeTab === "actual";
-    $("#tab-planned").hidden = isA;
-    $("#tab-actual").hidden = !isA;
-    Object.entries(TAB_BTNS).forEach(([name, b]) => {
-      b.setAttribute("aria-selected", String(name === activeTab));
-      b.tabIndex = name === activeTab ? 0 : -1;
-      if (focus && name === activeTab) b.focus();
+  // ----- Planned ⇄ Actual: every card swipes (or tap its labels) between its two sides -----
+  // Chart cards are `.flip`; area cards are `.acard`. Both hold `.faces > .face[data-face]`.
+  const FACES_KEY = "focus168.faces";
+  let faceState = {};
+  try { faceState = JSON.parse(localStorage.getItem(FACES_KEY)) || {}; } catch {}
+  const saveFaces = () => { try { localStorage.setItem(FACES_KEY, JSON.stringify(faceState)); } catch {} };
+  const facesOf = (flip) => [...flip.querySelector(":scope > .faces").children];
+  const areaFaces = new Map();   // area id -> "planned" | "actual"
+
+  function setFace(flip, face, dir) {
+    const list = facesOf(flip);
+    if (!list.some((f) => f.dataset.face === face)) face = list[0].dataset.face;
+    list.forEach((f, i) => {
+      const on = f.dataset.face === face;
+      f.classList.toggle("on", on);
+      f.inert = !on;
+      if (on) {
+        f.removeAttribute("aria-hidden");
+        f.classList.remove("in-left", "in-right");
+        if (dir) { void f.offsetWidth; f.classList.add(dir > 0 ? "in-right" : "in-left"); }
+      } else f.setAttribute("aria-hidden", "true");
     });
-    try { localStorage.setItem("focus168.tab", activeTab); } catch {}
-    if (location.hash !== "#" + activeTab) history.replaceState(null, "", "#" + activeTab);
-    hidePop(false);
-    if (isA) openWeek(viewKey); else updateChrome();
+    flip.dataset.face = face;
+    flip.querySelectorAll(":scope > .flip-head .seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.face === face)));
+    const idx = list.findIndex((f) => f.dataset.face === face);
+    flip.querySelectorAll(":scope > .flip-dots i").forEach((d, i) => d.classList.toggle("on", i === idx));
   }
-  TAB_BTNS.planned.addEventListener("click", () => setTab("planned"));
-  TAB_BTNS.actual.addEventListener("click", () => setTab("actual"));
-  $(".tabs").addEventListener("keydown", (e) => {
-    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-    e.preventDefault();
-    setTab(activeTab === "planned" ? "actual" : "planned", true);
+
+  function chooseFace(flip, face, dir) {
+    if (flip.classList.contains("acard")) {
+      areaFaces.set(flip.dataset.id, face);
+    } else {
+      faceState[flip.dataset.flip] = face;
+      saveFaces();
+    }
+    setFace(flip, face, dir);
+    hidePop(false);
+  }
+
+  function stepFace(flip, step) {
+    const names = facesOf(flip).map((f) => f.dataset.face);
+    const i = names.indexOf(flip.dataset.face) + step;
+    if (i < 0 || i >= names.length) return;
+    chooseFace(flip, names[i], step);
+  }
+
+  document.querySelectorAll(".flip").forEach((flip) => {
+    setFace(flip, faceState[flip.dataset.flip] || facesOf(flip)[0].dataset.face);
+    flip.querySelector(":scope > .flip-head .seg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-face]");
+      if (!b || b.dataset.face === flip.dataset.face) return;
+      const names = facesOf(flip).map((f) => f.dataset.face);
+      chooseFace(flip, b.dataset.face, names.indexOf(b.dataset.face) > names.indexOf(flip.dataset.face) ? 1 : -1);
+    });
   });
+
+  // The switch above the area cards flips every card at once.
+  const areasSeg = $("#areas-seg");
+  function paintAreasSeg() {
+    const face = faceState.areas || "planned";
+    areasSeg.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.face === face)));
+    $(".areas-card").classList.toggle("showing-actual", face === "actual");
+  }
+  areasSeg.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-face]");
+    if (!b) return;
+    faceState.areas = b.dataset.face;
+    saveFaces();
+    areaFaces.clear();
+    rowsEl.querySelectorAll(".acard").forEach((card) => setFace(card, b.dataset.face, b.dataset.face === "actual" ? 1 : -1));
+    paintAreasSeg();
+    hidePop(false);
+  });
+  paintAreasSeg();
+
+  // Horizontal swipes flip a card; vertical movement is left to page scrolling.
+  let swipe = null;
+  document.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 || drag) return;
+    const flip = e.target.closest(".flip, .acard");
+    if (!flip || e.target.closest("input, select, textarea, .handle, .seg, .weeknav")) return;
+    swipe = { flip, x: e.clientX, y: e.clientY, id: e.pointerId, active: false };
+  });
+  document.addEventListener("pointermove", (e) => {
+    if (!swipe || e.pointerId !== swipe.id) return;
+    const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y;
+    if (!swipe.active) {
+      if (Math.abs(dy) > 14 && Math.abs(dy) > Math.abs(dx)) { swipe = null; return; }
+      if (Math.abs(dx) < 14 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      swipe.active = true;
+    }
+    const face = swipe.flip.querySelector(":scope > .faces > .face.on");
+    if (face) { face.style.transition = "none"; face.style.transform = `translateX(${dx * 0.35}px)`; }
+  });
+  function endSwipe(e) {
+    if (!swipe || e.pointerId !== swipe.id) return;
+    const s = swipe;
+    swipe = null;
+    const face = s.flip.querySelector(":scope > .faces > .face.on");
+    if (face) { face.style.transform = ""; face.style.transition = ""; }
+    if (!s.active) return;
+    // A swipe that started on a button shouldn't also press it.
+    const block = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+    document.addEventListener("click", block, true);
+    setTimeout(() => document.removeEventListener("click", block, true), 0);
+    const dx = (e.clientX || s.x) - s.x;
+    if (Math.abs(dx) > 48) stepFace(s.flip, dx < 0 ? 1 : -1);
+  }
+  document.addEventListener("pointerup", endSwipe);
+  document.addEventListener("pointercancel", endSwipe);
+
+  // ----- bottom navigation: Areas, Charts, Focus -----
+  const VIEWS = ["areas", "charts", "focus"];
+  const VIEW_KEY = "focus168.view";
+  let activeView = "areas";
+  function setView(v, keepScroll) {
+    activeView = VIEWS.includes(v) ? v : "areas";
+    VIEWS.forEach((n) => { $("#view-" + n).hidden = n !== activeView; });
+    document.querySelectorAll(".bottomnav button").forEach((b) => {
+      const on = b.dataset.view === activeView;
+      b.classList.toggle("on", on);
+      if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+    try { localStorage.setItem(VIEW_KEY, activeView); } catch {}
+    if (location.hash !== "#" + activeView) history.replaceState(null, "", "#" + activeView);
+    hidePop(false);
+    if (!keepScroll) window.scrollTo({ top: 0 });
+  }
+  document.querySelector(".bottomnav").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-view]");
+    if (b) setView(b.dataset.view);
+  });
+
+  // ----- Deep Focus sessions (Pomodoro) -----
+  // Uses the normal timer for the chosen area, so the time logs and syncs like any other timer.
+  // The session clock itself is kept on this device.
+  const POMO_KEY = "focus168.pomo";
+  let pomo = { phase: "idle", area: null, len: 25, start: 0, ends: 0 };
+  try { Object.assign(pomo, JSON.parse(localStorage.getItem(POMO_KEY)) || {}); } catch {}
+  const savePomo = () => { try { localStorage.setItem(POMO_KEY, JSON.stringify(pomo)); } catch {} };
+  const breakMins = (len) => Math.max(5, Math.round(len / 5));
+  const RING = 2 * Math.PI * 52;
+
+  let audioCtx = null;
+  function primeAudio() {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+    } catch {}
+  }
+  function chime() {
+    try {
+      if (audioCtx) {
+        const t0 = audioCtx.currentTime;
+        [660, 880, 990].forEach((freq, i) => {
+          const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = t0 + i * 0.18;
+          o.frequency.value = freq;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+          o.connect(g).connect(audioCtx.destination);
+          o.start(t);
+          o.stop(t + 0.32);
+        });
+      }
+    } catch {}
+    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch {}
+  }
+
+  const pomoSelect = $("#pomo-area");
+  function drawPomoSelect() {
+    if (pomoSelect.matches(":focus")) return;
+    const keep = pomo.area || pomoSelect.value;
+    pomoSelect.textContent = "";
+    const groups = [["Deep Focus areas", state.areas.filter((a) => a.deep)], ["Other areas", state.areas.filter((a) => !a.deep)]];
+    groups.forEach(([title, list]) => {
+      if (!list.length) return;
+      const g = document.createElement("optgroup");
+      g.label = title;
+      list.forEach((a) => {
+        const o = document.createElement("option");
+        o.value = a.id;
+        o.textContent = label(a);
+        g.append(o);
+      });
+      pomoSelect.append(g);
+    });
+    const ids = state.areas.map((a) => a.id);
+    pomoSelect.value = ids.includes(keep) ? keep : (state.areas.find((a) => a.deep) || state.areas[0] || {}).id || "";
+  }
+
+  function paintPomoClock() {
+    const running = pomo.phase !== "idle";
+    const total = (pomo.phase === "break" ? breakMins(pomo.len) : pomo.len) * 60000;
+    const left = running ? Math.max(0, pomo.ends - Date.now()) : total;
+    const s = Math.ceil(left / 1000);
+    $("#pomo-time").textContent = `${Math.floor(s / 60)}:${pad2(s % 60)}`;
+    $("#pomo-phase").textContent = pomo.phase === "focus" ? "Focus" : pomo.phase === "break" ? "Break" : "Ready";
+    const prog = $("#pomo-prog");
+    prog.style.strokeDasharray = RING;
+    prog.style.strokeDashoffset = running ? RING * (left / total) : 0;
+    prog.classList.toggle("brk", pomo.phase === "break");
+    prog.classList.toggle("idle", !running);
+  }
+
+  function drawPomo() {
+    drawPomoSelect();
+    const running = pomo.phase !== "idle";
+    pomoSelect.disabled = running || !state.areas.length;
+    $("#pomo-len").querySelectorAll("button").forEach((b) => {
+      b.setAttribute("aria-pressed", String(+b.dataset.len === pomo.len));
+      b.disabled = running;
+    });
+    const start = $("#pomo-start"), stop = $("#pomo-stop");
+    start.hidden = running;
+    start.disabled = !state.areas.length || logBlocked();
+    stop.hidden = !running;
+    stop.textContent = pomo.phase === "break" ? "Skip break" : "Stop";
+    const w = weeks.get(thisWeekKey()), today = todayIdx();
+    const done = w ? w.entries.filter((e) => e.s === "pomo" && e.d === today) : [];
+    const mins = sumBy(done, (e) => e.m);
+    $("#pomo-stats").textContent = !state.areas.length ? "Add an area of focus to start a session."
+      : done.length ? `Today: ${done.length} session${done.length === 1 ? "" : "s"} · ${fmt(mins / 60)} of focus`
+      : "No sessions yet today.";
+    paintPomoClock();
+  }
+
+  $("#pomo-len").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-len]");
+    if (!b || pomo.phase !== "idle") return;
+    pomo.len = +b.dataset.len;
+    savePomo();
+    drawPomo();
+  });
+  pomoSelect.addEventListener("change", () => { pomo.area = pomoSelect.value; savePomo(); });
+
+  $("#pomo-start").addEventListener("click", async () => {
+    const area = state.areas.find((a) => a.id === pomoSelect.value);
+    if (!area || logBlocked()) return;
+    primeAudio();
+    await startTimer(area);
+    if (!timerFor(area.id)) return;
+    const now = Date.now();
+    pomo = { phase: "focus", area: area.id, len: pomo.len, start: now, ends: now + pomo.len * 60000 };
+    savePomo();
+    drawPomo();
+  });
+  $("#pomo-stop").addEventListener("click", () => {
+    if (pomo.phase === "focus" && timerFor(pomo.area)) stopTimer(pomo.area);
+    pomo.phase = "idle";
+    savePomo();
+    drawPomo();
+  });
+
+  setInterval(() => {
+    if (pomo.phase === "focus") {
+      if (!weeks.has(thisWeekKey())) return;
+      if (!timerFor(pomo.area)) { pomo.phase = "idle"; savePomo(); drawPomo(); return; }   // stopped elsewhere
+      if (Date.now() >= pomo.ends) {
+        const name = areaName(pomo.area);
+        stopTimer(pomo.area, false, { endAt: pomo.ends, source: "pomo", quiet: true });
+        chime();
+        const brk = breakMins(pomo.len), now = Date.now();
+        pomo = { ...pomo, phase: "break", start: now, ends: now + brk * 60000 };
+        savePomo();
+        drawPomo();
+        showToast(`Session done: ${fmt(pomo.len / 60)} logged to ${name}. Take a ${brk}-minute break.`, null);
+        return;
+      }
+    } else if (pomo.phase === "break" && Date.now() >= pomo.ends) {
+      chime();
+      pomo.phase = "idle";
+      savePomo();
+      drawPomo();
+      showToast("Break's over. Ready for another session?", null);
+      return;
+    }
+    if (pomo.phase !== "idle") paintPomoClock();
+  }, 1000);
 
   // ---------- accounts ----------
   const authEl = $("#auth"), appEl = $("#app");
@@ -2680,9 +3256,9 @@ button.d:hover { color: var(--ink); }
   $("#auth-logo").append($(".mast .logo svg").cloneNode(true));
   {
     let saved = null;
-    try { saved = localStorage.getItem("focus168.tab"); } catch {}
+    try { saved = localStorage.getItem(VIEW_KEY); } catch {}
     const fromHash = location.hash.slice(1);
-    setTab(fromHash === "actual" || fromHash === "planned" ? fromHash : saved || "planned");
+    setView(VIEWS.includes(fromHash) ? fromHash : saved || "areas", true);
   }
   if (sb) {
     // Fires once on load (with the saved session, if any) and again on every sign-in or sign-out.
